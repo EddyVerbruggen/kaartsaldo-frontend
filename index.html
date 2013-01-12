@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <title>Kaartsaldo app</title>
+  <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.2.0-alpha.1.min.css" type="text/css"/>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Gudea:400,700,400italic" type="text/css"/>
+  <link rel="stylesheet" href="css/intratuincard.css" type="text/css"/>
+  <script src="js/lib/jquery.js"></script>
+  <script src="js/intratuincard.custom.js"></script>
+  <script src="js/jqm-init.js"></script>
+  <script src="js/lib/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+  <script src="phonegap.js"></script>
+  <script src="barcodescanner.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+  function loadCardData(cardcompany, cardnumber, successFunction) {
+    var url = "http://www.libwat.ch/cards/"+cardcompany;
+    // for SSL, we can use this url, which is libwat.ch
+//    var url = "https://morning-stone-3983.herokuapp.com/cards/bijenkorf";
+
+    var data = {
+      'cardnumber': cardnumber
+    };
+
+    setTimeout(function () {
+      $.ajax({
+        data: data,
+        dataType:"json",
+        async:false,
+        type: 'POST',
+        url:url,
+        success:successFunction,
+        error:function () {
+          $.mobile.loading('hide');
+          alert('Er is iets misgegaan. Probeer het nogmaals.');
+        }
+      });
+    }, 250);
+  }
+
+  function scan(cardcompany, successFunction) {
+    window.plugins.barcodeScanner.scan(function(result) {
+      if (!result.cancelled) {
+        // Successfully scanned a bar code
+        loadCardData(cardcompany, result.text, successFunction);
+      }
+
+//       alert("We got a barcode\n" +
+//          "Result: " + result.text + "\n" +
+//          "Format: " + result.format + "\n" +
+//          "Cancelled: " + result.cancelled);
+        }, function(error) {
+          alert("Scanning failed: " + error);
+        }
+    );
+  }
+</script>
+
+<!-- Page: Home page -->
+<div id="homePage" data-role="page">
+  <script language="JavaScript">
+    $('#homePage').live('pagebeforeshow', function (e, data) {
+
+      $('#loginButton').bind("click", function () {
+        $.mobile.loading('show');
+        loadCardData($("#c1").val(), $("#c2").val(), $("#c3").val(), $("#c4").val(), $("#c5").val(), function (data) {
+          $("#saldo").html("Saldo: " + data.saldo);
+        });
+        $.mobile.loading('hide');
+      });
+
+      $('.scanButton').bind("click", function () {
+        var cardcompany = $(this).attr("data-cardcompany");
+        scan(cardcompany, function (data) {
+          if (data.success) {
+            $("#saldo").html("Saldo: " + data.saldo);
+          } else {
+            alert("Controleer uw invoer..");
+          }
+        });
+      });
+    });
+
+  </script>
+  <div data-role="header" data-tap-toggle="false">
+    <h1>Kaartsaldo</h1>
+  </div>
+  <div data-role="content">
+    <h2>Voer hier het nummer van je Intratuin cadeaukaart in: </h2>
+
+    <form id="loginForm">
+      <input type="text" name="c1" id="c1" value="" autocomplete="off" autocorrect="off"/>
+      <input type="text" name="c2" id="c2" value="" autocomplete="off" autocorrect="off"/>
+      <input type="text" name="c3" id="c3" value="" autocomplete="off" autocorrect="off"/>
+      <input type="text" name="c4" id="c4" value="" autocomplete="off" autocorrect="off"/>
+      <input type="text" name="c5" id="c5" value="" autocomplete="off" autocorrect="off"/>
+
+      <div class="ui-grid-a">
+        <div class="ui-block-a" style="text-align: right">
+          <input type="button" data-role="button" data-mini="true" data-inline="true" data-icon="arrow-r" data-iconpos="right" data-theme="a" class="scanButton" data-cardcompany="fashioncheque" value="fashioncheque"/>
+        </div>
+        <div class="ui-block-b" style="text-align: right">
+          <input type="button" data-role="button" data-mini="true" data-inline="true" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="inloggen"/>
+        </div>
+      </div>
+    </form>
+
+    <h3>Het saldo op uw Intratuin cadeaukaart</h3>
+    <ul id="totals" data-role="listview" data-inset="true" data-divider-theme="d">
+      <li data-role="list-divider" id="saldo"></li>
+    </ul>
+  </div>
+</div>
+<!-- End page: Home page -->
+
+
+<!-- Page: Home page -->
+<div id="unusedPage" data-role="page">
+  <div data-role="header" data-theme="c" data-tap-toggle="false" data-position="fixed">
+    <a id="backToLogin" data-icon="arrow-l" data-direction="reverse" href="#loginPage" class="button_back">log uit</a>
+    <h1>Intratuin cadeaukaart</h1>
+    <a data-icon="refresh" href="#" onclick="$.mobile.loading('show', {text:'Gegevens worden ververst..'}); setTimeout(function(){loadCardData(getLoginName(), getPassword(), function(data) {localStorage.setItem('CardResponse', JSON.stringify(data)); showCardData(); $.mobile.loading('hide');})},250)">vernieuw</a>
+  </div>
+
+  <div data-role="content">
+  </div>
+</div>
+<!-- End page: Home page -->
+
+
+</body>
