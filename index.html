@@ -9,9 +9,9 @@
   <title>Kaartsaldo app</title>
   <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.2.0-alpha.1.min.css" type="text/css"/>
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Gudea:400,700,400italic" type="text/css"/>
-  <link rel="stylesheet" href="css/intratuincard.css" type="text/css"/>
+  <link rel="stylesheet" href="css/kaartsaldo.css" type="text/css"/>
   <script src="js/lib/jquery.js"></script>
-  <script src="js/intratuincard.custom.js"></script>
+  <script src="js/kaartsaldo.custom.js"></script>
   <script src="js/jqm-init.js"></script>
   <script src="js/lib/jquery.mobile-1.2.0-alpha.1.min.js"></script>
   <script src="phonegap.js"></script>
@@ -29,6 +29,8 @@
       'cardnumber': cardnumber
     };
 
+    $.mobile.loading('show');
+
     setTimeout(function () {
       $.ajax({
         data: data,
@@ -36,7 +38,7 @@
         async:false,
         type: 'POST',
         url:url,
-        success:successFunction,
+        success:function(data){successFunction(cardcompany, data)},
         error:function () {
           $.mobile.loading('hide');
           alert('Er is iets misgegaan. Probeer het nogmaals.');
@@ -61,6 +63,60 @@
         }
     );
   }
+
+  function renderMycardsList(mycards) {
+    var htmlMyCards = '' +
+        '<li data-role="list-divider" id="page_home_channellist_header">Mijn kaarten</li>';
+    $.each(mycards, function (i, mycard) {
+
+      htmlMyCards += '' +
+          '<li data-role="fieldcontain">' +
+          '  <img src="img/cardcompany/' + mycard.cardcompany + '.png" />' +
+          '  <div class="ui-grid-a">' +
+          '    <div class="ui-block-a">' +
+          '      <h3>' + mycard.saldo +'</h3>' +
+          '      <p>Laatste check: ' + mycard.checkdate + '</p>' +
+          '      <p>' + mycard.cardnumber + '</p>' +
+          '    </div>' +
+          '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
+          '      <a href="refresh">refresh</a>' +
+          '      <br/>' +
+          '      <br/>' +
+          '      <a href="del">del</a>' +
+          '    </div>' +
+          '  </div>' +
+//          '  </a>' +
+          '</li>';
+    });
+    $("#mycardsList").html(htmlMyCards);
+    $("#mycardsList").listview("refresh");
+  }
+
+  function processCardResponse(cardcompany, data) {
+    $.mobile.loading('hide');
+    if (data.success) {
+      // add the cardcompany and store it
+      data.cardcompany = cardcompany;
+      var mycards = localStorage.getItem("mycards");
+      if (mycards == null) {
+        mycards = new Array();
+      } else {
+        mycards = JSON.parse(mycards);
+        // check if it existed... if so, remove it first
+        $.each(mycards, function (i, mycard) {
+          if (mycard.cardnumber == data.cardnumber) {
+            newVideoIDs.splice(i, 1);
+          }
+        });
+      }
+      mycards.push(data);
+      localStorage.setItem("mycards", JSON.stringify(mycards));
+      // re-render the mycardslist
+      renderMycardsList(mycards);
+    } else {
+      alert("Controleer uw invoer..");
+    }
+  }
 </script>
 
 <!-- Page: Home page -->
@@ -68,62 +124,48 @@
   <script language="JavaScript">
     $('#homePage').live('pagebeforeshow', function (e, data) {
 
-      $('#loginButton').bind("click", function () {
-        $.mobile.loading('show');
-        loadCardData($("#c1").val(), $("#c2").val(), $("#c3").val(), $("#c4").val(), $("#c5").val(), function (data) {
-          $("#saldo").html("Saldo: " + data.saldo);
-        });
-        $.mobile.loading('hide');
-      });
+      // render the list of scanned cards
+      var mycards = localStorage.getItem("mycards");
+      if (mycards != null) {
+        renderMycardsList(JSON.parse(mycards));
+      }
 
+      // bind behaviour to any buttons
       $('.scanButton').bind("click", function () {
         var cardcompany = $(this).attr("data-cardcompany");
-        scan(cardcompany, function (data) {
-          if (data.success) {
-            $("#saldo").html("Saldo: " + data.saldo);
-          } else {
-            alert("Controleer uw invoer..");
-          }
-        });
+        if (isIOS() || isAndroid()) {
+          scan(cardcompany, processCardResponse);
+        } else {
+          // debugging in browser
+          var testcardnr = $(this).attr("data-testcard");
+          loadCardData(cardcompany, testcardnr, processCardResponse);
+        }
       });
     });
 
   </script>
   <div data-role="header" data-tap-toggle="false">
     <h1>Kaartsaldo</h1>
+    <a data-icon="info" data-iconpos="notext" href="#infoPopup" data-theme="b">info</a>
   </div>
   <div data-role="content">
-    <h2>Welke cadeaukaart wilt u scannen?</h2>
+    <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="d"></ul>
 
-    <!--form id="loginForm">
-      <input type="text" name="c1" id="c1" value="" autocomplete="off" autocorrect="off"/>
-      <input type="text" name="c2" id="c2" value="" autocomplete="off" autocorrect="off"/>
-      <input type="text" name="c3" id="c3" value="" autocomplete="off" autocorrect="off"/>
-      <input type="text" name="c4" id="c4" value="" autocomplete="off" autocorrect="off"/>
-      <input type="text" name="c5" id="c5" value="" autocomplete="off" autocorrect="off"/>
+    <ul id="allcardsList" data-role="listview" data-inset="false" data-divider-theme="d">
+      <li data-role="list-divider">Voeg een kaart toe</li>
+      <li><img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema" data-testcard="300416828647599"/></li>
+      <li><img src="img/cardcompany/intratuin.png" class="scanButton" data-cardcompany="intratuin" alt="intratuin" data-testcard="6064362091069735993"/></li>
+      <li><img src="img/cardcompany/fashioncheque.png" class="scanButton" data-cardcompany="fashioncheque" data-testcard="6046425110188147616" alt="fashioncheque"/></li>
+      <li><img src="img/cardcompany/bartsmit.png" class="scanButton" data-cardcompany="bartsmit" alt="bartsmit" data-testcard="3040012188580701179"/></li>
+      <li><img src="img/cardcompany/prenatal.png" class="scanButton" data-cardcompany="prenatal" alt="prenatal" data-testcard="3080017005005856058"/></li>
+      <li><img src="img/cardcompany/missetam.png" class="scanButton" data-cardcompany="missetam" alt="missetam"/></li>
+      <li><img src="img/cardcompany/promiss.png" class="scanButton" data-cardcompany="promiss" alt="promiss"/></li>
+    </ul>
 
-      <div class="ui-grid-a">
-        <div class="ui-block-a" style="text-align: right">
-          <input type="button" data-role="button" data-mini="true" data-inline="true" data-icon="arrow-r" data-iconpos="right" data-theme="a" class="scanButton" data-cardcompany="fashioncheque" value="fashioncheque"/>
-        </div>
-        <div class="ui-block-b" style="text-align: right">
-          <input type="button" data-role="button" data-mini="true" data-inline="true" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="inloggen"/>
-        </div>
-      </div>
-    </form-->
 
-    <img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema"/>
-    <img src="img/cardcompany/intratuin.png" class="scanButton" data-cardcompany="intratuin" alt="intratuin"/>
-    <img src="img/cardcompany/fashioncheque.png" class="scanButton" data-cardcompany="fashioncheque" alt="fashioncheque"/>
 
-    <img src="img/cardcompany/bartsmit.png" class="scanButton" data-cardcompany="bartsmit" alt="bartsmit"/>
-    <img src="img/cardcompany/prenatal.png" class="scanButton" data-cardcompany="prenatal" alt="prenatal"/>
-    <img src="img/cardcompany/missetam.png" class="scanButton" data-cardcompany="missetam" alt="missetam"/>
-    <img src="img/cardcompany/promiss.png" class="scanButton" data-cardcompany="promiss" alt="promiss"/>
-
-    <h3>Het saldo op de gescande kaart:</h3>
-    &euro;&nbsp;<div id="saldo"></div>
   </div>
+
 </div>
 <!-- End page: Home page -->
 
@@ -132,7 +174,7 @@
 <div id="unusedPage" data-role="page">
   <div data-role="header" data-theme="c" data-tap-toggle="false" data-position="fixed">
     <a id="backToLogin" data-icon="arrow-l" data-direction="reverse" href="#loginPage" class="button_back">log uit</a>
-    <h1>Intratuin cadeaukaart</h1>
+    <h1>Kaartsaldo</h1>
     <a data-icon="refresh" href="#" onclick="$.mobile.loading('show', {text:'Gegevens worden ververst..'}); setTimeout(function(){loadCardData(getLoginName(), getPassword(), function(data) {localStorage.setItem('CardResponse', JSON.stringify(data)); showCardData(); $.mobile.loading('hide');})},250)">vernieuw</a>
   </div>
 

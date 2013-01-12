@@ -145,3 +145,9 @@ input::-webkit-input-placeholder {
   max-width: 140px;
   cursor: pointer;
 }
+
+.ui-li-heading {
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
