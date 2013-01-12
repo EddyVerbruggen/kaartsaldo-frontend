@@ -93,9 +93,9 @@
     <h1>Kaartsaldo</h1>
   </div>
   <div data-role="content">
-    <h2>Voer hier het nummer van je Intratuin cadeaukaart in: </h2>
+    <h2>Welke cadeaukaart wilt u scannen?</h2>
 
-    <form id="loginForm">
+    <!--form id="loginForm">
       <input type="text" name="c1" id="c1" value="" autocomplete="off" autocorrect="off"/>
       <input type="text" name="c2" id="c2" value="" autocomplete="off" autocorrect="off"/>
       <input type="text" name="c3" id="c3" value="" autocomplete="off" autocorrect="off"/>
@@ -110,12 +110,19 @@
           <input type="button" data-role="button" data-mini="true" data-inline="true" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="inloggen"/>
         </div>
       </div>
-    </form>
+    </form-->
 
-    <h3>Het saldo op uw Intratuin cadeaukaart</h3>
-    <ul id="totals" data-role="listview" data-inset="true" data-divider-theme="d">
-      <li data-role="list-divider" id="saldo"></li>
-    </ul>
+    <img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema"/>
+    <img src="img/cardcompany/intratuin.png" class="scanButton" data-cardcompany="intratuin" alt="intratuin"/>
+    <img src="img/cardcompany/fashioncheque.png" class="scanButton" data-cardcompany="fashioncheque" alt="fashioncheque"/>
+
+    <img src="img/cardcompany/bartsmit.png" class="scanButton" data-cardcompany="bartsmit" alt="bartsmit"/>
+    <img src="img/cardcompany/prenatal.png" class="scanButton" data-cardcompany="prenatal" alt="prenatal"/>
+    <img src="img/cardcompany/missetam.png" class="scanButton" data-cardcompany="missetam" alt="missetam"/>
+    <img src="img/cardcompany/promiss.png" class="scanButton" data-cardcompany="promiss" alt="promiss"/>
+
+    <h3>Het saldo op de gescande kaart:</h3>
+    &euro;&nbsp;<div id="saldo"></div>
   </div>
 </div>
 <!-- End page: Home page -->

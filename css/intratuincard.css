@@ -140,3 +140,8 @@ input::-webkit-input-placeholder {
 .ui-li-static.ui-li-has-count {
   padding-right: 70px;
 }
+
+.scanButton {
+  max-width: 140px;
+  cursor: pointer;
+}
