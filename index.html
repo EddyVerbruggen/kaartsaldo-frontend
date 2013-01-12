@@ -105,7 +105,7 @@
         // check if it existed... if so, remove it first
         $.each(mycards, function (i, mycard) {
           if (mycard.cardnumber == data.cardnumber) {
-            newVideoIDs.splice(i, 1);
+            mycards.splice(i, 1);
           }
         });
       }
@@ -153,13 +153,13 @@
 
     <ul id="allcardsList" data-role="listview" data-inset="false" data-divider-theme="d">
       <li data-role="list-divider">Voeg een kaart toe</li>
-      <li><img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema" data-testcard="300416828647599"/></li>
-      <li><img src="img/cardcompany/intratuin.png" class="scanButton" data-cardcompany="intratuin" alt="intratuin" data-testcard="6064362091069735993"/></li>
-      <li><img src="img/cardcompany/fashioncheque.png" class="scanButton" data-cardcompany="fashioncheque" data-testcard="6046425110188147616" alt="fashioncheque"/></li>
-      <li><img src="img/cardcompany/bartsmit.png" class="scanButton" data-cardcompany="bartsmit" alt="bartsmit" data-testcard="3040012188580701179"/></li>
-      <li><img src="img/cardcompany/prenatal.png" class="scanButton" data-cardcompany="prenatal" alt="prenatal" data-testcard="3080017005005856058"/></li>
-      <li><img src="img/cardcompany/missetam.png" class="scanButton" data-cardcompany="missetam" alt="missetam"/></li>
-      <li><img src="img/cardcompany/promiss.png" class="scanButton" data-cardcompany="promiss" alt="promiss"/></li>
+      <li><img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema" data-testcard="300416828647599"/><h3>HEMA</h3></li>
+      <li><img src="img/cardcompany/intratuin.png" class="scanButton" data-cardcompany="intratuin" alt="intratuin" data-testcard="6064362091069735993"/><h3>Intratuin</h3></li>
+      <li><img src="img/cardcompany/fashioncheque.png" style="max-width: 80px" class="scanButton" data-cardcompany="fashioncheque" data-testcard="6046425110188147616" alt="fashioncheque"/><h3>Fashioncheque</h3></li>
+      <li><img src="img/cardcompany/bartsmit.png" class="scanButton" data-cardcompany="bartsmit" alt="bartsmit" data-testcard="3040012188580701179"/><h3>Bart Smit</h3></li>
+      <li><img src="img/cardcompany/prenatal.png" class="scanButton" data-cardcompany="prenatal" alt="prenatal" data-testcard="3080017005005856058"/><h3>Prenatal</h3></li>
+      <li><img src="img/cardcompany/missetam.png" class="scanButton" data-cardcompany="missetam" alt="missetam"/><h3>Miss Etam</h3></li>
+      <li><img src="img/cardcompany/promiss.png" class="scanButton" data-cardcompany="promiss" alt="promiss"/><h3>Promiss</h3></li>
     </ul>
 
 
