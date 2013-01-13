@@ -20,12 +20,13 @@
 <body>
 
 <script type="text/javascript">
-  function loadCardData(cardcompany, cardnumber, successFunction) {
-    var url = "http://www.libwat.ch/cards/"+cardcompany;
+  function loadCardData(cardtype, cardnumber, successFunction) {
+    var url = "http://www.libwat.ch/cards";
     // for SSL, we can use this url, which is libwat.ch
 //    var url = "https://morning-stone-3983.herokuapp.com/cards/bijenkorf";
 
     var data = {
+      'cardtype': cardtype,
       'cardnumber': cardnumber
     };
 
@@ -92,6 +93,47 @@
     $("#mycardsList").listview("refresh");
   }
 
+  // TODO from server?
+  // Note: keep them sorted!
+  var allcards = new Array (
+      new Array("bartsmit", "Bart Smit", "3040012188580701179"),
+      new Array("fashioncheque", "Fashioncheque", "6046425110188147616"),
+      new Array("hema", "HEMA", "300416828647599"),
+      new Array("intratuin", "Intratuin", "6064362091069735993"),
+      new Array("missetam", "Miss Etam", ""),
+      new Array("prenatal", "Prenatal", "3080017005005856058"),
+      new Array("promiss", "Promiss", "")
+  );
+
+  function renderAllcardsList() {
+    var htmlAllCards = '' +
+        '<li data-role="list-divider">Voeg een kaart toe!</li>';
+    $.each(allcards, function (i, card) {
+//      <li><img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema" data-testcard="300416828647599"/><h3>HEMA</h3></li>
+
+      htmlAllCards += '' +
+          '<li data-role="fieldcontain">' +
+          '  <img src="img/cardcompany/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="['+card[0]+']" data-testcard="'+card[2]+'"/>' +
+          '  <div class="ui-grid-a">' +
+          '    <div class="ui-block-a">' +
+          '      <h3>' + card[1] +'</h3>' +
+//          '      <p>Laatste check: ' + card.checkdate + '</p>' +
+//          '      <p>' + card.cardnumber + '</p>' +
+          '    </div>' +
+          '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
+          '      <a href="refresh">refresh</a>' +
+          '      <br/>' +
+          '      <br/>' +
+          '      <a href="del">del</a>' +
+          '    </div>' +
+          '  </div>' +
+//          '  </a>' +
+          '</li>';
+    });
+    $("#allcardsList").html(htmlAllCards);
+    $("#allcardsList").listview("refresh");
+  }
+
   function processCardResponse(cardcompany, data) {
     $.mobile.loading('hide');
     if (data.success) {
@@ -129,6 +171,8 @@
       if (mycards != null) {
         renderMycardsList(JSON.parse(mycards));
       }
+
+      renderAllcardsList();
 
       // bind behaviour to any buttons
       $('.scanButton').bind("click", function () {
