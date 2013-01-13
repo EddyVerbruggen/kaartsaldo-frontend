@@ -77,8 +77,8 @@
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
           '      <h3>' + mycard.saldo +'</h3>' +
-          '      <p>Laatste check: ' + mycard.checkdate + '</p>' +
-          '      <p>' + mycard.cardnumber + '</p>' +
+          '      <p>Laatste check: ' + getDateString(mycard.checkdate) + '</p>' +
+          '      <p style="color:#bbb">Kaartnr. ' + mycard.cardnumber + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
           '      <a href="refresh">refresh</a>' +
@@ -118,7 +118,11 @@
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
           '      <h3>' + card[1] +'</h3>' +
-//          '      <p>Laatste check: ' + card.checkdate + '</p>' +
+          '      <p>' +
+          '        <a data-role="button" data-theme="a" data-icon="info" data-mini="true" href="#x" class="scanButton" data-cardcompany="'+card[0]+'" data-testcard="'+card[2]+'">scan</a>' +
+          '        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+          '        <a data-role="button" data-theme="b" data-icon="grid" data-mini="true" href="#y">tik in</a>'+
+          '      </p>' +
 //          '      <p>' + card.cardnumber + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +

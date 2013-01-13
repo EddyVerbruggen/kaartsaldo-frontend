@@ -7,3 +7,21 @@ function isAndroid() {
 function isIOS() {
   return navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
 }
+
+function getDateString(javaDateString) {
+  var date = new Date(javaDateString);
+  var d = date.getDate();
+  var m = date.getMonth()+1;
+  var month = getMonthName(m);
+  var y = date.getFullYear();
+  return d + ' ' + month; // + ' ' + y;
+}
+
+function getMonthName(nr) {
+  switch(nr) {
+    case 1 : return "januari";
+    case 2 : return "februari";
+    case 3 : return "maart";
+    default : return "erm, todo ;)";
+  }
+}
