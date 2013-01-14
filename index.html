@@ -24,7 +24,7 @@
 //    var url = "http://localhost:9004/cards";
     var url = "http://www.libwat.ch/cards";
     // for SSL, we can use this url, which is libwat.ch
-//    var url = "https://morning-stone-3983.herokuapp.com/cards/bijenkorf";
+//    var url = "https://morning-stone-3983.herokuapp.com/cards";
 
     var data = {
       'cardtype': cardtype,
@@ -54,10 +54,10 @@
     this.cardcompany = cardcompany;
     if (isIOS() || isAndroid()) {
       navigator.notification.confirm(
-          'Hoe wil je invoeren?',  // message
+          'Hoe wil je de kaart toevoegen?',  // message
           onConfirmCallback,       // callback to invoke with index of button pressed
           'Kaart toevoegen',       // title
-          'Scan,Tik in'            // buttonLabels
+          'Scannen,Intoetsen,Annuleren'   // button labels
       );
     } else {
       if (confirm('Wil je scannen?')) {
@@ -73,7 +73,10 @@
     if (i == 1) {
       scan(cardcompany, processCardResponse);
     } else if (i == 2) {
+      alert("Wordt aan gewerkt ;)");
       // TODO: type
+    } else if (i == 3) {
+      // noop
     }
   }
 
@@ -149,12 +152,15 @@
   // Note: keep them sorted!
   var allcards = new Array (
       new Array("bartsmit", "Bart Smit", "3040012188580701179"),
+      new Array("bijenkorf", "Bijenkorf", "901000007890000634092956"),
       new Array("fashioncheque", "Fashioncheque", "6046425110188147616"),
       new Array("hema", "HEMA", "300416828647599"),
       new Array("intratuin", "Intratuin", "6064362091069735993"),
       new Array("missetam", "Miss Etam", ""),
       new Array("prenatal", "Prenatal", "3080017005005856058"),
-      new Array("promiss", "Promiss", "")
+      new Array("promiss", "Promiss", ""),
+      new Array("vend", "V & D", ""),
+      new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522")
   );
 
   function renderAllcardsList() {

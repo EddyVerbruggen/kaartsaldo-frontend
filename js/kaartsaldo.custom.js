@@ -13,8 +13,12 @@ function getDateString(javaDateString) {
   var d = date.getDate();
   var m = date.getMonth()+1;
   var month = getMonthName(m);
-//  var y = date.getFullYear();
-  return d + ' ' + month + ' ' + date.getHours() + ':' + date.getMinutes();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = "0"+minutes;
+  }
+  return d + ' ' + month + ' ' + hours + ':' + minutes;
 }
 
 function getMonthName(nr) {
