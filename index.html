@@ -104,6 +104,20 @@
     });
   }
 
+  function removeCard(cardnumber) {
+    if (confirm('Zeker weten?')) {
+      var mycards = JSON.parse(localStorage.getItem("mycards"));
+      $.each(mycards, function (i, mycard) {
+        if (mycard.cardnumber == cardnumber) {
+          mycards.splice(i, 1);
+          localStorage.setItem("mycards", JSON.stringify(mycards));
+          renderMycardsList(mycards);
+          return false; // breaks the loop
+        }
+      });
+    }
+  }
+
   function renderMycardsList(mycards) {
     var htmlMyCards = '' +
         '<li data-role="list-divider" id="page_home_channellist_header">Mijn kaarten</li>';
