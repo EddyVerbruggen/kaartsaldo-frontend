@@ -8,6 +8,14 @@ function isIOS() {
   return navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
 }
 
+function formatAmount(amount) {
+  amount = amount.replace(".", ",");
+  if (amount.indexOf(",") == -1) {
+    amount += ",00";
+  }
+  return amount;
+}
+
 function getDateString(javaDateString) {
   var date = new Date(javaDateString);
   var d = date.getDate();
