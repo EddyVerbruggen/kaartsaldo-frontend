@@ -54,10 +54,10 @@
     this.cardcompany = cardcompany;
     if (isIOS() || isAndroid()) {
       navigator.notification.confirm(
-          'Kaart toevoegen',  // message
-          onConfirmCallback,      // callback to invoke with index of button pressed
-          'Hoe wil je invoeren?',            // title
-          'Scan,Tik in'          // buttonLabels
+          'Hoe wil je invoeren?',  // message
+          onConfirmCallback,       // callback to invoke with index of button pressed
+          'Kaart toevoegen',       // title
+          'Scan,Tik in'            // buttonLabels
       );
     } else {
       if (confirm('Wil je scannen?')) {
@@ -70,7 +70,6 @@
   }
 
   function onConfirmCallback(i) {
-    alert("pressed button " + i);
     if (i == 1) {
       scan(cardcompany, processCardResponse);
     } else if (i == 2) {
@@ -112,7 +111,7 @@
 
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
-          '  <img src="img/cardcompany/' + mycard.cardcompany + '.png" />' +
+          '  <img src="img/card/' + mycard.cardcompany + '.png" />' +
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
           '      <h3>' + mycard.saldo +'</h3>' +
@@ -145,24 +144,24 @@
   );
 
   function renderAllcardsList() {
-    var htmlAllCards = '' +
-        '<li data-role="list-divider">Voeg een kaart toe</li>';
+    var htmlAllCards = '';
     $.each(allcards, function (i, card) {
 //      <li><img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema" data-testcard="300416828647599"/><h3>HEMA</h3></li>
 
+//      htmlAllCards += '' +
+//          '<li data-role="fieldcontain">' +
+//          '  <img src="img/cardcompany/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="'+card[0]+'" data-testcard="'+card[2]+'"/>' +
+//          '  <h3>' + card[1] +'</h3>' +
+//          '</li>';
+
       htmlAllCards += '' +
-          '<li data-role="fieldcontain">' +
-          '  <img src="img/cardcompany/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="'+card[0]+'" data-testcard="'+card[2]+'"/>' +
-          '  <h3>' + card[1] +'</h3>' +
-//          '  <p>' +
-//          '    <a class="scanButton" data-cardcompany="'+card[0]+'" data-testcard="'+card[2]+'"><img src="img/scan.png" width="50px" height="20px" border="0"/></a>' +
-//          '    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-//          '    <a href="#"><img src="img/typing.png" width="47px" height="46px" border="0"/></a>'+
-//          '  </p>' +
-          '</li>';
+          '<div class="ui-block-'+(i%2==0 ? 'a' : 'b')+'">' +
+          '  <div class="cardcompany-name">' + card[1] + '</div>' +
+          '  <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="'+card[0]+'" data-testcard="'+card[2]+'"/></div>' +
+          '</div>';
     });
     $("#allcardsList").html(htmlAllCards);
-    $("#allcardsList").listview("refresh");
+//    $("#allcardsList").listview("refresh");
   }
 
   function processCardResponse(cardcompany, data) {
@@ -189,10 +188,6 @@
       if (!added) {
         mycards.push(data);
       }
-
-      $.each(mycards, function (i, mycard) {
-        alert(mycard.checkdate);
-      });
 
       localStorage.setItem("mycards", JSON.stringify(mycards));
       // re-render the mycardslist
@@ -233,8 +228,11 @@
     <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="d"></ul>
   </div>
   <div data-role="content">
-    <ul id="allcardsList" data-role="listview" data-inset="false" data-divider-theme="d"></ul>
+    <ul data-role="listview" data-inset="false" data-divider-theme="d">
+      <li data-role="list-divider">Voeg een kaart toe</li>
+    </ul>
   </div>
+  <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
 
 </div>
 <!-- End page: Home page -->
@@ -255,5 +253,3 @@
 
 
 </body>
-
-nmjjgba

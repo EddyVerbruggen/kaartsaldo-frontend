@@ -4,7 +4,7 @@
 
 .ui-page {
   background-color: #fff;
-  background-image: url('../img/background.png');
+  /*background-image: url('../img/background.png');*/
   background-size: 619px 645px;
   /*background-size: 482px 568px;*/
   background-repeat: no-repeat;
@@ -27,6 +27,10 @@
 .ui-body-c {
   text-shadow: none;
   font-weight: normal;
+}
+
+.ui-body-c, .ui-overlay-c {
+  background: none;
 }
 
 .ui-header {
@@ -129,14 +133,6 @@ input::-webkit-input-placeholder {
   font-size: 13px;
 }
 
-#loginPage .ui-grid-a .ui-block-a {
-  width: 55%;
-}
-
-#loginPage .ui-grid-a .ui-block-b {
-  width: 45%;
-}
-
 .ui-li-static.ui-li-has-count {
   padding-right: 70px;
 }
@@ -166,4 +162,29 @@ input::-webkit-input-placeholder {
 
 #mycardsList .ui-block-b {
   width: 16%;
+}
+
+#allcardsList .ui-block-a, #allcardsList .ui-block-b {
+  border-bottom: 1px solid #eee;
+  /*background-color: red;*/
+  text-align: center;
+  height: 140px;
+  padding: 10px;
+}
+
+#allcardsList .ui-block-b {
+  border-left: 1px solid #eee;
+}
+
+#allcardsList .cardcompany-name {
+  margin-bottom: 10px;
+}
+
+.ui-li-thumb {
+  top: 15px;
+  max-width: 96px;
+}
+
+.ui-btn-up-c {
+  background-color: #fff;
 }
