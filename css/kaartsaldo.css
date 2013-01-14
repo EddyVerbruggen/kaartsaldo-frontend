@@ -151,3 +151,19 @@ input::-webkit-input-placeholder {
   margin-top: 0;
   margin-bottom: 4px;
 }
+
+.ui-li-static.ui-li {
+  padding-bottom: 0;
+}
+
+.ui-li-static.ui-li-has-thumb {
+  min-height: 68px;
+}
+
+#mycardsList .ui-block-a {
+  width: 84%;
+}
+
+#mycardsList .ui-block-b {
+  width: 16%;
+}

@@ -49,6 +49,35 @@
     }, 250);
   }
 
+  var cardcompany;
+  function confirmInputtype(cardcompany, testcardnr) {
+    this.cardcompany = cardcompany;
+    if (isIOS() || isAndroid()) {
+      navigator.notification.confirm(
+          'Kaart toevoegen',  // message
+          onConfirmCallback,      // callback to invoke with index of button pressed
+          'Hoe wil je invoeren?',            // title
+          'Scan,Tik in'          // buttonLabels
+      );
+    } else {
+      if (confirm('Wil je scannen?')) {
+        // debugging in browser
+        loadCardData(cardcompany, testcardnr, processCardResponse);
+      } else if (confirm('Wil je intikken?')) {
+        alert('TODO: nog maken'); // TODO
+      }
+    }
+  }
+
+  function onConfirmCallback(i) {
+    alert("pressed button " + i);
+    if (i == 1) {
+      scan(cardcompany, processCardResponse);
+    } else if (i == 2) {
+      // TODO: type
+    }
+  }
+
   function scan(cardcompany, successFunction) {
     window.plugins.barcodeScanner.scan(function(result) {
       if (!result.cancelled) {
@@ -66,6 +95,16 @@
     );
   }
 
+  function refreshBalance(companyname, cardnumber) {
+    var mycards = JSON.parse(localStorage.getItem("mycards"));
+    $.each(mycards, function (i, mycard) {
+      if (mycard.cardnumber == cardnumber) {
+        loadCardData(companyname, cardnumber, processCardResponse);
+        return false; // breaks the loop
+      }
+    });
+  }
+
   function renderMycardsList(mycards) {
     var htmlMyCards = '' +
         '<li data-role="list-divider" id="page_home_channellist_header">Mijn kaarten</li>';
@@ -77,14 +116,13 @@
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
           '      <h3>' + mycard.saldo +'</h3>' +
-          '      <p>Laatste check: ' + getDateString(mycard.checkdate) + '</p>' +
-          '      <p style="color:#bbb">Kaartnr. ' + mycard.cardnumber + '</p>' +
+          '      <p>Saldo op ' + getDateString(mycard.checkdate) + '</p>' +
+          '      <p style="color:#bbb">' + mycard.cardnumber + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
-          '      <a href="refresh">refresh</a>' +
+          '      <a href="#" onclick="refreshBalance(\''+mycard.cardcompany+'\', \''+mycard.cardnumber+'\')"><img style="padding:6px; padding-top: 0" src="img/refresh.png" width="15px" height="16px" border="0"/></a>' +
           '      <br/>' +
-          '      <br/>' +
-          '      <a href="del">del</a>' +
+          '      <a href="#" onclick="removeCard(\''+mycard.cardnumber+'\')"><img style="padding:6px" src="img/trash.png" width="16px" height="16px" border="0"/></a>' +
           '    </div>' +
           '  </div>' +
 //          '  </a>' +
@@ -108,31 +146,19 @@
 
   function renderAllcardsList() {
     var htmlAllCards = '' +
-        '<li data-role="list-divider">Voeg een kaart toe!</li>';
+        '<li data-role="list-divider">Voeg een kaart toe</li>';
     $.each(allcards, function (i, card) {
 //      <li><img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema" data-testcard="300416828647599"/><h3>HEMA</h3></li>
 
       htmlAllCards += '' +
           '<li data-role="fieldcontain">' +
-          '  <img src="img/cardcompany/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="['+card[0]+']" data-testcard="'+card[2]+'"/>' +
-          '  <div class="ui-grid-a">' +
-          '    <div class="ui-block-a">' +
-          '      <h3>' + card[1] +'</h3>' +
-          '      <p>' +
-          '        <a data-role="button" data-theme="a" data-icon="info" data-mini="true" href="#x" class="scanButton" data-cardcompany="'+card[0]+'" data-testcard="'+card[2]+'">scan</a>' +
-          '        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-          '        <a data-role="button" data-theme="b" data-icon="grid" data-mini="true" href="#y">tik in</a>'+
-          '      </p>' +
-//          '      <p>' + card.cardnumber + '</p>' +
-          '    </div>' +
-          '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
-          '      <a href="refresh">refresh</a>' +
-          '      <br/>' +
-          '      <br/>' +
-          '      <a href="del">del</a>' +
-          '    </div>' +
-          '  </div>' +
-//          '  </a>' +
+          '  <img src="img/cardcompany/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="'+card[0]+'" data-testcard="'+card[2]+'"/>' +
+          '  <h3>' + card[1] +'</h3>' +
+//          '  <p>' +
+//          '    <a class="scanButton" data-cardcompany="'+card[0]+'" data-testcard="'+card[2]+'"><img src="img/scan.png" width="50px" height="20px" border="0"/></a>' +
+//          '    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+//          '    <a href="#"><img src="img/typing.png" width="47px" height="46px" border="0"/></a>'+
+//          '  </p>' +
           '</li>';
     });
     $("#allcardsList").html(htmlAllCards);
@@ -145,6 +171,7 @@
       // add the cardcompany and store it
       data.cardcompany = cardcompany;
       var mycards = localStorage.getItem("mycards");
+      var added = false;
       if (mycards == null) {
         mycards = new Array();
       } else {
@@ -152,11 +179,21 @@
         // check if it existed... if so, remove it first
         $.each(mycards, function (i, mycard) {
           if (mycard.cardnumber == data.cardnumber) {
-            mycards.splice(i, 1);
+            added = true;
+            mycards[i] = data;
+            return false; // breaks the loop
           }
         });
       }
-      mycards.push(data);
+
+      if (!added) {
+        mycards.push(data);
+      }
+
+      $.each(mycards, function (i, mycard) {
+        alert(mycard.checkdate);
+      });
+
       localStorage.setItem("mycards", JSON.stringify(mycards));
       // re-render the mycardslist
       renderMycardsList(mycards);
@@ -182,13 +219,8 @@
       // bind behaviour to any buttons
       $('.scanButton').bind("click", function () {
         var cardcompany = $(this).attr("data-cardcompany");
-        if (isIOS() || isAndroid()) {
-          scan(cardcompany, processCardResponse);
-        } else {
-          // debugging in browser
-          var testcardnr = $(this).attr("data-testcard");
-          loadCardData(cardcompany, testcardnr, processCardResponse);
-        }
+        var testcardnr = $(this).attr("data-testcard");
+        confirmInputtype(cardcompany, testcardnr);
       });
     });
 
@@ -199,6 +231,8 @@
   </div>
   <div data-role="content">
     <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="d"></ul>
+  </div>
+  <div data-role="content">
     <ul id="allcardsList" data-role="listview" data-inset="false" data-divider-theme="d"></ul>
   </div>
 
