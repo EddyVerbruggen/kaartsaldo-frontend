@@ -166,10 +166,13 @@ input::-webkit-input-placeholder {
 
 #allcardsList .ui-block-a, #allcardsList .ui-block-b {
   border-bottom: 1px solid #eee;
-  /*background-color: red;*/
   text-align: center;
-  height: 140px;
-  padding: 10px;
+  height: 134px;
+  padding-top: 10px;
+}
+
+#allcardsList .ui-block-a:last-child, #allcardsList .ui-block-b:last-child {
+  border-bottom: 0 !important;
 }
 
 #allcardsList .ui-block-b {
@@ -178,6 +181,7 @@ input::-webkit-input-placeholder {
 
 #allcardsList .cardcompany-name {
   margin-bottom: 10px;
+  font-size: 0.8em;
 }
 
 .ui-li-thumb {

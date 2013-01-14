@@ -105,11 +105,11 @@
   }
 
   function removeCard(cardnumber) {
-    if (confirm('Zeker weten?')) {
+    if (confirm('Wil je deze kaart verwijderen?')) {
       var mycards = JSON.parse(localStorage.getItem("mycards"));
       $.each(mycards, function (i, mycard) {
         if (mycard.cardnumber == cardnumber) {
-          mycards.splice(i, 1);
+          mycards.splice(i, 1); // TODO this creates an empty entry
           localStorage.setItem("mycards", JSON.stringify(mycards));
           renderMycardsList(mycards);
           return false; // breaks the loop
@@ -135,7 +135,7 @@
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
           '      <a href="#" onclick="refreshBalance(\''+mycard.cardcompany+'\', \''+mycard.cardnumber+'\')"><img style="padding:6px; padding-top: 0" src="img/refresh.png" width="15px" height="16px" border="0"/></a>' +
           '      <br/>' +
-          '      <a href="#" onclick="removeCard(\''+mycard.cardnumber+'\')"><img style="padding:6px" src="img/trash.png" width="16px" height="16px" border="0"/></a>' +
+          '      <a href="#" onclick="removeCard(\''+mycard.cardnumber+'\')"><img style="padding:6px; padding-right: 8px" src="img/trash.png" width="16px" height="16px" border="0"/></a>' +
           '    </div>' +
           '  </div>' +
 //          '  </a>' +
@@ -219,7 +219,7 @@
 
       // render the list of scanned cards
       var mycards = localStorage.getItem("mycards");
-      if (mycards != null) {
+      if (mycards != null && mycards.length > 0) {
         renderMycardsList(JSON.parse(mycards));
       }
 
