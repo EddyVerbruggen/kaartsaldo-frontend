@@ -21,8 +21,8 @@
 
 <script type="text/javascript">
 function loadCardData(cardtype, cardnumber, successFunction) {
-    var url = "http://localhost:9004/cards";
-//  var url = "http://www.libwat.ch/cards";
+//    var url = "http://localhost:9004/cards";
+  var url = "http://www.libwat.ch/cards";
   // for SSL, we can use this url, which is libwat.ch
 //    var url = "https://morning-stone-3983.herokuapp.com/cards";
 
@@ -104,11 +104,10 @@ function doTestScan() {
   window.plugins.barcodeScanner.scan(function (result) {
         if (!result.cancelled) {
           // Successfully scanned a bar code
-          alert("Gescand: " + result.text + "\n" +
-              "Formaat: " + result.format);
+          $("#scanTestResult").html("Gescand: " + result.text + " (" + result.format + ")");
         }
       }, function (error) {
-        alert("Scanning failed: " + error);
+        $("#scanTestResult").html("Scan mislukt: " + error);
       }
   );
 }
@@ -170,15 +169,20 @@ function renderMycardsList(mycards) {
 var allcards = new Array(
     new Array("bartsmit", "Bart Smit", "3040012188580701179"),
     new Array("bijenkorf", "Bijenkorf", "901000007890000634092956"),
+    new Array("bol", "Bol.com", ""),
+    new Array("efteling", "Efteling", ""),
     new Array("fashioncheque", "Fashioncheque", "6046425110188147616"),
-    new Array("fashioncheque", "Fashioncheque 2", "6046425115331753426"),
+    new Array("fashioncheque", "Fashioncheque 2 (test)", "6046425115331753426"),
     new Array("hema", "HEMA", "300416828647599"),
     new Array("intratuin", "Intratuin", "6064362091069735993"),
+    new Array("karwei", "Karwei", ""),
     new Array("missetam", "Miss Etam", ""),
+    new Array("nationaleentertainmentcard", "Nationale Entertainment Card", ""),
     new Array("prenatal", "Prenatal", "3080017005005856058"),
     new Array("promiss", "Promiss", ""),
     new Array("vend", "V & D", ""),
-    new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522")
+    new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522"),
+    new Array("wehkamp", "Wehkamp.nl", "")
 );
 
 function renderAllcardsList() {
@@ -263,7 +267,8 @@ function processCardResponse(cardcompany, data) {
   </div>
   <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
   <div data-role="content">
-    <br/><br/><a href="" onclick="doTestScan()">scantest</a><br/><br/>
+    <br/><br/><a href="" onclick="doTestScan()">scantest</a><br/>
+    <div id="scanTestResult"></div><br/>
   </div>
 
 </div>
