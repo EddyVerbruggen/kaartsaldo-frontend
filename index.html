@@ -67,7 +67,7 @@ function confirmInputtype(cardcompany, testcardnr) {
       loadCardData(cardcompany, testcardnr, processCardResponse);
     } else if (confirm('Wil je intikken?')) {
       $('#typeInPopup #hint').html('');
-      $('#typeInPopup').popup('open');
+      $('#typeInPopup').popup('open', { transition: 'pop'});
     }
   }
 }
@@ -77,7 +77,7 @@ function onConfirmCallback(i) {
     scan(cardcompany, processCardResponse);
   } else if (i == 2) {
     $('#typeInPopup #hint').html('');
-    $('#typeInPopup').popup('open');
+    $('#typeInPopup').popup('open', { transition: 'pop'});
   } else if (i == 3) {
     // noop
   }
@@ -91,7 +91,7 @@ function scan(cardcompany, successFunction) {
             loadCardData(cardcompany, result.text, successFunction);
           } else {
             $('#typeInPopup #hint').html("Sorry, we konden de barcode lezen. Geef dit ajb door aan de ontwikkelaar: " + cardcompany + ": " + result.format + ". Voer zelf de code in om de kaart toe te voegen:");
-            $('#typeInPopup').popup('open');
+            $('#typeInPopup').popup('open', { transition: 'pop'});
           }
         }
       }, function (error) {
@@ -225,6 +225,8 @@ function processCardResponse(cardcompany, data) {
     localStorage.setItem("mycards", JSON.stringify(mycards));
     // re-render the mycardslist
     renderMycardsList(mycards);
+    // scroll to the top, so the user sees the card
+    $.mobile.silentScroll(0);
   } else {
     alert("Controleer uw invoer..");
   }
