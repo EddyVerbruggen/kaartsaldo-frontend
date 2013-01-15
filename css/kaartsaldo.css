@@ -156,8 +156,15 @@ input::-webkit-input-placeholder {
   min-height: 68px;
 }
 
+#mycardsList .ui-grid-a {
+  background-color: #F0F0F0
+
+}
+
 #mycardsList .ui-block-a {
   width: 84%;
+  padding-top: 12px;
+  padding-left: 12px;
 }
 
 #mycardsList .ui-block-b {
@@ -168,15 +175,20 @@ input::-webkit-input-placeholder {
   border-bottom: 0;
 }
 
+#mycardsList h3 .cents {
+  color: #888;
+  font-size: 0.7em;
+}
+
+#mycardsList p.cardnumber {
+  color: #ccc;
+}
+
 #allcardsList .ui-block-a, #allcardsList .ui-block-b {
   border-bottom: 1px solid #eee;
   text-align: center;
   height: 134px;
   padding-top: 10px;
-}
-
-#allcardsList .ui-block-a:last-child, #allcardsList .ui-block-b:last-child {
-  border-bottom: 0 !important;
 }
 
 #allcardsList .ui-block-b {
@@ -186,6 +198,7 @@ input::-webkit-input-placeholder {
 #allcardsList .cardcompany-name {
   margin-bottom: 10px;
   font-size: 0.8em;
+  color: #777;
 }
 
 .ui-li-thumb {
@@ -195,4 +208,9 @@ input::-webkit-input-placeholder {
 
 .ui-btn-up-c {
   background-color: #fff;
+}
+
+.ui-li-static.ui-li {
+  padding-top: 0;
+  padding-right: 0;
 }

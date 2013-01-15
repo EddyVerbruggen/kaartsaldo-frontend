@@ -20,202 +20,211 @@
 <body>
 
 <script type="text/javascript">
-  function loadCardData(cardtype, cardnumber, successFunction) {
-//    var url = "http://localhost:9004/cards";
-    var url = "http://www.libwat.ch/cards";
-    // for SSL, we can use this url, which is libwat.ch
+function loadCardData(cardtype, cardnumber, successFunction) {
+    var url = "http://localhost:9004/cards";
+//  var url = "http://www.libwat.ch/cards";
+  // for SSL, we can use this url, which is libwat.ch
 //    var url = "https://morning-stone-3983.herokuapp.com/cards";
 
-    var data = {
-      'cardtype': cardtype,
-      'cardnumber': cardnumber
-    };
+  var data = {
+    'cardtype':cardtype,
+    'cardnumber':cardnumber
+  };
 
-    $.mobile.loading('show');
+  $.mobile.loading('show');
 
-    setTimeout(function () {
-      $.ajax({
-        data: data,
-        dataType:"json",
-        async: true,
-        type: 'POST',
-        url:url,
-        success:function(data){successFunction(cardtype, data)},
-        error:function () {
-          $.mobile.loading('hide');
-          alert('Er is iets misgegaan. Probeer het nogmaals.');
-        }
-      });
-    }, 250);
-  }
-
-  var cardcompany;
-  function confirmInputtype(cardcompany, testcardnr) {
-    this.cardcompany = cardcompany;
-    if (isIOS() || isAndroid()) {
-      navigator.notification.confirm(
-          'Hoe wil je de kaart toevoegen?',  // message
-          onConfirmCallback,       // callback to invoke with index of button pressed
-          'Kaart toevoegen',       // title
-          'Scannen,Intoetsen,Annuleren'   // button labels
-      );
-    } else {
-      if (confirm('Wil je scannen?')) {
-        // debugging in browser
-        loadCardData(cardcompany, testcardnr, processCardResponse);
-      } else if (confirm('Wil je intikken?')) {
-        alert('TODO: nog maken'); // TODO
+  setTimeout(function () {
+    $.ajax({
+      data:data,
+      dataType:"json",
+      async:true,
+      type:'POST',
+      url:url,
+      success:function (data) {
+        successFunction(cardtype, data)
+      },
+      error:function () {
+        $.mobile.loading('hide');
+        alert('Er is iets misgegaan. Probeer het nogmaals.');
       }
-    }
-  }
+    });
+  }, 250);
+}
 
-  function onConfirmCallback(i) {
-    if (i == 1) {
-      scan(cardcompany, processCardResponse);
-    } else if (i == 2) {
-      alert("Wordt aan gewerkt ;)");
-      // TODO: type
-    } else if (i == 3) {
-      // noop
-    }
-  }
-
-  function scan(cardcompany, successFunction) {
-    window.plugins.barcodeScanner.scan(function(result) {
-      if (!result.cancelled) {
-        // Successfully scanned a bar code
-        loadCardData(cardcompany, result.text, successFunction);
-      }
-
-//       alert("We got a barcode\n" +
-//          "Result: " + result.text + "\n" +
-//          "Format: " + result.format + "\n" +
-//          "Cancelled: " + result.cancelled);
-        }, function(error) {
-          alert("Scanning failed: " + error);
-        }
+var cardcompany;
+function confirmInputtype(cardcompany, testcardnr) {
+  this.cardcompany = cardcompany;
+  if (isIOS() || isAndroid()) {
+    navigator.notification.confirm(
+        'Hoe wil je de kaart toevoegen?', // message
+        onConfirmCallback, // callback to invoke with index of button pressed
+        'Kaart toevoegen', // title
+        'Scannen,Intoetsen,Annuleren'   // button labels
     );
+  } else {
+    if (confirm('Wil je scannen?')) {
+      // debugging in browser
+      loadCardData(cardcompany, testcardnr, processCardResponse);
+    } else if (confirm('Wil je intikken?')) {
+      var cardnr = prompt("Wat is het nummer onder de streepjescode?", testcardnr);
+      loadCardData(cardcompany, cardnr, processCardResponse);
+    }
   }
+}
 
-  function refreshBalance(companyname, cardnumber) {
+function onConfirmCallback(i) {
+  if (i == 1) {
+    scan(cardcompany, processCardResponse);
+  } else if (i == 2) {
+    var cardnr = prompt("Wat is het nummer onder de streepjescode?");
+    loadCardData(cardcompany, cardnr, processCardResponse);
+  } else if (i == 3) {
+    // noop
+  }
+}
+
+function scan(cardcompany, successFunction) {
+  window.plugins.barcodeScanner.scan(function (result) {
+        if (!result.cancelled) {
+          // Successfully scanned a bar code
+//          if (confirm("Is dit het goede nummer? " + result.text)) {
+          var checkedNumber = prompt("Controleer het nummer:", result.text);
+          loadCardData(cardcompany, checkedNumber, successFunction);
+//          } else {
+//            confirmInputtype(cardcompany);
+//          }
+        }
+      }, function (error) {
+        alert("Scanning failed: " + error);
+      }
+  );
+}
+
+function doTestScan() {
+  window.plugins.barcodeScanner.scan(function (result) {
+        if (!result.cancelled) {
+          // Successfully scanned a bar code
+          alert("Gescand: " + result.text + "\n" +
+              "Formaat: " + result.format);
+        }
+      }, function (error) {
+        alert("Scanning failed: " + error);
+      }
+  );
+}
+
+function refreshBalance(companyname, cardnumber) {
+  var mycards = JSON.parse(localStorage.getItem("mycards"));
+  $.each(mycards, function (i, mycard) {
+    if (mycard.cardnumber == cardnumber) {
+      loadCardData(companyname, cardnumber, processCardResponse);
+      return false; // breaks the loop
+    }
+  });
+}
+
+function removeCard(cardnumber) {
+  if (confirm('Wil je deze kaart verwijderen?')) {
     var mycards = JSON.parse(localStorage.getItem("mycards"));
     $.each(mycards, function (i, mycard) {
       if (mycard.cardnumber == cardnumber) {
-        loadCardData(companyname, cardnumber, processCardResponse);
+        mycards.splice(i, 1); // TODO this creates an empty entry
+        localStorage.setItem("mycards", JSON.stringify(mycards));
+        renderMycardsList(mycards);
         return false; // breaks the loop
       }
     });
   }
+}
 
-  function removeCard(cardnumber) {
-    if (confirm('Wil je deze kaart verwijderen?')) {
-      var mycards = JSON.parse(localStorage.getItem("mycards"));
-      $.each(mycards, function (i, mycard) {
-        if (mycard.cardnumber == cardnumber) {
-          mycards.splice(i, 1); // TODO this creates an empty entry
-          localStorage.setItem("mycards", JSON.stringify(mycards));
-          renderMycardsList(mycards);
-          return false; // breaks the loop
-        }
-      });
-    }
-  }
-
-  function renderMycardsList(mycards) {
-    var htmlMyCards = '' +
-        '<li data-role="list-divider" id="page_home_channellist_header">Mijn kaarten</li>';
+function renderMycardsList(mycards) {
+  var htmlMyCards = '';
+  if (mycards.length > 0) {
+    htmlMyCards += '<li data-role="list-divider">Mijn kaarten</li>';
     $.each(mycards, function (i, mycard) {
-
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
           '  <img src="img/card/' + mycard.cardcompany + '.png" />' +
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
-          '      <h3>' + formatAmount(mycard.saldo) +'</h3>' +
+          '      <h3>' + formatAmount(mycard.saldo) + '</h3>' +
           '      <p>Saldo op ' + getDateString(mycard.checkdate) + '</p>' +
-          '      <p style="color:#bbb">' + mycard.cardnumber + '</p>' +
+          '      <p class="cardnumber">' + mycard.cardnumber + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
-          '      <a href="#" onclick="refreshBalance(\''+mycard.cardcompany+'\', \''+mycard.cardnumber+'\')"><img style="padding:6px; padding-top: 0" src="img/refresh.png" width="15px" height="16px" border="0"/></a>' +
+          '      <a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img style="padding:6px; padding-top: 0" src="img/refresh.png" width="15px" height="16px" border="0"/></a>' +
           '      <br/>' +
-          '      <a href="#" onclick="removeCard(\''+mycard.cardnumber+'\')"><img style="padding:6px; padding-right: 8px" src="img/trash.png" width="16px" height="16px" border="0"/></a>' +
+          '      <a href="#" onclick="removeCard(\'' + mycard.cardnumber + '\')"><img style="padding:6px; padding-right: 8px" src="img/trash.png" width="16px" height="16px" border="0"/></a>' +
           '    </div>' +
           '  </div>' +
-//          '  </a>' +
+  //          '  </a>' +
           '</li>';
     });
-    $("#mycardsList").html(htmlMyCards);
-    $("#mycardsList").listview("refresh");
   }
+  $("#mycardsList").html(htmlMyCards);
+  $("#mycardsList").listview("refresh");
+}
 
-  // TODO from server?
-  // Note: keep them sorted!
-  var allcards = new Array (
-      new Array("bartsmit", "Bart Smit", "3040012188580701179"),
-      new Array("bijenkorf", "Bijenkorf", "901000007890000634092956"),
-      new Array("fashioncheque", "Fashioncheque", "6046425110188147616"),
-      new Array("hema", "HEMA", "300416828647599"),
-      new Array("intratuin", "Intratuin", "6064362091069735993"),
-      new Array("missetam", "Miss Etam", ""),
-      new Array("prenatal", "Prenatal", "3080017005005856058"),
-      new Array("promiss", "Promiss", ""),
-      new Array("vend", "V & D", ""),
-      new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522")
-  );
+// TODO from server?
+// Note: keep them sorted!
+var allcards = new Array(
+    new Array("bartsmit", "Bart Smit", "3040012188580701179"),
+    new Array("bijenkorf", "Bijenkorf", "901000007890000634092956"),
+    new Array("fashioncheque", "Fashioncheque", "6046425110188147616"),
+    new Array("fashioncheque", "Fashioncheque 2", "6046425115331753426"),
+    new Array("hema", "HEMA", "300416828647599"),
+    new Array("intratuin", "Intratuin", "6064362091069735993"),
+    new Array("missetam", "Miss Etam", ""),
+    new Array("prenatal", "Prenatal", "3080017005005856058"),
+    new Array("promiss", "Promiss", ""),
+    new Array("vend", "V & D", ""),
+    new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522")
+);
 
-  function renderAllcardsList() {
-    var htmlAllCards = '';
-    $.each(allcards, function (i, card) {
-//      <li><img src="img/cardcompany/hema.png" class="scanButton" data-cardcompany="hema" alt="hema" data-testcard="300416828647599"/><h3>HEMA</h3></li>
+function renderAllcardsList() {
+  var htmlAllCards = '';
+  $.each(allcards, function (i, card) {
+    htmlAllCards += '' +
+        '<div class="ui-block-' + (i % 2 == 0 ? 'a' : 'b') + '">' +
+        '  <div class="cardcompany-name">' + card[1] + '</div>' +
+        '  <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="scanButton" data-cardcompany="' + card[0] + '" alt="' + card[0] + '" data-testcard="' + card[2] + '"/></div>' +
+        '</div>';
+  });
+  $("#allcardsList").html(htmlAllCards);
+}
 
-//      htmlAllCards += '' +
-//          '<li data-role="fieldcontain">' +
-//          '  <img src="img/cardcompany/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="'+card[0]+'" data-testcard="'+card[2]+'"/>' +
-//          '  <h3>' + card[1] +'</h3>' +
-//          '</li>';
-
-      htmlAllCards += '' +
-          '<div class="ui-block-'+(i%2==0 ? 'a' : 'b')+'">' +
-          '  <div class="cardcompany-name">' + card[1] + '</div>' +
-          '  <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="scanButton" data-cardcompany="'+card[0]+'" alt="'+card[0]+'" data-testcard="'+card[2]+'"/></div>' +
-          '</div>';
-    });
-    $("#allcardsList").html(htmlAllCards);
-//    $("#allcardsList").listview("refresh");
-  }
-
-  function processCardResponse(cardcompany, data) {
-    $.mobile.loading('hide');
-    if (data.success) {
-      // add the cardcompany and store it
-      data.cardcompany = cardcompany;
-      var mycards = localStorage.getItem("mycards");
-      var added = false;
-      if (mycards == null) {
-        mycards = new Array();
-      } else {
-        mycards = JSON.parse(mycards);
-        // check if it existed... if so, remove it first
-        $.each(mycards, function (i, mycard) {
-          if (mycard.cardnumber == data.cardnumber) {
-            added = true;
-            mycards[i] = data;
-            return false; // breaks the loop
-          }
-        });
-      }
-
-      if (!added) {
-        mycards.push(data);
-      }
-
-      localStorage.setItem("mycards", JSON.stringify(mycards));
-      // re-render the mycardslist
-      renderMycardsList(mycards);
+function processCardResponse(cardcompany, data) {
+  $.mobile.loading('hide');
+  if (data.success) {
+    // add the cardcompany and store it
+    data.cardcompany = cardcompany;
+    var mycards = localStorage.getItem("mycards");
+    var added = false;
+    if (mycards == null) {
+      mycards = new Array();
     } else {
-      alert("Controleer uw invoer..");
+      mycards = JSON.parse(mycards);
+      // check if it existed... if so, remove it first
+      $.each(mycards, function (i, mycard) {
+        if (mycard.cardnumber == data.cardnumber) {
+          added = true;
+          mycards[i] = data;
+          return false; // breaks the loop
+        }
+      });
     }
+
+    if (!added) {
+      mycards.push(data);
+    }
+
+    localStorage.setItem("mycards", JSON.stringify(mycards));
+    // re-render the mycardslist
+    renderMycardsList(mycards);
+  } else {
+    alert("Controleer uw invoer..");
   }
+}
 </script>
 
 <!-- Page: Home page -->
@@ -225,7 +234,7 @@
 
       // render the list of scanned cards
       var mycards = localStorage.getItem("mycards");
-      if (mycards != null && mycards.length > 0) {
+      if (mycards != null) {
         renderMycardsList(JSON.parse(mycards));
       }
 
@@ -244,7 +253,7 @@
     <h1>Kaartsaldo</h1>
     <a data-icon="info" data-iconpos="notext" href="#infoPopup" data-theme="b">info</a>
   </div-->
-  <div data-role="content">
+  <div>
     <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="a"></ul>
   </div>
   <div data-role="content">
@@ -253,6 +262,9 @@
     </ul>
   </div>
   <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
+  <div data-role="content">
+    <br/><br/><a href="" onclick="doTestScan()">scantest</a><br/><br/>
+  </div>
 
 </div>
 <!-- End page: Home page -->
@@ -262,8 +274,10 @@
 <div id="unusedPage" data-role="page">
   <div data-role="header" data-theme="c" data-tap-toggle="false" data-position="fixed">
     <a id="backToLogin" data-icon="arrow-l" data-direction="reverse" href="#loginPage" class="button_back">log uit</a>
+
     <h1>Kaartsaldo</h1>
-    <a data-icon="refresh" href="#" onclick="$.mobile.loading('show', {text:'Gegevens worden ververst..'}); setTimeout(function(){loadCardData(getLoginName(), getPassword(), function(data) {localStorage.setItem('CardResponse', JSON.stringify(data)); showCardData(); $.mobile.loading('hide');})},250)">vernieuw</a>
+    <a data-icon="refresh" href="#"
+       onclick="$.mobile.loading('show', {text:'Gegevens worden ververst..'}); setTimeout(function(){loadCardData(getLoginName(), getPassword(), function(data) {localStorage.setItem('CardResponse', JSON.stringify(data)); showCardData(); $.mobile.loading('hide');})},250)">vernieuw</a>
   </div>
 
   <div data-role="content">

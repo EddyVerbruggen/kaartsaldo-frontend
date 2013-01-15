@@ -13,7 +13,9 @@ function formatAmount(amount) {
   if (amount.indexOf(",") == -1) {
     amount += ",00";
   }
-  return amount;
+  var amountFormatted = amount.substr(0, amount.indexOf(",")+1);
+  amountFormatted += '<span class="cents"><sup>' + amount.substr(amount.indexOf(",")+1) + '</sup></span>';
+  return amountFormatted;
 }
 
 function getDateString(javaDateString) {
