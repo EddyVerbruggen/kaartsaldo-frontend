@@ -87,12 +87,11 @@ function scan(cardcompany, successFunction) {
   window.plugins.barcodeScanner.scan(function (result) {
         if (!result.cancelled) {
           // Successfully scanned a bar code
-//          if (confirm("Is dit het goede nummer? " + result.text)) {
-          var checkedNumber = prompt("Controleer het nummer:", result.text);
-          loadCardData(cardcompany, checkedNumber, successFunction);
-//          } else {
-//            confirmInputtype(cardcompany);
-//          }
+          if (result.format == "CODE_128") {
+            loadCardData(cardcompany, result.text, successFunction);
+          } else {
+            alert("Geef svp even door aan de developer: " + result.format + ". (Heb je de juiste barcode gescand?) En klopt dit nr? " + result.text);
+          }
         }
       }, function (error) {
         alert("Scanning failed: " + error);
@@ -104,7 +103,7 @@ function doTestScan() {
   window.plugins.barcodeScanner.scan(function (result) {
         if (!result.cancelled) {
           // Successfully scanned a bar code
-          $("#scanTestResult").html("Gescand: " + result.text + " (" + result.format + ")");
+          $("#scanTestResult").append("<br/>Gescand: " + result.text + " (" + result.format + ")");
         }
       }, function (error) {
         $("#scanTestResult").html("Scan mislukt: " + error);
@@ -182,7 +181,8 @@ var allcards = new Array(
     new Array("promiss", "Promiss", ""),
     new Array("vend", "V & D", ""),
     new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522"),
-    new Array("wehkamp", "Wehkamp.nl", "")
+    new Array("wehkamp", "Wehkamp.nl", ""),
+    new Array("yourgift", "Your Gift", "")
 );
 
 function renderAllcardsList() {
@@ -267,7 +267,7 @@ function processCardResponse(cardcompany, data) {
   </div>
   <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
   <div data-role="content">
-    <br/><br/><a href="" onclick="doTestScan()">scantest</a><br/>
+    <br/><br/><a href="" onclick="doTestScan()">scantest</a><br/><br/>
     <div id="scanTestResult"></div><br/>
   </div>
 
