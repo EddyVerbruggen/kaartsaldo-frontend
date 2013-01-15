@@ -37,7 +37,7 @@
       $.ajax({
         data: data,
         dataType:"json",
-        async:false,
+        async: true,
         type: 'POST',
         url:url,
         success:function(data){successFunction(cardtype, data)},
@@ -240,12 +240,12 @@
     });
 
   </script>
-  <div data-role="header" data-tap-toggle="false">
+  <!--div data-role="header" data-tap-toggle="false">
     <h1>Kaartsaldo</h1>
     <a data-icon="info" data-iconpos="notext" href="#infoPopup" data-theme="b">info</a>
-  </div>
+  </div-->
   <div data-role="content">
-    <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="d"></ul>
+    <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="a"></ul>
   </div>
   <div data-role="content">
     <ul data-role="listview" data-inset="false" data-divider-theme="d">

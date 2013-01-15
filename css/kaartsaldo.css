@@ -164,6 +164,10 @@ input::-webkit-input-placeholder {
   width: 16%;
 }
 
+#mycardsList li:last-child {
+  border-bottom: 0;
+}
+
 #allcardsList .ui-block-a, #allcardsList .ui-block-b {
   border-bottom: 1px solid #eee;
   text-align: center;
