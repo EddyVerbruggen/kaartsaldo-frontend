@@ -218,3 +218,7 @@ input::-webkit-input-placeholder {
 #typeInPopup h3 {
   font-size: 0.8em;
 }
+
+#typeInPopup #hint {
+  font-size: 0.7em;
+}

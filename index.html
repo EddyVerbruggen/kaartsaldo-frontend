@@ -66,6 +66,7 @@ function confirmInputtype(cardcompany, testcardnr) {
       // debugging in browser
       loadCardData(cardcompany, testcardnr, processCardResponse);
     } else if (confirm('Wil je intikken?')) {
+      $('#typeInPopup #hint').html('');
       $('#typeInPopup').popup('open');
     }
   }
@@ -75,6 +76,7 @@ function onConfirmCallback(i) {
   if (i == 1) {
     scan(cardcompany, processCardResponse);
   } else if (i == 2) {
+    $('#typeInPopup #hint').html('');
     $('#typeInPopup').popup('open');
   } else if (i == 3) {
     // noop
@@ -88,9 +90,8 @@ function scan(cardcompany, successFunction) {
           if (result.format == "CODE_128") {
             loadCardData(cardcompany, result.text, successFunction);
           } else {
-            $('#typeInPopup #hint').html("Barcode formaat " + result.format + " uitlezen mislukt. Voer ajb zelf de code in..");
+            $('#typeInPopup #hint').html("Sorry, we konden de barcode lezen. Geef dit ajb door aan de ontwikkelaar: " + cardcompany + ": " + result.format + ". Voer zelf de code in om de kaart toe te voegen:");
             $('#typeInPopup').popup('open');
-//            alert("Geef svp even door aan de developer: " + result.format + ". (Heb je de juiste barcode gescand?) En klopt dit nr? " + result.text);
           }
         }
       }, function (error) {
@@ -279,7 +280,7 @@ function processCardResponse(cardcompany, data) {
         <p id="hint"></p>
         <label for="cardnrEntry" class="ui-hidden-accessible">Kaartnummer:</label>
         <input type="tel" pattern="[0-9]*" name="cardnrEntry" id="cardnrEntry" data-theme="a"/>
-        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInPopup').popup('close'); loadCardData(cardcompany, $('#cardnrEntry').val(), processCardResponse); $('#cardnrEntry').val(''); $('#typeInPopup #hint').html(''); return false">Verzenden</a>
+        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInPopup').popup('close'); loadCardData(cardcompany, $('#cardnrEntry').val(), processCardResponse); $('#cardnrEntry').val(''); return false">Verzenden</a>
       </div>
     </form>
   </div>
