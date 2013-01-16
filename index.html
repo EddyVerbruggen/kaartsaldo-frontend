@@ -45,15 +45,18 @@ function loadCardData(cardtype, cardnumber, successFunction) {
       },
       error:function () {
         $.mobile.loading('hide');
-        alert('Er is iets misgegaan. Probeer het nogmaals.');
+        navigator.notification.alert('Er is iets misgegaan. Probeer het nogmaals.', null, 'Fout', 'OK, jammer');
       }
     });
   }, 250);
 }
 
 var cardcompany;
+var testcardnr;
+
 function confirmInputtype(cardcompany, testcardnr) {
   this.cardcompany = cardcompany;
+  this.testcardnr = testcardnr;
   if (isIOS() || isAndroid()) {
     navigator.notification.confirm(
         'Hoe wil je de kaart toevoegen?', // message
@@ -63,8 +66,11 @@ function confirmInputtype(cardcompany, testcardnr) {
     );
   } else {
     if (confirm('Wil je scannen?')) {
-      // debugging in browser
-      loadCardData(cardcompany, testcardnr, processCardResponse);
+      if (localStorage.getItem("hasSeenHowToScanInstructions") == null) {
+        $('#scanInstructionsPopup').popup('open', {transition: 'pop'});
+      } else {
+        loadCardData(cardcompany, testcardnr, processCardResponse);
+      }
     } else if (confirm('Wil je intikken?')) {
       $('#typeInPopup .hint').html('');
       $('#typeInPopup').popup('open', { transition: 'pop'});
@@ -85,7 +91,11 @@ function onConfirmCallback(i) {
 
 function closeScanInstructionsPopup() {
   localStorage.setItem("hasSeenHowToScanInstructions", "ok");
-  scan(cardcompany, processCardResponse);
+  if (isIOS() || isAndroid()) {
+    scan(cardcompany, processCardResponse);
+  } else {
+    loadCardData(cardcompany, testcardnr, processCardResponse);
+  }
 }
 
 function scan(cardcompany, successFunction) {
@@ -104,7 +114,7 @@ function scan(cardcompany, successFunction) {
             }
           }
         }, function (error) {
-          alert("Scanning failed: " + error);
+          navigator.notification.alert('Scannen mislukt: ' + error, null, 'Fout', 'OK, jammer');
         }
     );
   }
@@ -237,7 +247,7 @@ function processCardResponse(cardcompany, data) {
     // scroll to the top, so the user sees the card
     $.mobile.silentScroll(0);
   } else {
-    alert("Controleer uw invoer..");
+    navigator.notification.alert('Controleer uw kaartkeuze en invoer.', null, 'Nummer niet herkend.', 'OK');
   }
 }
 </script>
@@ -278,7 +288,7 @@ function processCardResponse(cardcompany, data) {
   </div>
   <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
   <div data-role="content">
-    <br/><br/><a href="" onclick="doTestScan()">scantest</a><br/><br/>
+    <br/><br/><br/><br/><br/><a href="" onclick="doTestScan()">scantest</a><br/>
     <div id="scanTestResult"></div><br/>
   </div>
 
@@ -298,10 +308,11 @@ function processCardResponse(cardcompany, data) {
   <div data-role="popup" id="scanInstructionsPopup" data-theme="a" class="ui-corner-all">
     <!--<a data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" onclick="$('#scanInstructionsPopup').popup('close'); closeScanInstructionsPopup(); return false" class="ui-btn-right">Sluiten</a>-->
     <form>
-      <div style="padding:10px 20px;">
-        <h3>Hier komt nog uitleg met een plaatje..</h3>
-        <img src="img/scanhint-framed.png" width="160px"/>
-        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#scanInstructionsPopup').popup('close'); closeScanInstructionsPopup(); return false">OK, begrepen</a>
+      <div style="padding:10px 20px; text-align: center">
+        <h3>Zorg voor een beeldvullende streepjescode:</h3>
+        <img src="img/scanhint-framed.png" width="150px"/>
+        <!--<a data-icon="grid" data-role="button" data-theme="a" data-iconpos="left" onclick="$('#scanInstructionsPopup').popup('close'); closeScanInstructionsPopup(); return false">intoetsen</a>-->
+        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#scanInstructionsPopup').popup('close'); closeScanInstructionsPopup(); return false">OK, scannen maar!</a>
       </div>
     </form>
   </div>
