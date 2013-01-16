@@ -45,7 +45,11 @@ function loadCardData(cardtype, cardnumber, successFunction) {
       },
       error:function () {
         $.mobile.loading('hide');
-        navigator.notification.alert('Er is iets misgegaan. Probeer het nogmaals.', null, 'Fout', 'OK, jammer');
+        if (isIOS() || isAndroid()) {
+          showScanOrTypeInPrompt();
+        } else {
+          alert("Er ging iets mis..");
+        }
       }
     });
   }, 250);
@@ -54,16 +58,20 @@ function loadCardData(cardtype, cardnumber, successFunction) {
 var cardcompany;
 var testcardnr;
 
+function showScanOrTypeInPrompt(msg) {
+  navigator.notification.confirm(
+      msg, // message
+      onConfirmCallback, // callback to invoke with index of button pressed
+      'Kaart toevoegen', // title
+      'Scannen,Intoetsen,Annuleren'   // button labels
+  );
+}
+
 function confirmInputtype(cardcompany, testcardnr) {
   this.cardcompany = cardcompany;
   this.testcardnr = testcardnr;
   if (isIOS() || isAndroid()) {
-    navigator.notification.confirm(
-        'Hoe wil je de kaart toevoegen?', // message
-        onConfirmCallback, // callback to invoke with index of button pressed
-        'Kaart toevoegen', // title
-        'Scannen,Intoetsen,Annuleren'   // button labels
-    );
+    showScanOrTypeInPrompt("Hoe wil je de kaart toevoegen?");
   } else {
     if (confirm('Wil je scannen?')) {
       if (localStorage.getItem("hasSeenHowToScanInstructions") == null) {
@@ -114,7 +122,7 @@ function scan(cardcompany, successFunction) {
             }
           }
         }, function (error) {
-          navigator.notification.alert('Scannen mislukt: ' + error, null, 'Fout', 'OK, jammer');
+          showScanOrTypeInPrompt('Er ging iets mis. Nogmaals proberen?');
         }
     );
   }
@@ -249,7 +257,8 @@ function processCardResponse(cardcompany, data) {
     // scroll to the top, so the user sees the card
     $.mobile.silentScroll(0);
   } else {
-    navigator.notification.alert('Controleer uw kaartkeuze en invoer.', null, 'Nummer niet herkend.', 'OK');
+    showScanOrTypeInPrompt('Controleer je kaartkeuze en invoer. Nogmaals proberen?');
+//    navigator.notification.alert('Controleer uw kaartkeuze en invoer.', null, 'Nummer niet herkend.', 'OK');
   }
 }
 </script>
