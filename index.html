@@ -83,14 +83,23 @@ function onConfirmCallback(i) {
   }
 }
 
+function closeScanInstructionsPopup() {
+  localStorage.setItem("hasSeenHowToScanInstructions", "ok");
+  scan(cardcompany, processCardResponse);
+}
+
 function scan(cardcompany, successFunction) {
+  // check if we have shown the how-to instructions yet
+  if (localStorage.getItem("hasSeenHowToScanInstructions") == null) {
+    $('#scanInstructionsPopup').popup('open', { transition: 'pop'});
+  }
   window.plugins.barcodeScanner.scan(function (result) {
         if (!result.cancelled) {
           // Successfully scanned a bar code
           if (result.format == "CODE_128") {
             loadCardData(cardcompany, result.text, successFunction);
           } else {
-            $('#typeInPopup #hint').html("Sorry, we konden de barcode lezen. Geef dit ajb door aan de ontwikkelaar: " + cardcompany + ": " + result.format + ". Voer zelf de code in om de kaart toe te voegen:");
+            $('#typeInPopup #hint').html("Sorry, we konden de barcode niet goed uitlezen. Geef dit ajb door aan de ontwikkelaar: '" + cardcompany + ", " + result.format + "'. Voer zelf de code in om de kaart toe te voegen:");
             $('#typeInPopup').popup('open', { transition: 'pop'});
           }
         }
@@ -146,14 +155,13 @@ function renderMycardsList(mycards) {
           '  <img src="img/card/' + mycard.cardcompany + '.png" />' +
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
-          '      <h3>' + formatAmount(mycard.saldo) + '</h3>' +
-          '      <p>Saldo op ' + getDateString(mycard.checkdate) + '</p>' +
-          '      <p class="cardnumber">' + mycard.cardnumber + '</p>' +
+          '      <h3><div class="euro">&euro;</div>' + formatAmount(mycard.saldo) + '</h3>' +
+          '      <p>saldo op ' + getDateString(mycard.checkdate) + '</p>' +
+          '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
-          '      <a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img style="padding:6px; padding-top: 4px" src="img/refresh.png" width="15px" height="16px" border="0"/></a>' +
-          '      <br/>' +
-          '      <a href="#" onclick="removeCard(\'' + mycard.cardnumber + '\')"><img style="padding:8px; padding-top: 10px" src="img/trash.png" width="16px" height="16px" border="0"/></a>' +
+          '      <div class="refresh"><a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
+          '      <div class="remove"><a href="#" onclick="removeCard(\'' + mycard.cardnumber + '\')"><img src="img/trash.png" width="16px" height="16px" border="0"/></a></div>' +
           '    </div>' +
           '  </div>' +
   //          '  </a>' +
@@ -176,7 +184,7 @@ var allcards = new Array(
     new Array("intratuin", "Intratuin", "6064362091069735993"),
     new Array("karwei", "Karwei", ""),
     new Array("missetam", "Miss Etam", ""),
-    new Array("nationaleentertainmentcard", "Nationale Entertainment Card", ""),
+    new Array("nationaleentertainmentcard", "Nat. Entertainment Card", ""),
     new Array("prenatal", "Prenatal", "3080017005005856058"),
     new Array("promiss", "Promiss", ""),
     new Array("vend", "V & D", ""),
@@ -282,6 +290,17 @@ function processCardResponse(cardcompany, data) {
         <label for="cardnrEntry" class="ui-hidden-accessible">Kaartnummer:</label>
         <input type="tel" pattern="[0-9]*" name="cardnrEntry" id="cardnrEntry" data-theme="a"/>
         <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInPopup').popup('close'); loadCardData(cardcompany, $('#cardnrEntry').val(), processCardResponse); $('#cardnrEntry').val(''); return false">Verzenden</a>
+      </div>
+    </form>
+  </div>
+
+  <div data-role="popup" id="scanInstructionsPopup" data-theme="a" class="ui-corner-all">
+    <!--<a data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" onclick="$('#scanInstructionsPopup').popup('close'); closeScanInstructionsPopup(); return false" class="ui-btn-right">Sluiten</a>-->
+    <form>
+      <div style="padding:10px 20px;">
+        <h3>Hier komt nog uitleg met een plaatje..</h3>
+        <img src="img/card/bol.png" width="200px" height="160px"/>
+        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#scanInstructionsPopup').popup('close'); closeScanInstructionsPopup(); return false">OK, begrepen</a>
       </div>
     </form>
   </div>

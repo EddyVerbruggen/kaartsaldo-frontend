@@ -18,6 +18,17 @@ function formatAmount(amount) {
   return amountFormatted;
 }
 
+function formatCardnumber(nr) {
+  var result = '';
+  for (var i=0; i<nr.length; i++) {
+    if (i > 0 && i % 4 == 0) {
+      result += ' ';
+    }
+    result += nr[i];
+  }
+  return result;
+}
+
 function getDateString(javaDateString) {
   var date = new Date(javaDateString);
   var d = date.getDate();

@@ -180,8 +180,41 @@ input::-webkit-input-placeholder {
   font-size: 0.7em;
 }
 
+#mycardsList .euro {
+  width: 18px;
+  color: #fff;
+  background-color: #629925;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 6px;
+  text-shadow: none;
+  clear: none;
+  float: left;
+}
+
 #mycardsList p.cardnumber {
   color: #ccc;
+}
+
+#mycardsList .refresh, #mycardsList .remove {
+  float: right;
+  clear:both;
+  margin-right: 20px;
+  /*border: 1px solid red;*/
+  padding:10px;
+  width: 22px;
+  height: 20px;
+  text-align: center;
+}
+
+#mycardsList .refresh {
+  margin-top: -5px;
+  /*padding-top: 2px;*/
+}
+
+#mycardsList .remove {
+  /*padding-top: 14px;*/
 }
 
 #allcardsList .ui-block-a, #allcardsList .ui-block-b {
