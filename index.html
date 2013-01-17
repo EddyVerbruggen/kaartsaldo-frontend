@@ -90,11 +90,16 @@ function onConfirmCallback(i) {
   if (i == 1) {
     scan(cardcompany, processCardResponse);
   } else if (i == 2) {
-    $('#typeInPopup .hint').html('');
-    $('#typeInPopup').popup('open', { transition: 'pop'});
+    openTypeInPopup();
   } else if (i == 3) {
     // noop
   }
+}
+
+function openTypeInPopup(cardcompany) {
+  this.cardcompany = cardcompany;
+  $('#typeInPopup .hint').html('');
+  $('#typeInPopup').popup('open', { transition: 'pop'});
 }
 
 function closeScanInstructionsPopup() {
@@ -220,19 +225,15 @@ function renderAllcardsList() {
     htmlAllCards += '' +
         '<div class="ui-block-' + (i % 2 == 0 ? 'a' : 'b') + '">' +
         '  <div class="cardcompany-name">' + card[1] + '</div>' +
-        '  <div class="cardcompany-image-container" data-cardcompany="' + card[0] + '" data-testcard="' + card[2] + '">' +
+        '  <div id="container-'+i+'" class="cardcompany-image-container" data-cardcompany="' + card[0] + '" data-testcard="' + card[2] + '">' +
         '    <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="scanButton" alt="' + card[0] + '"/></div>' +
-        '    <div class="cardcompany-overlay"><img src="img/card-backside.png" width="134px"/><!--span class="cardcompany-overlay-inner">plaatje en <a href="">linkje</a></span--></div>' +
-//        '  <div class="cardcompany-buttons">' +
-//        '    <input type="button" name="scan" value="scan"/>' +
-//        '  </div>' +
+        '    <div class="cardcompany-overlay"><img src="img/card-backside.png"/></div>' +
+        '    <div class="cardcompany-buttons">' +
+        '      <a class="close" onclick="flipBack(\'container-'+i+'\')"></a>' +
+        '      <a class="scan" onclick="scan(\''+card[1]+'\', processCardResponse)"></a>' +
+        '      <a class="type" onclick="openTypeInPopup(\''+card[1]+'\')"></a>' +
+        '    </div>' +
         '  </div>' +
-//        '  <div class="flip-container" ontouchstart="this.classList.toggle(\'hover\');">' +
-//        '    <div class="flipper">' +
-//        '      <div class="front"><img src="img/card/' + card[0] + '.png"/></div>' +
-//        '      <div class="back"><img src="img/card-backside.png"/></div>' +
-//        '    </div>' +
-//        '  </div>' +
         '</div>';
   });
   $("#allcardsList").html(htmlAllCards);
@@ -289,21 +290,29 @@ function processCardResponse(cardcompany, data) {
       renderAllcardsList();
 
       // bind behaviour to any buttons
-      $('.cardcompany-image-container').bind("click", function () {
-        var that = $(this);
-        var cardcompany = $(this).attr("data-cardcompany");
-        var testcardnr = $(this).attr("data-testcard");
-//        confirmInputtype(cardcompany, testcardnr);
-        $(that).addClass('zoom');
-        setTimeout(function() {
-          $(that).addClass('rotate');
-          setTimeout(function() {
-            $(that).parent().prev().css({'visibility': 'visible'});
-          }, 1250);
-        }, 750);
-      });
+      $('.cardcompany-image-container').bind("click", onClickBehaviourForCards);
     });
 
+    function onClickBehaviourForCards() {
+      var that = $(this);
+      $(that).unbind("click");
+      var cardcompany = $(that).attr("data-cardcompany");
+      var testcardnr = $(that).attr("data-testcard");
+//        confirmInputtype(cardcompany, testcardnr);
+      $(that).addClass('zoom');
+      setTimeout(function() {
+        $(that).addClass('rotate');
+      }, 750);
+    }
+
+    function flipBack(elem) {
+      $("#"+elem).removeClass('zoom').removeClass('rotate').addClass('rotateBack');
+      // init the element for a new click
+      setTimeout(function() {
+        $("#"+elem).bind("click", onClickBehaviourForCards);
+        $("#"+elem).removeClass('rotateBack');
+      }, 1300);
+    }
   </script>
   <!--div data-role="header" data-tap-toggle="false">
     <h1>Kaartsaldo</h1>

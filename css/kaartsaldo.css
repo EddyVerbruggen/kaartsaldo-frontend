@@ -172,6 +172,11 @@ input::-webkit-input-placeholder {
   -webkit-transition: 1.25s;
 }
 
+.cardcompany-image-container.rotateBack {
+  -webkit-transform: perspective(500) rotateY(0deg);
+  -webkit-transition: 1.25s;
+}
+
 .cardcompany-image-container {
   position: relative;
   z-index: 9;
@@ -202,7 +207,6 @@ input::-webkit-input-placeholder {
   clear: none;
   left:0;
   top:0;
-  /*width: 100%;*/
   /*height: 130px;*/
   margin-left: 2px;
   /*margin-top: -36px;*/
@@ -214,51 +218,67 @@ input::-webkit-input-placeholder {
   /*background: url("../img/card-backside.png") 200px 100px;*/
 }
 
-.cardcompany-overlay-inner {
-  visibility: hidden;
-}
-
-
-.flip-container {
-  perspective: 1000;
-}
-  /* flip the pane when hovered */
-  .flip-container:hover .flipper, .flip-container.hover .flipper {
-    -webkit-transform: rotateY(180deg);
-  }
-
-.flip-container, .front, .back {
-  width: 320px;
-  height: 480px;
-}
-
-/* flip speed goes here */
-.flipper {
-  -webkit-transition: 0.6s;
-  -webkit-transform-style: preserve-3d;
-
-  position: relative;
-}
-
-/* hide back of pane during swap */
-.front, .back {
-  -webkit-backface-visibility: hidden;
-
+.cardcompany-buttons {
   position: absolute;
-  top: 0;
-  left: 0;
-}
-
-/* front pane, placed above back */
-.front {
-  z-index: 2;
-}
-
-/* back, initially hidden pane */
-.back {
+  clear: none;
+  left:0;
+  top:0;
+  z-index: 17;
+  /*visibility: hidden;*/
+  -webkit-backface-visibility: hidden;
   -webkit-transform: rotateY(180deg);
 }
 
+.cardcompany-buttons a {
+  position: absolute;
+  cursor: pointer;
+  left:-44px;
+  height: 22px;
+  width: 42px;
+}
+
+.cardcompany-buttons .close {
+  /*border: 1px solid red;*/
+  top:0;
+}
+
+.cardcompany-buttons .scan {
+  /*border: 1px solid blue;*/
+  top:34px;
+}
+
+.cardcompany-buttons .type {
+  /*border: 1px solid green;*/
+  top:60px;
+}
+
+.cardcompany-overlay img {
+  width: 134px;
+}
+
+@media (max-width:320px) {
+  .cardcompany-image-container {
+    -webkit-transform: perspective(500);
+  }
+
+  .cardcompany-image-container.zoom {
+    -webkit-transform: perspective(500) translateZ(150px);
+    -webkit-transition: 0.5s;
+  }
+
+  .cardcompany-image-container.rotate {
+    -webkit-transform: perspective(500) translateZ(150px) rotateY(180deg);
+    -webkit-transition: 1.25s;
+  }
+
+  .cardcompany-overlay {
+    margin-left: 8px;
+  }
+
+  .cardcompany-overlay img {
+    width: 126px;
+  }
+}
 
 .ui-li-heading {
   font-size: 22px;
@@ -352,7 +372,7 @@ input::-webkit-input-placeholder {
 }
 
 #allcardsList .ui-block-b {
-  border-left: 1px solid #eee;
+  /*border-left: 1px solid #eee;*/
 }
 
 #allcardsList .cardcompany-name {
