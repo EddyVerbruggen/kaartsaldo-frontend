@@ -2,6 +2,13 @@
   font-family: 'Gudea', Helvetica, sans-serif !important;
 }
 
+html {
+  -webkit-text-size-adjust:none;
+  -webkit-touch-callout:none;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  tap-highlight-color: rgba(0,0,0,0);
+}
+
 .ui-page {
   background-color: #fff;
   /*background-image: url('../img/background.png');*/
@@ -142,6 +149,16 @@ input::-webkit-input-placeholder {
   cursor: pointer;
 }
 
+.ui-block-a .scanButton:active {
+  -webkit-transform: perspective(120px) translateZ(30px) rotatey(10deg);
+  -webkit-transition: 0.5s;
+}
+
+.ui-block-b .scanButton:active {
+  -webkit-transform: perspective(120px) translateZ(30px) rotatey(-10deg);
+  -webkit-transition: 0.5s;
+}
+
 .ui-li-heading {
   font-size: 22px;
   margin-top: 0;
@@ -207,6 +224,12 @@ input::-webkit-input-placeholder {
   text-align: center;
 }
 
+#mycardsList .refresh:active {
+  -webkit-transform: rotatez(360deg);
+  -webkit-transition: 2s;
+}
+
+
 #mycardsList .refresh {
   margin-top: -5px;
   /*padding-top: 2px;*/
@@ -217,9 +240,9 @@ input::-webkit-input-placeholder {
 }
 
 #allcardsList .ui-block-a, #allcardsList .ui-block-b {
-  border-bottom: 1px solid #eee;
+  /*border-bottom: 1px solid #eee;*/
   text-align: center;
-  height: 134px;
+  height: 160px;
   padding-top: 10px;
 }
 
