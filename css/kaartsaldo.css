@@ -133,8 +133,8 @@ input::-webkit-input-placeholder {
 }
 
 .ui-li-desc {
-  white-space: normal;
-  font-size: 13px;
+  white-space: nowrap;
+  font-size: 12px;
 }
 
 .ui-li-static.ui-li-has-count {
@@ -344,6 +344,7 @@ input::-webkit-input-placeholder {
   clear:both;
   margin-right: 5%;
   padding:10px;
+  padding-right: 4px;
   width: 22px;
   height: 20px;
   text-align: center;
