@@ -3,10 +3,7 @@
 }
 
 html {
-  -webkit-text-size-adjust:none;
-  -webkit-touch-callout:none;
-  -webkit-tap-highlight-color:rgba(0,0,0,0);
-  tap-highlight-color: rgba(0,0,0,0);
+  /*-webkit-touch-callout:none;*/
 }
 
 .ui-page {
@@ -145,10 +142,11 @@ input::-webkit-input-placeholder {
 }
 
 .scanButton {
-  max-width: 140px;
+  max-width: 160px;
   cursor: pointer;
 }
 
+/*
 .ui-block-a .scanButton:active {
   -webkit-transform: perspective(120px) translateZ(30px) rotatey(10deg);
   -webkit-transition: 0.5s;
@@ -158,6 +156,109 @@ input::-webkit-input-placeholder {
   -webkit-transform: perspective(120px) translateZ(30px) rotatey(-10deg);
   -webkit-transition: 0.5s;
 }
+*/
+
+.cardcompany-image-container {
+  -webkit-transform: perspective(500);
+}
+
+.cardcompany-image-container.zoom {
+  -webkit-transform: perspective(500) translateZ(180px);
+  -webkit-transition: 0.5s;
+}
+
+.cardcompany-image-container.rotate {
+  -webkit-transform: perspective(500) translateZ(180px) rotateY(180deg);
+  -webkit-transition: 1.25s;
+}
+
+.cardcompany-image-container {
+  position: relative;
+  z-index: 9;
+  left: 50%;
+  margin-left: -80px;
+  /*border: 1px solid red;*/
+  width: 150px;
+  height: 120px;
+  -webkit-transform-style: preserve-3d;
+}
+
+.cardcompany-image {
+  position: absolute;
+  left:0;
+  top:0;
+  /*float: left;*/
+  z-index: 11;
+  /*margin-left: -100px;*/
+  clear: none;
+  /*border: 1px dotted green;*/
+  /*width: 100%;*/
+  -webkit-backface-visibility: hidden;
+}
+
+.cardcompany-overlay {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  clear: none;
+  left:0;
+  top:0;
+  /*width: 100%;*/
+  /*height: 130px;*/
+  margin-left: 2px;
+  /*margin-top: -36px;*/
+  /*left: 50%;*/
+  /*float: left;*/
+  z-index: 10;
+  -webkit-transform: rotateY(180deg);
+  /*border: 1px dashed blue;*/
+  /*background: url("../img/card-backside.png") 200px 100px;*/
+}
+
+.cardcompany-overlay-inner {
+  visibility: hidden;
+}
+
+
+.flip-container {
+  perspective: 1000;
+}
+  /* flip the pane when hovered */
+  .flip-container:hover .flipper, .flip-container.hover .flipper {
+    -webkit-transform: rotateY(180deg);
+  }
+
+.flip-container, .front, .back {
+  width: 320px;
+  height: 480px;
+}
+
+/* flip speed goes here */
+.flipper {
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+
+  position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+  -webkit-backface-visibility: hidden;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+  z-index: 2;
+}
+
+/* back, initially hidden pane */
+.back {
+  -webkit-transform: rotateY(180deg);
+}
+
 
 .ui-li-heading {
   font-size: 22px;
@@ -214,6 +315,10 @@ input::-webkit-input-placeholder {
   color: #bbb;
 }
 
+#cardNrEntry {
+  -webkit-touch-callout:inherit; /* TODO test: this should allow pasting in the textfield */
+}
+
 #mycardsList .refresh, #mycardsList .remove {
   float: right;
   clear:both;
@@ -225,8 +330,8 @@ input::-webkit-input-placeholder {
 }
 
 #mycardsList .refresh:active {
-  -webkit-transform: rotatez(360deg);
-  -webkit-transition: 2s;
+  -webkit-transform: rotatez(720deg);
+  -webkit-transition: 4s;
 }
 
 
