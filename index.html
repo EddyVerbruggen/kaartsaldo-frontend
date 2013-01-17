@@ -319,7 +319,10 @@ function processCardResponse(cardcompany, data) {
   </div>
   <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
   <div data-role="content">
-    <br/><br/><br/><br/><br/><a href="" onclick="doTestScan()">scantest</a><br/>
+    <br/><br/><br/><br/>
+    <a href="" onclick="loadCardData('intratuin', '6064362091069735993', processCardResponse)">testkaart intratuin</a><br/>
+    <a href="" onclick="loadCardData('bijenkorf', '901000007890000634092956', processCardResponse)">testkaart bijenkorf</a><br/><br/>
+    <a href="" onclick="doTestScan()">scantest</a><br/>
     <div id="scanTestResult"></div><br/>
   </div>
 
