@@ -296,7 +296,7 @@ function processCardResponse(cardcompany, data) {
 //    flipBack(cardcompany);
   } else {
 //    showScanOrTypeInPrompt('Controleer je kaartkeuze en invoer. Nogmaals proberen?');
-    navigator.notification.alert('Controleer uw kaartkeuze en invoer.', null, 'Nummer niet herkend.', 'OK');
+    navigator.notification.alert('Controleer uw kaartkeuze en invoer. Of is de kaart inactief?', null, 'Nummer niet herkend.', 'OK');
   }
 }
 </script>
@@ -359,7 +359,7 @@ function processCardResponse(cardcompany, data) {
   <div data-role="popup" id="typeInPopup" data-theme="a" class="ui-corner-all">
     <a data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" onclick="$('#typeInPopup').popup('close'); return false" class="ui-btn-right">Sluiten</a>
     <form>
-      <div style="padding:10px 16px;">
+      <div style="padding:10px 15px;">
         <h3>Wat is het nummer onder de streepjescode?</h3>
         <p class="hint"></p>
         <label for="cardnrEntry" class="ui-hidden-accessible">Kaartnummer:</label>
