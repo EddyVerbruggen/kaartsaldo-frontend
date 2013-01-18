@@ -61,6 +61,7 @@
   <preference name="android-installLocation" value="auto" /><!-- preferExternal; preferably install on SD-card -->
   <preference name="show-splash-screen-spinner" value="false" />
   <preference name="stay-in-webview" value="false" />
+  <preference name="prerendered-icon" value="true" /><!-- don't add iOS gloss effect -->
 
   <gap:plugin name="BarcodeScanner" /> <!-- latest release -->
 
