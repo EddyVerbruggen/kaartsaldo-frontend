@@ -122,7 +122,8 @@ function scan(cardcompany, successFunction) {
             if (result.format == "CODE_128") {
               loadCardData(cardcompany, result.text, successFunction);
             } else {
-              $('#typeInPopup .hint').html("Sorry, we konden de barcode niet goed uitlezen. Geef dit ajb door aan de ontwikkelaar: '" + cardcompany + ", " + result.format + "'. Voer zelf de code in om de kaart toe te voegen:");
+//              $('#typeInPopup .hint').html("Sorry, we konden de barcode niet goed uitlezen. Geef dit ajb door aan de ontwikkelaar: '" + cardcompany + ", " + result.format + "'. Voer zelf de code in om de kaart toe te voegen:");
+              $('#typeInPopup .hint').html("Sorry, we konden de barcode niet goed uitlezen (code " + result.format + "). Voer zelf het nummer in om de kaart toe te voegen:");
               $('#typeInPopup').popup('open', { transition: 'pop'});
             }
           }
@@ -155,11 +156,30 @@ function refreshBalance(companyname, cardnumber) {
   });
 }
 
+var removeCardnumber;
+
 function removeCard(cardnumber) {
-  if (confirm('Wil je deze kaart verwijderen?')) {
+  this.removeCardnumber = cardnumber;
+  if (isIOS() || isAndroid()) {
+    navigator.notification.confirm(
+        '', // message
+        onConfirmRemoveCardCallback, // callback to invoke with index of button pressed
+        'Kaart verwijderen', // title
+        'Verwijderen,Annuleren'   // button labels
+    );
+  } else {
+    // desktop
+    if (confirm('Wil je deze kaart verwijderen?')) {
+      onConfirmRemoveCardCallback(1);
+    }
+  }
+}
+
+function onConfirmRemoveCardCallback(j) {
+  if (j == 1) {
     var mycards = JSON.parse(localStorage.getItem("mycards"));
     $.each(mycards, function (i, mycard) {
-      if (mycard.cardnumber == cardnumber) {
+      if (mycard.cardnumber == removeCardnumber) {
         mycards.splice(i, 1); // TODO this creates an empty entry
         localStorage.setItem("mycards", JSON.stringify(mycards));
         renderMycardsList(mycards);
@@ -344,7 +364,8 @@ function processCardResponse(cardcompany, data) {
         <p class="hint"></p>
         <label for="cardnrEntry" class="ui-hidden-accessible">Kaartnummer:</label>
         <input type="tel" pattern="[0-9]*" name="cardnrEntry" id="cardnrEntry" data-theme="a"/>
-        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInPopup').popup('close'); loadCardData(cardcompany, $('#cardnrEntry').val(), processCardResponse); $('#cardnrEntry').val(''); return false">Verzenden</a>
+        <a data-inline="true" data-mini="true" data-role="button" data-theme="d" onclick="$('#typeInPopup').popup('close'); scan(cardcompany, processCardResponse); $('#cardnrEntry').val(''); return false">scan</a>
+        <a data-inline="true" data-mini="false" data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInPopup').popup('close'); loadCardData(cardcompany, $('#cardnrEntry').val(), processCardResponse); $('#cardnrEntry').val(''); return false">Controleer invoer</a>
       </div>
     </form>
   </div>

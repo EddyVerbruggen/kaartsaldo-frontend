@@ -261,12 +261,12 @@ input::-webkit-input-placeholder {
   }
 
   .cardcompany-image-container.zoom {
-    -webkit-transform: perspective(500) translateZ(150px);
+    -webkit-transform: perspective(500) translateZ(140px);
     -webkit-transition: 0.5s;
   }
 
   .cardcompany-image-container.rotate {
-    -webkit-transform: perspective(500) translateZ(150px) rotateY(180deg);
+    -webkit-transform: perspective(500) translateZ(140px) rotateY(180deg);
     -webkit-transition: 1.25s;
   }
 
