@@ -291,11 +291,12 @@ function processCardResponse(cardcompany, data) {
     renderMycardsList(mycards);
     // scroll to the top, so the user sees the card
     $.mobile.silentScroll(0);
-    // flip back the card
-    flipBack(cardcompany);
+    // re-render all cards, so the flipped card(s) is hidden
+    renderAllcardsList();
+//    flipBack(cardcompany);
   } else {
-    showScanOrTypeInPrompt('Controleer je kaartkeuze en invoer. Nogmaals proberen?');
-//    navigator.notification.alert('Controleer uw kaartkeuze en invoer.', null, 'Nummer niet herkend.', 'OK');
+//    showScanOrTypeInPrompt('Controleer je kaartkeuze en invoer. Nogmaals proberen?');
+    navigator.notification.alert('Controleer uw kaartkeuze en invoer.', null, 'Nummer niet herkend.', 'OK');
   }
 }
 </script>
@@ -358,7 +359,7 @@ function processCardResponse(cardcompany, data) {
   <div data-role="popup" id="typeInPopup" data-theme="a" class="ui-corner-all">
     <a data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" onclick="$('#typeInPopup').popup('close'); return false" class="ui-btn-right">Sluiten</a>
     <form>
-      <div style="padding:10px 20px;">
+      <div style="padding:10px 16px;">
         <h3>Wat is het nummer onder de streepjescode?</h3>
         <p class="hint"></p>
         <label for="cardnrEntry" class="ui-hidden-accessible">Kaartnummer:</label>
