@@ -245,7 +245,7 @@ function renderAllcardsList() {
   $.each(allcards, function (i, card) {
     htmlAllCards += '' +
         '<div class="ui-block-' + (i % 2 == 0 ? 'a' : 'b') + '">' +
-//        '  <div class="cardcompany-name">' + card[1] + '</div>' +
+        '  <div class="cardcompany-name">' + card[1] + '</div>' +
         '  <div id="container-'+card[0]+'" class="cardcompany-image-container" data-cardcompany="' + card[0] + '" data-testcard="' + card[2] + '">' +
         '    <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="scanButton" alt="' + card[0] + '"/></div>' +
         '    <div class="cardcompany-overlay"><img src="img/card-backside.png"/></div>' +
