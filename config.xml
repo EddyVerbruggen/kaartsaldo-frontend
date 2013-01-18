@@ -59,13 +59,13 @@
   <preference name="ios-statusbarstyle" value="black-opaque"/>
   <preference name="android-minSdkVersion" value="8" />
   <preference name="android-installLocation" value="auto" /><!-- preferExternal; preferably install on SD-card -->
-  <preference name="show-splash-screen-spinner" value="false" />
+  <preference name="show-splash-screen-spinner" value="true" />
   <preference name="stay-in-webview" value="false" />
   <preference name="prerendered-icon" value="true" /><!-- don't add iOS gloss effect -->
 
   <gap:plugin name="BarcodeScanner" /> <!-- latest release -->
 
-  <!--reference name="splash-screen-duration" value="2500" /--> <!-- default 5000 -->
+  <reference name="splash-screen-duration" value="3000" /> <!-- default 5000 -->
 
   <!-- allow loading any url in the webview -->
   <access origin="*" />
