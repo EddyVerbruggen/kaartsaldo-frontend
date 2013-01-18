@@ -204,7 +204,7 @@ function renderMycardsList(mycards) {
           '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
-          '      <div class="refresh"><a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
+          '      <div class="refresh"><a href="#" onclick="$(this).parent().addClass(\'spin\'); refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
           '      <div class="remove"><a href="#" onclick="removeCard(\'' + mycard.cardnumber + '\')"><img src="img/trash.png" width="16px" height="16px" border="0"/></a></div>' +
           '    </div>' +
           '  </div>' +
@@ -246,11 +246,12 @@ function renderAllcardsList() {
     htmlAllCards += '' +
         '<div class="ui-block-' + (i % 2 == 0 ? 'a' : 'b') + '">' +
         '  <div class="cardcompany-name">' + card[1] + '</div>' +
-        '  <div id="container-'+i+'" class="cardcompany-image-container" data-cardcompany="' + card[0] + '" data-testcard="' + card[2] + '">' +
+        '  <div id="container-'+card[0]+'" class="cardcompany-image-container" data-cardcompany="' + card[0] + '" data-testcard="' + card[2] + '">' +
         '    <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="scanButton" alt="' + card[0] + '"/></div>' +
         '    <div class="cardcompany-overlay"><img src="img/card-backside.png"/></div>' +
         '    <div class="cardcompany-buttons">' +
-        '      <a class="close" onclick="flipBack(\'container-'+i+'\')"></a>' +
+//        '      <span class="cardname">'+card[1]+'</span>' +
+        '      <a class="close" onclick="flipBack(\'container-'+card[0]+'\')"></a>' +
         '      <a class="scan" onclick="scan(\''+card[0]+'\', processCardResponse)"></a>' +
         '      <a class="type" onclick="openTypeInPopup(\''+card[0]+'\')"></a>' +
         '    </div>' +
@@ -290,6 +291,8 @@ function processCardResponse(cardcompany, data) {
     renderMycardsList(mycards);
     // scroll to the top, so the user sees the card
     $.mobile.silentScroll(0);
+    // flip back the card
+    flipBack(cardcompany);
   } else {
     showScanOrTypeInPrompt('Controleer je kaartkeuze en invoer. Nogmaals proberen?');
 //    navigator.notification.alert('Controleer uw kaartkeuze en invoer.', null, 'Nummer niet herkend.', 'OK');
@@ -332,13 +335,9 @@ function processCardResponse(cardcompany, data) {
       setTimeout(function() {
         $("#"+elem).bind("click", onClickBehaviourForCards);
         $("#"+elem).removeClass('rotateBack');
-      }, 1300);
+      }, 1300); // animation ends after 1250
     }
   </script>
-  <!--div data-role="header" data-tap-toggle="false">
-    <h1>Kaartsaldo</h1>
-    <a data-icon="info" data-iconpos="notext" href="#infoPopup" data-theme="b">info</a>
-  </div-->
   <div>
     <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="a"></ul>
   </div>
