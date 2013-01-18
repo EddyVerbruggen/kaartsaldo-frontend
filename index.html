@@ -365,7 +365,7 @@ function processCardResponse(cardcompany, data) {
         <label for="cardnrEntry" class="ui-hidden-accessible">Kaartnummer:</label>
         <input type="tel" pattern="[0-9]*" name="cardnrEntry" id="cardnrEntry" data-theme="a"/>
         <a data-inline="true" data-mini="true" data-role="button" data-theme="d" onclick="$('#typeInPopup').popup('close'); scan(cardcompany, processCardResponse); $('#cardnrEntry').val(''); return false">scan</a>
-        <a data-inline="true" data-mini="true" data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInPopup').popup('close'); loadCardData(cardcompany, $('#cardnrEntry').val(), processCardResponse); $('#cardnrEntry').val(''); return false">Controleer invoer</a>
+        <a data-inline="true" data-mini="false" data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInPopup').popup('close'); loadCardData(cardcompany, $('#cardnrEntry').val(), processCardResponse); $('#cardnrEntry').val(''); return false">Check invoer</a>
       </div>
     </form>
   </div>
