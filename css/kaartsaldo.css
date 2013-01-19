@@ -341,8 +341,9 @@ input::-webkit-input-placeholder {
   padding:10px;
   padding-right: 10px;
   width: 22px;
-  height: 18px;
+  height: 19px;
   text-align: center;
+  border-left: 1px solid #ddd;
 }
 
 #mycardsList .refresh.spin {
@@ -350,9 +351,9 @@ input::-webkit-input-placeholder {
   -webkit-transition: 8s;
 }
 
-
 #mycardsList .refresh {
   margin-top: -5px;
+  border-bottom: 1px solid #ddd;
   /*padding-top: 2px;*/
 }
 
