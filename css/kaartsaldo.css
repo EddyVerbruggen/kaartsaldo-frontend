@@ -328,6 +328,7 @@ input::-webkit-input-placeholder {
 
 #mycardsList p.cardnumber {
   color: #bbb;
+  padding-right: 5px;
 }
 
 #cardNrEntry {
