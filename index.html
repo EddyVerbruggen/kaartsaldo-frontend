@@ -222,24 +222,28 @@ function renderMycardsList(mycards) {
 // Note: keep them sorted!
 var allcards = new Array(
     new Array("anwb", "ANWB", ""),
+    new Array("babygiftcard", "Babygiftcard", ""),
     new Array("bartsmit", "Bart Smit", "3040012188580701179"),
     new Array("bijenkorf", "Bijenkorf", "901000007890000634092956"),
     new Array("bioscoopcadeau", "BioscoopCadeau", ""),
     new Array("bol", "Bol.com", ""),
+    new Array("denationalemusicalcard", "De Nat. Musicalcard", ""),
     new Array("efteling", "Efteling", ""),
     new Array("fashioncheque", "Fashioncheque", "6046425110188147616"),
+    new Array("gamma", "GAMMA", ""),
     new Array("hema", "HEMA", "300416828647599"),
     new Array("intratuin", "Intratuin", "6064362091069735993"),
     new Array("karwei", "Karwei", ""),
     new Array("lief", "Lief!", ""),
     new Array("missetam", "Miss Etam", ""),
+    new Array("nationalebloemenbon", "Nationale Bloemenbon", ""),
     new Array("nationaleentertainmentcard", "Nat. Entertainment Card", ""),
     new Array("prenatal", "Prénatal", "3080017005005856058"),
     new Array("promiss", "Promiss", ""),
     new Array("restaurantcadeau", "Restaurant Cadeau", ""),
     new Array("vend", "V & D", ""),
     new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522"),
-    new Array("wehkamp", "Wehkamp.nl", ""),
+//    new Array("wehkamp", "Wehkamp.nl", ""),
     new Array("xenos", "Xenos", ""),
     new Array("yourgift", "Your Gift", "")
 );
@@ -352,13 +356,13 @@ function processCardResponse(cardcompany, data) {
     </ul>
   </div>
   <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
-  <div data-role="content">
+  <!--div data-role="content">
     <br/><br/><br/><br/>
     <a href="" onclick="loadCardData('intratuin', '6064362091069735993', processCardResponse)">testkaart intratuin</a><br/>
     <a href="" onclick="loadCardData('bijenkorf', '901000007890000634092956', processCardResponse)">testkaart bijenkorf</a><br/><br/>
     <a href="" onclick="doTestScan()">scantest</a><br/>
     <div id="scanTestResult"></div><br/>
-  </div>
+  </div-->
 
   <div data-role="popup" id="typeInPopup" data-theme="a" class="ui-corner-all">
     <a data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" onclick="$('#typeInPopup').popup('close'); return false" class="ui-btn-right">Sluiten</a>
