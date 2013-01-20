@@ -33,24 +33,21 @@
   <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="hdpi" width="96" height="96"/>
 
   <!-- iPhone splash -->
-  <!--<gap:splash src="splash/ios/Default.png"         gap:platform="ios" width="320" height="480" />-->
- 	<!--<gap:splash src="splash/ios/Default_at_2x.png"   gap:platform="ios" width="640" height="960" />-->
- 	<!--<gap:splash src="splash/ios/Default_iphone5.png" gap:platform="ios" width="640" height="1136" />-->
+  <gap:splash src="splash/ios/Default.png"         gap:platform="ios" width="320" height="480" />
+ 	<gap:splash src="splash/ios/Default_at_2x.png"   gap:platform="ios" width="640" height="960" />
+ 	<gap:splash src="splash/ios/Default_iphone5.png" gap:platform="ios" width="640" height="1136" />
 
   <!-- iPad splash -->
-  <!--<gap:splash src="splash/ios/Default-Portrait-ipad.png"  gap:platform="ios" width="768" height="1024" />-->
-  <!--<gap:splash src="splash/ios/Default-Landscape-ipad.png" gap:platform="ios" width="1024" height="768" />-->
+  <gap:splash src="splash/ios/Default-Portrait-ipad.png"  gap:platform="ios" width="768" height="1024" />
+  <gap:splash src="splash/ios/Default-Landscape-ipad.png" gap:platform="ios" width="1024" height="768" />
 
   <!-- Android splash -->
-  <!--<gap:splash src="splash/android/Default-ldpi.png"  width="320" height="460"  gap:platform="android" gap:density="ldpi" />-->
- 	<!--<gap:splash src="splash/android/Default-mdpi.png"  width="320" height="500"  gap:platform="android" gap:density="mdpi" />-->
- 	<!--<gap:splash src="splash/android/Default-hdpi.png"  width="480" height="760"  gap:platform="android" gap:density="hdpi" />-->
- 	<!--<gap:splash src="splash/android/Default-xhdpi.png" width="720" height="1140" gap:platform="android" gap:density="xhdpi" />-->
+  <gap:splash src="splash/android/Default-ldpi.png"  width="320" height="460"  gap:platform="android" gap:density="ldpi" />
+ 	<gap:splash src="splash/android/Default-mdpi.png"  width="320" height="500"  gap:platform="android" gap:density="mdpi" />
+ 	<gap:splash src="splash/android/Default-hdpi.png"  width="480" height="760"  gap:platform="android" gap:density="hdpi" />
+ 	<gap:splash src="splash/android/Default-xhdpi.png" width="720" height="1140" gap:platform="android" gap:density="xhdpi" />
 
   <feature name="http://api.phonegap.com/1.0/network"/>
-  <!--<feature name="http://api.phonegap.com/1.0/camera"/>-->
-  <!--<feature name="http://api.phonegap.com/1.0/contacts"/>-->
-  <!--<feature name="http://api.phonegap.com/1.0/geolocation"/>-->
 
   <preference name="phonegap-version" value="2.2.0"/>
   <preference name="orientation" value="default"/><!-- both landscape and portrait-->
@@ -59,13 +56,13 @@
   <preference name="ios-statusbarstyle" value="black-opaque"/>
   <preference name="android-minSdkVersion" value="8" />
   <preference name="android-installLocation" value="auto" /><!-- preferExternal; preferably install on SD-card -->
-  <!--<preference name="show-splash-screen-spinner" value="true" />-->
+  <preference name="show-splash-screen-spinner" value="true" />
   <preference name="stay-in-webview" value="false" />
   <preference name="prerendered-icon" value="true" /><!-- don't add iOS gloss effect -->
 
   <gap:plugin name="BarcodeScanner" /> <!-- latest release -->
 
-  <!--reference name="splash-screen-duration" value="3000" /--> <!-- default 5000 -->
+  <reference name="splash-screen-duration" value="2000" /> <!-- default 5000 -->
 
   <!-- allow loading any url in the webview -->
   <access origin="*" />
