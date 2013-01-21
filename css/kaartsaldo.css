@@ -227,8 +227,8 @@ input::-webkit-input-placeholder {
   position: absolute;
   cursor: pointer;
   left:50%;
-  margin-left: 24px;
-  height: 22px;
+  margin-left: 18px;
+  height: 26px;
   width: 42px;
 }
 
@@ -392,7 +392,8 @@ input::-webkit-input-placeholder {
   /*border-bottom: 1px solid #eee;*/
   text-align: center;
   height: 160px;
-  padding-top: 10px;
+  padding-top: 20px;
+  margin-top: 10px;
 }
 
 #allcardsList .ui-block-b {

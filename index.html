@@ -208,7 +208,6 @@ function onConfirmRemoveCardCallback(j) {
 
 function renderMycardsList(mycards) {
   var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
-  alert(mycards.length);
   if (mycards.length > 0) {
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
