@@ -21,6 +21,16 @@
 <body>
 
 <script type="text/javascript">
+
+$(document).ready(function() {
+  // init phonegap
+  document.addEventListener('deviceready', onDeviceReady, false);
+});
+
+function onDeviceReady() {
+  navigator.splashscreen.hide();
+}
+
 function loadCardData(cardtype, cardnumber, successFunction) {
 //    var url = "http://localhost:9004/cards";
   var url = "http://www.libwat.ch/cards";
@@ -198,6 +208,7 @@ function onConfirmRemoveCardCallback(j) {
 
 function renderMycardsList(mycards) {
   var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
+  alert(mycards.length);
   if (mycards.length > 0) {
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
