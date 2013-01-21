@@ -62,7 +62,7 @@
 
   <gap:plugin name="BarcodeScanner" /> <!-- latest release -->
 
-  <reference name="splash-screen-duration" value="1500" /> <!-- default 5000 -->
+  <reference name="splash-screen-duration" value="0" /> <!-- default 5000 -->
 
   <!-- allow loading any url in the webview -->
   <access origin="*" />
