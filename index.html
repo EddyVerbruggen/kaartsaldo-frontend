@@ -305,6 +305,7 @@ function renderAllcardsList() {
 
 function processCardResponse(cardcompany, data) {
   $.mobile.loading('hide');
+  $('#typeInDialog').dialog('close');
   if (data.success) {
     // add the cardcompany and store it
     data.cardcompany = cardcompany;
@@ -331,10 +332,12 @@ function processCardResponse(cardcompany, data) {
     localStorage.setItem("mycards", JSON.stringify(mycards));
     // re-render the mycardslist
     renderMycardsList(mycards);
-    // scroll to the top, so the user sees the card
-    $.mobile.silentScroll(0);
     // re-render all cards, so the flipped card(s) is hidden
     renderAllcardsList();
+    setTimeout(function() {
+    // scroll to the top, so the user sees the card
+      $.mobile.silentScroll(0);
+    }, 500);
 //    flipBack(cardcompany);
   } else {
 //    showScanOrTypeInPrompt('Controleer je kaartkeuze en invoer. Nogmaals proberen?');
@@ -432,7 +435,7 @@ function processCardResponse(cardcompany, data) {
       <label for="cardnrEntry2" class="ui-hidden-accessible">Kaartnummer:</label>
       <input type="tel" pattern="[0-9]*" name="cardnrEntry2" id="cardnrEntry2" placeholder="kijk onder de streepjescode.." data-theme="b"/>
       <a data-inline="true" data-mini="true" data-role="button" data-theme="d" onclick="$('#typeInDialog').dialog('close'); scan(cardcompany, processCardResponse); $('#cardnrEntry2').val(''); return false">scan</a>
-      <a data-inline="true" data-mini="false" data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInDialog').dialog('close'); loadCardData(cardcompany, $('#cardnrEntry2').val(), processCardResponse); $('#cardnrEntry2').val(''); return false">Check invoer</a>
+      <a data-inline="true" data-mini="false" data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="loadCardData(cardcompany, $('#cardnrEntry2').val(), processCardResponse); $('#cardnrEntry2').val(''); return false">Check invoer</a>
     </div>
   </form>
 </div>
