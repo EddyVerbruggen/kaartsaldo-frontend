@@ -251,7 +251,7 @@ input::-webkit-input-placeholder {
   width: 134px;
 }
 
-@media (max-width:340px) {
+@media (max-width:440px) {
   .cardcompany-image-container {
     -webkit-transform: perspective(500);
   }
@@ -276,7 +276,7 @@ input::-webkit-input-placeholder {
 
   /* move the enlarged cards a bit to the middle */
   .ui-block-a .cardcompany-overlay {
-    left:-6px;
+    left:-8px;
   }
 
   .ui-block-b .cardcompany-overlay {
@@ -292,11 +292,11 @@ input::-webkit-input-placeholder {
   }
 
   .ui-block-b .cardcompany-image-container.zoom {
-    -webkit-transform: perspective(500) translateX(-20px) translateZ(180px);
+    -webkit-transform: perspective(500) translateX(-24px) translateZ(180px);
   }
 
   .ui-block-b .cardcompany-image-container.rotate {
-    -webkit-transform: perspective(500) translateX(-14px) translateZ(180px) rotateY(180deg);
+    -webkit-transform: perspective(500) translateX(-18px) translateZ(180px) rotateY(180deg);
   }
 
 }
