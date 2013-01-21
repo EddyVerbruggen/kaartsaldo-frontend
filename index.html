@@ -400,14 +400,16 @@ function processCardResponse(cardcompany, data) {
 </div>
 <!-- End page: Home page -->
 
-<div id="typeInDialog" data-role="page" data-theme="b">
-  <a data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" onclick="$('#typeInDialog').dialog('close'); return false" class="ui-btn-right">Sluiten</a>
+<div id="typeInDialog" data-role="page" data-close-btn="right" data-theme="b">
+  <!--<a data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" onclick="$('#typeInDialog').dialog('close'); return false" class="ui-btn-right">Sluiten</a>-->
+  <div data-role="header">
+    <h1>Wat is het nummer?</h1>
+  </div>
   <form>
     <div style="padding:10px 20px;">
-      <h3>Wat is het nummer onder de streepjescode?</h3>
       <p class="hint"></p>
       <label for="cardnrEntry2" class="ui-hidden-accessible">Kaartnummer:</label>
-      <input type="tel" pattern="[0-9]*" name="cardnrEntry2" id="cardnrEntry2"/>
+      <input type="tel" pattern="[0-9]*" name="cardnrEntry2" id="cardnrEntry2" placeholder="kijk onder de streepjescode.." data-theme="b"/>
       <a data-inline="true" data-mini="true" data-role="button" data-theme="d" onclick="$('#typeInDialog').dialog('close'); scan(cardcompany, processCardResponse); $('#cardnrEntry2').val(''); return false">scan</a>
       <a data-inline="true" data-mini="false" data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#typeInDialog').dialog('close'); loadCardData(cardcompany, $('#cardnrEntry2').val(), processCardResponse); $('#cardnrEntry2').val(''); return false">Check invoer</a>
     </div>

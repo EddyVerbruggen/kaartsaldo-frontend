@@ -393,10 +393,10 @@ input::-webkit-input-placeholder {
   padding-right: 0;
 }
 
-.ui-popup-container h3 {
+.ui-dialog-contain h1 {
   font-size: 0.8em;
 }
 
-.ui-popup-container .hint {
+.ui-dialog-contain .hint {
   font-size: 0.7em;
 }
