@@ -207,10 +207,8 @@ function onConfirmRemoveCardCallback(j) {
 }
 
 function renderMycardsList(mycards) {
-  alert(mycards);
-  alert(mycards.length);
   var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
-  if (mycards.length > 0) {
+  if (mycards != null && mycards.length > 0) {
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
@@ -351,11 +349,7 @@ function processCardResponse(cardcompany, data) {
     $('#homePage').live('pagebeforeshow', function (e, data) {
 
       // render the list of scanned cards
-      var mycards = localStorage.getItem("mycards");
-      alert("1: " +mycards);
-      if (mycards != null) {
-        renderMycardsList(JSON.parse(mycards));
-      }
+      renderMycardsList(JSON.parse(localStorage.getItem("mycards")));
 
       renderAllcardsList();
     });
