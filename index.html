@@ -305,7 +305,10 @@ function renderAllcardsList() {
 
 function processCardResponse(cardcompany, data) {
   $.mobile.loading('hide');
-  $('#typeInDialog').dialog('close');
+  // close a typein dialog, if active
+  if ($('#typeInDialog').hasClass('ui-page-active')) {
+    $('#typeInDialog').dialog('close');
+  }
   if (data.success) {
     // add the cardcompany and store it
     data.cardcompany = cardcompany;
@@ -337,7 +340,7 @@ function processCardResponse(cardcompany, data) {
     setTimeout(function() {
     // scroll to the top, so the user sees the card
       $.mobile.silentScroll(0);
-    }, 500);
+    }, 600);
 //    flipBack(cardcompany);
   } else {
 //    showScanOrTypeInPrompt('Controleer je kaartkeuze en invoer. Nogmaals proberen?');
