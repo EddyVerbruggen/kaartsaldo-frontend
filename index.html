@@ -197,9 +197,8 @@ function onConfirmRemoveCardCallback(j) {
 }
 
 function renderMycardsList(mycards) {
-  var htmlMyCards = '';
+  var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
   if (mycards.length > 0) {
-    htmlMyCards += '<li data-role="list-divider">Mijn kaarten</li>';
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
@@ -211,14 +210,29 @@ function renderMycardsList(mycards) {
           '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
-//          '      <div class="refresh"><a href="#" onclick="$(this).parent().addClass(\'spin\'); refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
           '      <div class="refresh"><a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
           '      <div class="remove"><a href="#" onclick="removeCard(\'' + mycard.cardnumber + '\')"><img src="img/trash.png" width="16px" height="16px" border="0"/></a></div>' +
           '    </div>' +
           '  </div>' +
-  //          '  </a>' +
           '</li>';
     });
+  } else {
+    // show a nice helptext about adding your own cards
+    htmlMyCards += '' +
+        '<li data-role="fieldcontain">' +
+        '  <img src="img/card/_nocard.png" />' +
+        '  <div class="ui-grid-a">' +
+        '    <div class="ui-block-a">' +
+        '      <h3><div class="euro">&euro;</div>0,00</h3>' +
+        '      <p>Je hebt nog geen kaart gescand.</p>' +
+        '      <p class="cardnumber">Klik op het logo van uw cadeaukaart.</p>' +
+        '    </div>' +
+        '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
+        '      <div class="refresh"><img src="img/refresh.png" width="15px" height="16px" border="0"/></div>' +
+        '      <div class="remove"><img src="img/trash.png" width="16px" height="16px" border="0"/></div>' +
+        '    </div>' +
+        '  </div>' +
+        '</li>';
   }
   $("#mycardsList").html(htmlMyCards);
   $("#mycardsList").listview("refresh");
