@@ -273,6 +273,14 @@ input::-webkit-input-placeholder {
   .cardcompany-overlay img {
     width: 134px;
   }
+  /* move the flipped card a bit to the middle */
+  .ui-block-a .cardcompany-overlay {
+    left:-4px;
+  }
+
+  .ui-block-b .cardcompany-overlay {
+    left:4px;
+  }
 }
 
 .ui-li-heading {
@@ -399,4 +407,8 @@ input::-webkit-input-placeholder {
 
 .ui-dialog-contain .hint {
   font-size: 0.7em;
+}
+
+.ui-header .ui-title {
+  margin: 0.6em 20% 0.8em;
 }

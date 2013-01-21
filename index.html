@@ -268,7 +268,7 @@ function renderAllcardsList() {
 //        '      <span class="cardname">'+card[1]+'</span>' +
         '      <a class="close" onclick="flipBack(\'container-'+card[0]+'\')"></a>' +
         '      <a class="scan" onclick="scan(\''+card[0]+'\', processCardResponse)"></a>' +
-        '      <a class="type" data-rel="dialog" href="#typeInDialog" onclick="prepareTypeInDialog(\''+card[0]+'\')"></a>' +
+        '      <a class="type" data-rel="dialog" data-transition="flip" href="#typeInDialog" onclick="prepareTypeInDialog(\''+card[0]+'\')"></a>' +
         '    </div>' +
         '  </div>' +
         '</div>';
