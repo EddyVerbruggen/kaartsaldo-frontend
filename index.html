@@ -290,7 +290,7 @@ function renderAllcardsList() {
         '    <div class="cardcompany-overlay"><img src="img/card-backside.png"/></div>' +
         '    <div class="cardcompany-buttons">' +
 //        '      <span class="cardname">'+card[1]+'</span>' +
-        '      <a class="close" onclick="flipBack(\'container-'+card[0]+'\')"></a>' +
+        '      <a class="close" onclick="flipBack(\'#container-'+card[0]+'\')"></a>' +
         '      <a class="scan" onclick="scan(\''+card[0]+'\', processCardResponse)"></a>' +
         '      <a class="type" data-rel="dialog" data-transition="slidedown" href="#typeInDialog" onclick="prepareTypeInDialog(\''+card[0]+'\')"></a>' +
         '    </div>' +
@@ -366,19 +366,29 @@ function processCardResponse(cardcompany, data) {
       var cardcompany = $(that).attr("data-cardcompany");
       var testcardnr = $(that).attr("data-testcard");
 //        confirmInputtype(cardcompany, testcardnr);
+      flipBackAll();
       $(that).addClass('zoom');
       setTimeout(function() {
         $(that).addClass('rotate');
       }, 750);
     }
 
-    function flipBack(elem) {
-      $("#"+elem).removeClass('zoom').removeClass('rotate').addClass('rotateBack');
-      // init the element for a new click
-      setTimeout(function() {
-        $("#"+elem).bind("click", onClickBehaviourForCards);
-        $("#"+elem).removeClass('rotateBack');
-      }, 1300); // animation ends after 1250
+    function flipBackAll() {
+      $(".cardcompany-image-container").each(function(i, flipContainer) {
+        flipBack(flipContainer);
+      })
+    }
+
+    function flipBack(elemt) {
+      var elem = $(elemt);
+      if (elem.hasClass('zoom')) {
+        $(elem).removeClass('zoom').removeClass('rotate').addClass('rotateBack');
+        // init the element for a new click
+        setTimeout(function() {
+          $(elem).bind("click", onClickBehaviourForCards);
+          $(elem).removeClass('rotateBack');
+        }, 1300); // animation ends after 1250
+      }
     }
   </script>
   <div>
