@@ -227,23 +227,23 @@ input::-webkit-input-placeholder {
   position: absolute;
   cursor: pointer;
   left:50%;
-  margin-left: 18px;
+  margin-left: 22px;
   height: 26px;
   width: 42px;
 }
 
 .cardcompany-buttons .close {
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   top:0;
 }
 
 .cardcompany-buttons .scan {
-  border: 1px solid blue;
+  /*border: 1px solid blue;*/
   top:34px;
 }
 
 .cardcompany-buttons .type {
-  border: 1px solid green;
+  /*border: 1px solid green;*/
   top:60px;
 }
 
@@ -272,6 +272,10 @@ input::-webkit-input-placeholder {
 
   .cardcompany-overlay img {
     width: 134px;
+  }
+
+  .cardcompany-buttons a {
+    margin-left: 32px;
   }
 
   /* move the enlarged cards a bit to the middle */
