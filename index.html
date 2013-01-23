@@ -85,7 +85,8 @@ function confirmInputtype(cardcompany, testcardnr) {
     showScanOrTypeInPrompt("Hoe wil je de kaart toevoegen?");
   } else {
     if (confirm('Wil je scannen?')) {
-      if (localStorage.getItem("hasSeenHowToScanInstructions") == null) {
+      // show an instruction popup for iOS, because it's a bit tricky on that platform atm
+      if (isIOS() && localStorage.getItem("hasSeenHowToScanInstructions") == null) {
         $('#scanInstructionsPopup').popup('open', {transition: 'pop'});
       } else {
         loadCardData(cardcompany, testcardnr, processCardResponse);

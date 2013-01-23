@@ -27,10 +27,10 @@
   <icon src="icons/ios/icon-72_at_2x.png" gap:platform="ios" width="144" height="144" />
 
   <!-- Android icons -->
-  <icon src="icons/android/ldpi.png"  gap:platform="android" gap:density="ldpi" width="36" height="36" />
-  <icon src="icons/android/mdpi.png"  gap:platform="android" gap:density="mdpi" width="48" height="48" />
-  <icon src="icons/android/hdpi.png"  gap:platform="android" gap:density="hdpi" width="72" height="72" />
-  <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" width="96" height="96" />
+  <icon src="icons/android/ldpi.png"  gap:platform="android" gap:density="ldpi" />
+  <icon src="icons/android/mdpi.png"  gap:platform="android" gap:density="mdpi" />
+  <icon src="icons/android/hdpi.png"  gap:platform="android" gap:density="hdpi" />
+  <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
   <!-- iPhone splash -->
   <gap:splash src="splash/ios/Default.png"         gap:platform="ios" width="320" height="480" />
@@ -42,14 +42,16 @@
   <gap:splash src="splash/ios/Default-Landscape-ipad.png" gap:platform="ios" width="1024" height="768" />
 
   <!-- Android splash -->
-  <gap:splash src="splash/android/Default-ldpi.png"  width="320" height="460"  gap:platform="android" gap:density="ldpi" />
- 	<gap:splash src="splash/android/Default-mdpi.png"  width="320" height="500"  gap:platform="android" gap:density="mdpi" />
- 	<gap:splash src="splash/android/Default-hdpi.png"  width="480" height="760"  gap:platform="android" gap:density="hdpi" />
- 	<gap:splash src="splash/android/Default-xhdpi.png" width="720" height="1140" gap:platform="android" gap:density="xhdpi" />
+  <gap:splash src="splash/android/Default-ldpi.png"  gap:platform="android" gap:density="ldpi" />
+ 	<gap:splash src="splash/android/Default-mdpi.png"  gap:platform="android" gap:density="mdpi" />
+ 	<gap:splash src="splash/android/Default-hdpi.png"  gap:platform="android" gap:density="hdpi" />
+ 	<gap:splash src="splash/android/Default-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
   <feature name="http://api.phonegap.com/1.0/network"/>
 
   <preference name="phonegap-version" value="2.2.0"/>
+  <preference name="fullscreen" value="false" />
+  <preference name="detect-data-types" value="false" />
   <preference name="orientation" value="portrait"/><!-- both landscape and portrait-->
   <preference name="target-device" value="universal"/>
   <preference name="webviewbounce" value="true"/><!-- iOS rubber banding -->
@@ -59,14 +61,14 @@
   <preference name="show-splash-screen-spinner" value="true" />
   <preference name="stay-in-webview" value="false" />
   <preference name="prerendered-icon" value="true" /><!-- don't add iOS gloss effect -->
+  <preference name="exit-on-suspend" value="true" />
+  <preference name="auto-hide-splash-screen" value="false" /><!-- we're hiding it with js -->
 
   <gap:plugin name="BarcodeScanner" /> <!-- latest release -->
 
   <!--reference name="splash-screen-duration" value="2000" /--> <!-- default 5000 -->
-  <preference name="auto-hide-splash-screen" value="false" /><!-- hiding it with js -->
 
   <!-- allow loading any url in the webview -->
   <access origin="*" />
-  <preference name="exit-on-suspend" value="true" />
 
 </widget>
