@@ -233,7 +233,7 @@ function renderMycardsList(mycards) {
         '  <img src="img/card/_nocard.png" />' +
         '  <div class="ui-grid-a">' +
         '    <div class="ui-block-a">' +
-        '      <h3><div class="euro">&euro;</div>0,00</h3>' +
+        '      <h3><div class="euro">&euro;</div>0,<span class="cents"><sup>00</sup></span></h3>' +
         '      <p>Je hebt geen gescande kaarten</p>' +
         '      <p class="cardnumber">Kies hieronder je cadeaukaart</p>' +
         '    </div>' +
@@ -272,7 +272,7 @@ var allcards = new Array(
     new Array("weekendjeweg", "Weekendjeweg.nl", "6064364100963753522"),
 //    new Array("wehkamp", "Wehkamp.nl", ""),
     new Array("xenos", "Xenos", "6064363401005809851"),
-    new Array("yourgift", "Your Gift", "")
+    new Array("yourgift", "YourGift Card", "")
 );
 
 function renderAllcardsList() {
