@@ -52,7 +52,7 @@
   <preference name="phonegap-version" value="2.2.0"/>
   <preference name="fullscreen" value="false" />
   <preference name="detect-data-types" value="false" />
-  <preference name="orientation" value="portrait"/><!-- both landscape and portrait-->
+  <preference name="orientation" value="default"/><!-- both/landscape/portrait-->
   <preference name="target-device" value="universal"/>
   <preference name="webviewbounce" value="true"/><!-- iOS rubber banding -->
   <preference name="ios-statusbarstyle" value="black-opaque"/>
