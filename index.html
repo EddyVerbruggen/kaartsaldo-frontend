@@ -129,17 +129,24 @@ function closeScanInstructionsPopup() {
 }
 
 function encodeTextAsBarcode(text) {
+  // This plugin supports only QR codes, so using our own backend
+  /*
   window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, text, function(success) {
         alert("encode success: " + success);
       }, function(fail) {
         alert("encoding failed: " + fail);
       }
     );
+  */
+
+  $("#barcodeImage").attr("src", "https://morning-stone-3983.herokuapp.com/barcode/"+text);
+  $('#barcodePopup').popup('open', {transition: 'pop'});
+
 }
 
 function scan(cardcompany, successFunction) {
-  // check if we have shown the how-to instructions yet
-  if (localStorage.getItem("hasSeenHowToScanInstructions") == null) {
+  // check if we have shown the how-to instructions yet (iOS only, as it's a bit harder)
+  if (isIOS() && localStorage.getItem("hasSeenHowToScanInstructions") == null) {
     $('#scanInstructionsPopup').popup('open', {transition: 'pop'});
   } else {
     window.plugins.barcodeScanner.scan(function (result) {
@@ -227,6 +234,7 @@ function renderMycardsList(mycards) {
           '      <h3><div class="euro">&euro;</div>' + formatAmount(mycard.saldo) + '</h3>' +
           '      <p>saldo op ' + getDateString(mycard.checkdate) + '</p>' +
           '      <p class="cardnumber"><a href="" onclick="encodeTextAsBarcode(\''+mycard.cardnumber+'\')">' + formatCardnumber(mycard.cardnumber) + '</a></p>' +
+//          '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
           '      <div class="refresh"><a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
@@ -422,6 +430,16 @@ function processCardResponse(cardcompany, data) {
         <h3>Zorg voor een beeldvullende streepjescode:</h3>
         <img src="img/scanhint-framed.png" width="150px"/>
         <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#scanInstructionsPopup').popup('close'); closeScanInstructionsPopup(); return false">OK, scannen maar!</a>
+      </div>
+    </form>
+  </div>
+
+  <div data-role="popup" id="barcodePopup" data-theme="a" class="ui-corner-all">
+    <form>
+      <div style="padding:10px 20px; text-align: center">
+        <!--<h3>Zorg voor een beeldvullende streepjescode:</h3>-->
+        <img id="barcodeImage" src=""/>
+        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#barcodePopup').popup('close'); return false">Dank u!</a>
       </div>
     </form>
   </div>
