@@ -154,6 +154,7 @@ function postLoadingBarcodePopup(amount) {
 }
 
 function removeBarcodeFromPopup() {
+  $("#barcodePopup #barcodePopupAmount").html("");
   $("#barcodePopup #barcodeImage").attr("src", "");
 }
 
@@ -241,8 +242,8 @@ function renderMycardsList(mycards) {
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
-          '  <img class="cardImage" src="img/card/' + mycard.cardcompany + '.png" onclick="encodeTextAsBarcode(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"/>' +
-          '  <div class="zoomIconContainer"><img src="img/zoom.png" width="32px" height="32px"/></div>' +
+          '  <img class="pointer" src="img/card/' + mycard.cardcompany + '.png" onclick="encodeTextAsBarcode(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"/>' +
+          '  <div class="zoomIconContainer"><img class="pointer" src="img/zoom.png" width="32px" height="32px"  onclick="encodeTextAsBarcode(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"/></div>' +
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
           '      <h3><div class="euro">&euro;</div>' + formatAmount(mycard.saldo) + '</h3>' +
@@ -312,7 +313,7 @@ function renderAllcardsList() {
         '<div class="ui-block-' + (i % 2 == 0 ? 'a' : 'b') + '">' +
         '  <div class="cardcompany-name">' + card[1] + '</div>' +
         '  <div id="container-'+card[0]+'" class="cardcompany-image-container" data-cardcompany="' + card[0] + '" data-testcard="' + card[2] + '">' +
-        '    <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="scanButton" alt="' + card[0] + '"/></div>' +
+        '    <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="pointer scanButton" alt="' + card[0] + '"/></div>' +
         '    <div class="cardcompany-overlay"><img src="img/card-backside.png"/></div>' +
         '    <div class="cardcompany-buttons">' +
         '      <a class="close" onclick="flipBack(\'#container-'+card[0]+'\')"></a>' +
@@ -367,7 +368,9 @@ function processCardResponse(cardcompany, data) {
       $.mobile.silentScroll(0);
     }, 600);
   } else {
-    navigator.notification.alert('Controleer uw kaartkeuze en invoer. Of is de kaart nog niet actief?', null, 'Nummer niet herkend', 'OK');
+    setTimeout(function() {
+      navigator.notification.alert('Controleer uw kaartkeuze en invoer. Of is de kaart nog niet actief?', null, 'Nummer niet herkend', 'OK');
+    }, 500);
   }
 }
 </script>

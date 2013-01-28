@@ -132,7 +132,6 @@ input::-webkit-input-placeholder {
 
 .scanButton {
   max-width: 134px;
-  cursor: pointer;
 }
 
 .cardcompany-image-container {
@@ -423,9 +422,10 @@ input::-webkit-input-placeholder {
   float: right;
   clear: none;
   padding: 10px;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #000;
+  /*border-radius: 5px;*/
+  /*background-color: #fff;*/
+  color: #fff;
+  text-shadow: #000 0 1px 1px;
   font-size: 30px;
   top: 20px;
   right: 20px;
@@ -439,6 +439,6 @@ input::-webkit-input-placeholder {
   opacity: 0.85;
 }
 
-.cardImage {
+.pointer {
   cursor: pointer;
 }
