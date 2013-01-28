@@ -128,6 +128,15 @@ function closeScanInstructionsPopup() {
   }
 }
 
+function encodeTextAsBarcode(text) {
+  window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, text, function(success) {
+        alert("encode success: " + success);
+      }, function(fail) {
+        alert("encoding failed: " + fail);
+      }
+    );
+}
+
 function scan(cardcompany, successFunction) {
   // check if we have shown the how-to instructions yet
   if (localStorage.getItem("hasSeenHowToScanInstructions") == null) {
@@ -217,7 +226,7 @@ function renderMycardsList(mycards) {
           '    <div class="ui-block-a">' +
           '      <h3><div class="euro">&euro;</div>' + formatAmount(mycard.saldo) + '</h3>' +
           '      <p>saldo op ' + getDateString(mycard.checkdate) + '</p>' +
-          '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
+          '      <p class="cardnumber"><a href="" onclick="encodeTextAsBarcode(\''+mycard.cardnumber+'\')">' + formatCardnumber(mycard.cardnumber) + '</a></p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
           '      <div class="refresh"><a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
