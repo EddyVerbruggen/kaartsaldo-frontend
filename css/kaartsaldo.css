@@ -405,14 +405,11 @@ input::-webkit-input-placeholder {
   background-repeat: no-repeat;
   width: 292px;
   height: 185px;
+  display: block;
 }
 
 #barcodePopup #barcodeImageContainer {
   text-align: center;
-  display: block;
-  width: 300px;
-  height: 200px;
-  border: 1px solid red;
 }
 
 #barcodePopup #barcodeImage {
