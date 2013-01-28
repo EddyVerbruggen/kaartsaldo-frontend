@@ -142,7 +142,7 @@ function encodeTextAsBarcode(company, text) {
     );
   */
 
-  $("#barcodePopup").css({"background-image" : "url('/img/card/" + company + ".png')"});
+  $("#barcodePopup").css({"background-image" : "url('img/card/" + company + ".png')"});
   $("#barcodePopup #barcodeImage").attr("src", "https://morning-stone-3983.herokuapp.com/barcode/"+text);
   $('#barcodePopup').popup('open', {transition: 'pop'});
 
