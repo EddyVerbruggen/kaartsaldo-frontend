@@ -155,7 +155,7 @@ function postLoadingBarcodePopup(amount) {
 
 function removeBarcodeFromPopup() {
   $("#barcodePopup #barcodePopupAmount").html("");
-  $("#barcodePopup #barcodeImage").attr("src", "");
+  $("#barcodePopup #barcodeImage").attr("src", "img/spacer.gif");
 }
 
 function scan(cardcompany, successFunction) {
@@ -455,7 +455,7 @@ function processCardResponse(cardcompany, data) {
     <form>
       <div id="barcodeImageContainer" style="text-align: center">
         <div id="barcodePopupAmount"></div>
-        <img id="barcodeImage" src="" width="273px" height="66px"/>
+        <img id="barcodeImage" src="img/spacer.gif" width="273px" height="66px"/>
       </div>
     </form>
   </div>
