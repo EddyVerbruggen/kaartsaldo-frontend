@@ -14,7 +14,7 @@ function formatAmount(amount) {
     amount += ",00";
   }
   var amountFormatted = amount.substr(0, amount.indexOf(",")+1);
-  amountFormatted += '<span class="cents"><sup>' + amount.substr(amount.indexOf(",")+1) + '</sup></span>';
+  amountFormatted += '<span class=cents><sup>' + amount.substr(amount.indexOf(",")+1) + '</sup></span>';
   return amountFormatted;
 }
 

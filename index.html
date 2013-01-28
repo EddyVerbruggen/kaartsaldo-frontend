@@ -30,7 +30,7 @@ function onDeviceReady() {
   navigator.splashscreen.hide();
 }
 
-function loadCardData(cardtype, cardnumber, successFunction) {
+function loadCardData(cardtype, cardnumber, successFunction, postSuccessFunction) {
 //    var url = "http://localhost:9004/cards";
 //  var url = "http://www.libwat.ch/cards";
   // for SSL, we can use this url, which is libwat.ch
@@ -51,7 +51,10 @@ function loadCardData(cardtype, cardnumber, successFunction) {
       type:'POST',
       url:url,
       success:function (data) {
-        successFunction(cardtype, data)
+        successFunction(cardtype, data);
+        if (postSuccessFunction !== undefined) {
+          postSuccessFunction(data.saldo);
+        }
       },
       error:function () {
         $.mobile.loading('hide');
@@ -128,7 +131,7 @@ function closeScanInstructionsPopup() {
   }
 }
 
-function encodeTextAsBarcode(text) {
+function encodeTextAsBarcode(company, text) {
   // This plugin supports only QR codes, so using our own backend
   /*
   window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, text, function(success) {
@@ -139,9 +142,19 @@ function encodeTextAsBarcode(text) {
     );
   */
 
-  $("#barcodeImage").attr("src", "https://morning-stone-3983.herokuapp.com/barcode/"+text);
+  $("#barcodePopup").css({"background-image" : "url('/img/card/" + company + ".png')"});
+  $("#barcodePopup #barcodeImage").attr("src", "https://morning-stone-3983.herokuapp.com/barcode/"+text);
   $('#barcodePopup').popup('open', {transition: 'pop'});
 
+  refreshBalance(company, text, postLoadingBarcodePopup);
+}
+
+function postLoadingBarcodePopup(amount) {
+  $("#barcodePopup #barcodePopupAmount").html("&euro; " + formatAmount(amount));
+}
+
+function removeBarcodeFromPopup() {
+  $("#barcodePopup #barcodeImage").attr("src", "");
 }
 
 function scan(cardcompany, successFunction) {
@@ -179,11 +192,11 @@ function doTestScan() {
   );
 }
 
-function refreshBalance(companyname, cardnumber) {
+function refreshBalance(companyname, cardnumber, postSuccessFunction) {
   var mycards = JSON.parse(localStorage.getItem("mycards"));
   $.each(mycards, function (i, mycard) {
     if (mycard.cardnumber == cardnumber) {
-      loadCardData(companyname, cardnumber, processCardResponse);
+      loadCardData(companyname, cardnumber, processCardResponse, postSuccessFunction);
       return false; // breaks the loop
     }
   });
@@ -228,13 +241,13 @@ function renderMycardsList(mycards) {
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
-          '  <img src="img/card/' + mycard.cardcompany + '.png" />' +
+          '  <img class="cardImage" src="img/card/' + mycard.cardcompany + '.png" onclick="encodeTextAsBarcode(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"/>' +
+          '  <div class="zoomIconContainer"><img src="img/zoom.png" width="32px" height="32px"/></div>' +
           '  <div class="ui-grid-a">' +
           '    <div class="ui-block-a">' +
           '      <h3><div class="euro">&euro;</div>' + formatAmount(mycard.saldo) + '</h3>' +
           '      <p>saldo op ' + getDateString(mycard.checkdate) + '</p>' +
-          '      <p class="cardnumber"><a href="" onclick="encodeTextAsBarcode(\''+mycard.cardnumber+'\')">' + formatCardnumber(mycard.cardnumber) + '</a></p>' +
-//          '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
+          '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
           '      <div class="refresh"><a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
@@ -435,15 +448,14 @@ function processCardResponse(cardcompany, data) {
   </div>
 
   <div data-role="popup" id="barcodePopup" data-theme="a" class="ui-corner-all">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right" onclick="removeBarcodeFromPopup()">Close</a>
     <form>
-      <div style="padding:10px 20px; text-align: center">
-        <!--<h3>Zorg voor een beeldvullende streepjescode:</h3>-->
-        <img id="barcodeImage" src=""/>
-        <a data-icon="arrow-r" data-role="button" data-theme="b" data-iconpos="right" onclick="$('#barcodePopup').popup('close'); return false">Dank u!</a>
+      <div id="barcodeImageContainer" style="text-align: center">
+        <div id="barcodePopupAmount"></div>
+        <img id="barcodeImage" src="" width="273px" height="66px"/>
       </div>
     </form>
   </div>
-
 </div>
 <!-- End page: Home page -->
 
