@@ -36,6 +36,18 @@ function onDeviceReady() {
   gaPlugin.init(gaInitSuccessHandler, gaInitErrorHandler, "UA-28850866-5", 8); // last argument is push interval (in seconds)
 }
 
+function gaInitSuccessHandler() {
+}
+
+function gaInitErrorHandler() {
+}
+
+function gaPluginResultHandler() {
+}
+
+function gaPluginErrorHandler() {
+}
+
 function googleAnalytics_trackPage(page) {
   if (gaPlugin !== undefined) {
     gaPlugin.trackPage(gaPluginResultHandler, gaPluginErrorHandler, page);
