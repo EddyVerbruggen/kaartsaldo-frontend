@@ -48,20 +48,13 @@ function gaPluginResultHandler() {
 function gaPluginErrorHandler() {
 }
 
-function googleAnalytics_trackPage(page) {
+function googleAnalytics(page) {
   if (gaPlugin !== undefined) {
     gaPlugin.trackPage(gaPluginResultHandler, gaPluginErrorHandler, page);
   }
 }
 
-function googleAnalytics_trackEvent(eventType /*button*/, eventAction /*click*/, eventLabel /* send mail*/, eventParam /* anything */) {
-  if (gaPlugin !== undefined) {
-    gaPlugin.trackEvent(gaPluginResultHandler, gaPluginErrorHandler, eventType, eventAction, eventLabel, eventParam);
-  }
-}
-
 function loadCardData(cardtype, cardnumber, successFunction, postSuccessFunction) {
-//    var url = "http://localhost:9004/cards";
 //  var url = "http://www.libwat.ch/cards";
   // for SSL, we can use this url, which is libwat.ch
   var url = "https://morning-stone-3983.herokuapp.com/cards";
@@ -102,6 +95,7 @@ var cardcompany;
 var testcardnr;
 
 function showScanOrTypeInPrompt(msg) {
+  googleAnalytics("showscanortypeinprompt");
   navigator.notification.confirm(
       msg, // message
       onConfirmCallback, // callback to invoke with index of button pressed
@@ -147,6 +141,7 @@ function openTypeInPopup(cardcompany) {
 }
 
 function prepareTypeInDialog(cardcompany) {
+  googleAnalytics("typein/clicked/"+cardcompany);
   this.cardcompany = cardcompany;
   $('#typeInDialog .hint').html('');
   $('#typeInDialog').dialog({overlayTheme:'a'});
@@ -189,6 +184,7 @@ function removeBarcodeFromPopup() {
 }
 
 function scan(cardcompany, successFunction) {
+  googleAnalytics("scan/clicked/"+cardcompany);
   // check if we have shown the how-to instructions yet (iOS only, as it's a bit harder)
   if (isIOS() && localStorage.getItem("hasSeenHowToScanInstructions") == null) {
     $('#scanInstructionsPopup').popup('open', {transition: 'pop'});
@@ -211,23 +207,12 @@ function scan(cardcompany, successFunction) {
   }
 }
 
-function doTestScan() {
-  window.plugins.barcodeScanner.scan(function (result) {
-        if (!result.cancelled) {
-          // Successfully scanned a bar code
-          $("#scanTestResult").append("<br/>Gescand: " + result.text + " (" + result.format + ")");
-        }
-      }, function (error) {
-        $("#scanTestResult").html("Scan mislukt: " + error);
-      }
-  );
-}
-
 function refreshBalance(companyname, cardnumber, postSuccessFunction) {
   var mycards = JSON.parse(localStorage.getItem("mycards"));
   $.each(mycards, function (i, mycard) {
     if (mycard.cardnumber == cardnumber) {
       loadCardData(companyname, cardnumber, processCardResponse, postSuccessFunction);
+      googleAnalytics("refreshbalance/"+companyname);
       return false; // breaks the loop
     }
   });
@@ -236,6 +221,7 @@ function refreshBalance(companyname, cardnumber, postSuccessFunction) {
 var removeCardnumber;
 
 function removeCard(cardnumber) {
+  googleAnalytics("removecard/clicked");
   this.removeCardnumber = cardnumber;
   if (isIOS() || isAndroid()) {
     navigator.notification.confirm(
@@ -260,6 +246,7 @@ function onConfirmRemoveCardCallback(j) {
         mycards.splice(i, 1); // TODO this creates an empty entry
         localStorage.setItem("mycards", JSON.stringify(mycards));
         renderMycardsList(mycards);
+        googleAnalytics("removecard/confirmed");
         return false; // breaks the loop
       }
     });
@@ -368,6 +355,7 @@ function processCardResponse(cardcompany, data) {
     $('#typeInDialog').dialog('close');
   }
   if (data.success) {
+    googleAnalytics("cardresponse/success/"+cardcompany);
     // add the cardcompany and store it
     data.cardcompany = cardcompany;
     var mycards = localStorage.getItem("mycards");
@@ -401,6 +389,7 @@ function processCardResponse(cardcompany, data) {
     }, 600);
   } else {
     setTimeout(function() {
+      googleAnalytics("cardresponse/failure/"+cardcompany);
       navigator.notification.alert('Controleer uw kaartkeuze en invoer. Of de kaart is (nog) niet actief.', null, 'Nummer niet herkend', 'OK');
     }, 500);
   }
@@ -411,8 +400,7 @@ function processCardResponse(cardcompany, data) {
 <div id="homePage" data-role="page">
   <script language="JavaScript">
     $('#homePage').live('pagebeforeshow', function (e, data) {
-      googleAnalytics_trackPage("home");
-
+      googleAnalytics("home");
       // render the list of scanned cards
       renderMycardsList(JSON.parse(localStorage.getItem("mycards")));
 
@@ -424,8 +412,7 @@ function processCardResponse(cardcompany, data) {
       $(that).unbind("click");
       var cardcompany = $(that).attr("data-cardcompany");
       var testcardnr = $(that).attr("data-testcard");
-//      googleAnalytics_trackPage("clickcard/"+cardcompany);
-      googleAnalytics_trackEvent("card", "click", cardcompany, 1);
+      googleAnalytics("clickcard/"+cardcompany);
       flipBackAll();
       $(that).addClass('zoom');
       setTimeout(function() {
