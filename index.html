@@ -425,7 +425,7 @@ function processCardResponse(cardcompany, data) {
       var cardcompany = $(that).attr("data-cardcompany");
       var testcardnr = $(that).attr("data-testcard");
 //      googleAnalytics_trackPage("clickcard/"+cardcompany);
-      googleAnalytics_trackEvent("card", "click", cardcompany);
+      googleAnalytics_trackEvent("card", "click", cardcompany, 1);
       flipBackAll();
       $(that).addClass('zoom');
       setTimeout(function() {
