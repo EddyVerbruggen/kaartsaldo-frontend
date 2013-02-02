@@ -44,7 +44,7 @@ function googleAnalytics_trackPage(page) {
 
 function googleAnalytics_trackEvent(eventType /*button*/, eventAction /*click*/, eventLabel /* send mail*/, eventParam /* anything */) {
   if (gaPlugin !== undefined) {
-    gaPlugin.trackEvent(gaPluginResultHandler, gaPluginErrorHandler, page);
+    gaPlugin.trackEvent(gaPluginResultHandler, gaPluginErrorHandler, eventType, eventAction, eventLabel, eventParam);
   }
 }
 
