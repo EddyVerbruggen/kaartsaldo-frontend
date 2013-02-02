@@ -15,6 +15,7 @@
   <script src="js/jqm-init.js"></script>
   <script src="js/lib/jquery.mobile-1.3.0-beta.1.min.js"></script>
   <script src="phonegap.js"></script>
+  <script src="GAPlugin.js"></script>
   <script src="barcodescanner.js"></script>
 </head>
 <body>
@@ -26,8 +27,25 @@ $(document).ready(function() {
   document.addEventListener('deviceready', onDeviceReady, false);
 });
 
+// Google Analytics
+var gaPlugin;
+
 function onDeviceReady() {
   navigator.splashscreen.hide();
+  gaPlugin = window.plugins.gaPlugin;
+  gaPlugin.init(gaInitSuccessHandler, gaInitErrorHandler, "UA-28850866-5", 8); // last argument is push interval (in seconds)
+}
+
+function googleAnalytics_trackPage(page) {
+  if (gaPlugin !== undefined) {
+    gaPlugin.trackPage(gaPluginResultHandler, gaPluginErrorHandler, page);
+  }
+}
+
+function googleAnalytics_trackEvent(eventType /*button*/, eventAction /*click*/, eventLabel /* send mail*/, eventParam /* anything */) {
+  if (gaPlugin !== undefined) {
+    gaPlugin.trackEvent(gaPluginResultHandler, gaPluginErrorHandler, page);
+  }
 }
 
 function loadCardData(cardtype, cardnumber, successFunction, postSuccessFunction) {
@@ -371,7 +389,7 @@ function processCardResponse(cardcompany, data) {
     }, 600);
   } else {
     setTimeout(function() {
-      navigator.notification.alert('Controleer uw kaartkeuze en invoer. Of is de kaart nog niet actief?', null, 'Nummer niet herkend', 'OK');
+      navigator.notification.alert('Controleer uw kaartkeuze en invoer. Of de kaart is (nog) niet actief.', null, 'Nummer niet herkend', 'OK');
     }, 500);
   }
 }
@@ -381,6 +399,7 @@ function processCardResponse(cardcompany, data) {
 <div id="homePage" data-role="page">
   <script language="JavaScript">
     $('#homePage').live('pagebeforeshow', function (e, data) {
+      googleAnalytics_trackPage("home");
 
       // render the list of scanned cards
       renderMycardsList(JSON.parse(localStorage.getItem("mycards")));
@@ -393,6 +412,8 @@ function processCardResponse(cardcompany, data) {
       $(that).unbind("click");
       var cardcompany = $(that).attr("data-cardcompany");
       var testcardnr = $(that).attr("data-testcard");
+//      googleAnalytics_trackPage("clickcard/"+cardcompany);
+      googleAnalytics_trackEvent("card", "click", cardcompany);
       flipBackAll();
       $(that).addClass('zoom');
       setTimeout(function() {
