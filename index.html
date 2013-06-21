@@ -409,9 +409,14 @@ function processCardResponse(cardcompany, data) {
       googleAnalytics("home");
 
       alert(2);
-      alert(localStorage.getItem("mycards"));
+      var mycards = localStorage.getItem("mycards");
+      if (mycards != null) {
+        mycards = JSON.parse(mycards);
+      }
+
+      alert("2a");
       // render the list of scanned cards
-      renderMycardsList(JSON.parse(localStorage.getItem("mycards")));
+      renderMycardsList(mycards);
 
       alert(3);
       renderAllcardsList();
