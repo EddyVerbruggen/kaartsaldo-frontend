@@ -24,9 +24,7 @@
 
 $(document).ready(function() {
   // init phonegap
-  alert("document ready");
   document.addEventListener('deviceready', onDeviceReady, false);
-  alert("device ready");
 });
 
 // Google Analytics
@@ -261,6 +259,7 @@ function onConfirmRemoveCardCallback(j) {
 function renderMycardsList(mycards) {
   var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
   if (mycards != null && mycards.length > 0) {
+    alert(6);
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
@@ -280,6 +279,7 @@ function renderMycardsList(mycards) {
           '</li>';
     });
   } else {
+    alert(5);
     // show a nice helptext about adding your own cards
     htmlMyCards += '' +
         '<li data-role="fieldcontain">' +
@@ -295,6 +295,7 @@ function renderMycardsList(mycards) {
   }
   $("#mycardsList").html(htmlMyCards);
   $("#mycardsList").listview("refresh");
+  alert(7);
 }
 
 // TODO add prefix and check when scanning/typing
@@ -405,7 +406,6 @@ function processCardResponse(cardcompany, data) {
 <div id="homePage" data-role="page">
   <script language="JavaScript">
     $('#homePage').live('pagebeforeshow', function (e, data) {
-      alert(1);
       googleAnalytics("home");
 
       alert(2);
