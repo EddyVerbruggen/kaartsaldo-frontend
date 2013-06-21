@@ -400,11 +400,17 @@ function processCardResponse(cardcompany, data) {
 <div id="homePage" data-role="page">
   <script language="JavaScript">
     $('#homePage').live('pagebeforeshow', function (e, data) {
+      alert(1);
       googleAnalytics("home");
+
+      alert(2);
       // render the list of scanned cards
       renderMycardsList(JSON.parse(localStorage.getItem("mycards")));
 
+      alert(3);
       renderAllcardsList();
+
+      alert(4);
     });
 
     function onClickBehaviourForCards() {
