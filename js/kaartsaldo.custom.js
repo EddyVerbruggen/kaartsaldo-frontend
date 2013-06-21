@@ -1,8 +1,8 @@
 "use strict";
 
-//window.onerror = function(message, url, linenumber) {
-//  alert("JavaScript error: " + message + " on line " + linenumber + " for " + url);
-//};
+window.onerror = function(message, url, linenumber) {
+  alert("JavaScript error: " + message + " on line " + linenumber + " for " + url);
+};
 
 function isAndroid() {
   return navigator.userAgent.toLowerCase().indexOf("android") > -1;
