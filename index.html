@@ -24,7 +24,9 @@
 
 $(document).ready(function() {
   // init phonegap
+  alert("document ready");
   document.addEventListener('deviceready', onDeviceReady, false);
+  alert("device ready");
 });
 
 // Google Analytics
@@ -64,6 +66,7 @@ function loadCardData(cardtype, cardnumber, successFunction, postSuccessFunction
     'cardnumber':cardnumber
   };
 
+  alert("loading card data");
   $.mobile.loading('show');
 
   setTimeout(function () {
@@ -89,6 +92,8 @@ function loadCardData(cardtype, cardnumber, successFunction, postSuccessFunction
       }
     });
   }, 200);
+
+  alert("loading card data done");
 }
 
 var cardcompany;
