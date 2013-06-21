@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=1"/>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
@@ -64,7 +64,6 @@ function loadCardData(cardtype, cardnumber, successFunction, postSuccessFunction
     'cardnumber':cardnumber
   };
 
-  alert("loading card data");
   $.mobile.loading('show');
 
   setTimeout(function () {
@@ -90,8 +89,6 @@ function loadCardData(cardtype, cardnumber, successFunction, postSuccessFunction
       }
     });
   }, 200);
-
-  alert("loading card data done");
 }
 
 var cardcompany;
@@ -257,7 +254,6 @@ function onConfirmRemoveCardCallback(j) {
 }
 
 function renderMycardsList(mycards) {
-  alert(6);
   var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
   if (mycards != null && mycards.length > 0) {
     $.each(mycards, function (i, mycard) {
@@ -279,7 +275,6 @@ function renderMycardsList(mycards) {
           '</li>';
     });
   } else {
-    alert(5);
     // show a nice helptext about adding your own cards
     htmlMyCards += '' +
         '<li data-role="fieldcontain">' +
@@ -295,7 +290,6 @@ function renderMycardsList(mycards) {
   }
   $("#mycardsList").html(htmlMyCards);
   $("#mycardsList").listview("refresh");
-  alert(7);
 }
 
 // TODO add prefix and check when scanning/typing
@@ -408,20 +402,16 @@ function processCardResponse(cardcompany, data) {
     $('#homePage').live('pagebeforeshow', function (e, data) {
       googleAnalytics("home");
 
-      alert(2);
       var mycards = localStorage.getItem("mycards");
       if (mycards != null) {
         mycards = JSON.parse(mycards);
       }
 
-      alert("2a");
       // render the list of scanned cards
       renderMycardsList(mycards);
 
-      alert(3);
       renderAllcardsList();
 
-      alert(4);
     });
 
     function onClickBehaviourForCards() {
