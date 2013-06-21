@@ -257,9 +257,9 @@ function onConfirmRemoveCardCallback(j) {
 }
 
 function renderMycardsList(mycards) {
+  alert(6);
   var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
   if (mycards != null && mycards.length > 0) {
-    alert(6);
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
@@ -409,6 +409,7 @@ function processCardResponse(cardcompany, data) {
       googleAnalytics("home");
 
       alert(2);
+      alert(localStorage.getItem("mycards"));
       // render the list of scanned cards
       renderMycardsList(JSON.parse(localStorage.getItem("mycards")));
 
