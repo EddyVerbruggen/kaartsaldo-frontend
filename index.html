@@ -189,7 +189,8 @@ function scan(cardcompany, successFunction) {
   if (isIOS() && localStorage.getItem("hasSeenHowToScanInstructions") == null) {
     $('#scanInstructionsPopup').popup('open', {transition: 'pop'});
   } else {
-    window.plugins.barcodeScanner.scan(function (result) {
+    var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+    scanner.scan(function (result) {
           if (!result.cancelled) {
             // Successfully scanned a bar code
             if (result.format == "CODE_128") {
@@ -414,15 +415,14 @@ function processCardResponse(cardcompany, data) {
 
     });
 
-    var animate = false; // TODO false for android 2
-
     function onClickBehaviourForCards() {
       var that = $(this);
       $(that).unbind("click");
       var cardcompany = $(that).attr("data-cardcompany");
       var testcardnr = $(that).attr("data-testcard");
       googleAnalytics("clickcard/"+cardcompany);
-      if (animate) {
+      // do not animate for Android 2
+      if (!isAndroid2()) {
         flipBackAll();
         $(that).addClass('zoom');
         setTimeout(function() {

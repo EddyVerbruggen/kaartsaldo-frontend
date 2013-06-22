@@ -281,21 +281,37 @@ input::-webkit-input-placeholder {
     margin-left: 2px;
   }
 
-  .cardcompany-overlay-no-animation img {
-    width: 268px;
-  }
-
-  .cardcompany-buttons-holder a {
+  .ui-block-a .cardcompany-buttons a {
     margin-left: 32px;
   }
 
+  .ui-block-b .cardcompany-buttons a {
+    margin-left: 18px;
+  }
+
+  .ui-block-a .cardcompany-buttons-no-animation a {
+    margin-left: 74px;
+  }
+
+  .ui-block-b .cardcompany-buttons-no-animation a {
+    margin-left: 10px;
+  }
+
   /* move the enlarged cards a bit to the middle */
-  .ui-block-a .cardcompany-overlay-holder {
+  .ui-block-a .cardcompany-overlay {
     left:-8px;
   }
 
-  .ui-block-b .cardcompany-overlay-holder {
+  .ui-block-b .cardcompany-overlay {
     left:6px;
+  }
+
+  .ui-block-a .cardcompany-overlay-no-animation {
+    left:28px;
+  }
+
+  .ui-block-b .cardcompany-overlay-no-animation {
+    left:-36px;
   }
 
   .ui-block-a .cardcompany-image-container.zoom {

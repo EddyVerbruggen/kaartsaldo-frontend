@@ -8,6 +8,10 @@ function isAndroid() {
   return navigator.userAgent.toLowerCase().indexOf("android") > -1;
 }
 
+function isAndroid2() {
+  return navigator.userAgent.toLowerCase().indexOf("android 2") > -1;
+}
+
 function isIOS() {
   return navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
 }
