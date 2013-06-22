@@ -10,7 +10,7 @@ html {
   background-size: 619px 645px;
   background-repeat: no-repeat;
   background-position: bottom right;
-  -webkit-backface-visibility: hidden;  /* without this, Android pages may flicker after slide transitions */
+/*  -webkit-backface-visibility: hidden; */ /* without this, Android pages may flicker after slide transitions */
 }
 
 .ui-bar-c {
