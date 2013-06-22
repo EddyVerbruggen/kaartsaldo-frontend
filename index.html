@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
@@ -333,8 +333,8 @@ function renderAllcardsList() {
         '  <div class="cardcompany-name">' + card[1] + '</div>' +
         '  <div id="container-'+card[0]+'" class="cardcompany-image-container" data-cardcompany="' + card[0] + '" data-testcard="' + card[2] + '">' +
         '    <div class="cardcompany-image"><img src="img/card/' + card[0] + '.png" class="pointer scanButton" alt="' + card[0] + '"/></div>' +
-        '    <div class="cardcompany-overlay"><img src="img/card-backside.png"/></div>' +
-        '    <div class="cardcompany-buttons">' +
+        '    <div class="cardcompany-overlay-holder cardcompany-overlay"><img src="img/card-backside.png"/></div>' +
+        '    <div class="cardcompany-buttons-holder cardcompany-buttons">' +
         '      <a class="close" onclick="flipBack(\'#container-'+card[0]+'\')"></a>' +
         '      <a class="scan" onclick="scan(\''+card[0]+'\', processCardResponse)"></a>' +
         '      <a class="type" data-rel="dialog" data-transition="slidedown" href="#typeInDialog" onclick="prepareTypeInDialog(\''+card[0]+'\')"></a>' +
@@ -414,17 +414,24 @@ function processCardResponse(cardcompany, data) {
 
     });
 
+    var animate = false; // TODO false for android 2
+
     function onClickBehaviourForCards() {
       var that = $(this);
       $(that).unbind("click");
       var cardcompany = $(that).attr("data-cardcompany");
       var testcardnr = $(that).attr("data-testcard");
       googleAnalytics("clickcard/"+cardcompany);
-      flipBackAll();
-      $(that).addClass('zoom');
-      setTimeout(function() {
-        $(that).addClass('rotate');
-      }, 750);
+      if (animate) {
+        flipBackAll();
+        $(that).addClass('zoom');
+        setTimeout(function() {
+          $(that).addClass('rotate');
+        }, 750);
+      } else {
+        $(that).find(".cardcompany-overlay-holder").removeClass("cardcompany-overlay").addClass("cardcompany-overlay-no-animation");
+        $(that).find(".cardcompany-buttons-holder").removeClass("cardcompany-buttons").addClass("cardcompany-buttons-no-animation");
+      }
     }
 
     function flipBackAll() {
@@ -436,12 +443,18 @@ function processCardResponse(cardcompany, data) {
     function flipBack(elemt) {
       var elem = $(elemt);
       if (elem.hasClass('zoom')) {
-        $(elem).removeClass('zoom').removeClass('rotate').addClass('rotateBack');
+        elem.removeClass('zoom').removeClass('rotate').addClass('rotateBack');
         // init the element for a new click
         setTimeout(function() {
-          $(elem).bind("click", onClickBehaviourForCards);
-          $(elem).removeClass('rotateBack');
+          elem.bind("click", onClickBehaviourForCards);
+          elem.removeClass('rotateBack');
         }, 1300); // animation ends after 1250
+      } else {
+        elem.find(".cardcompany-overlay-holder").removeClass("cardcompany-overlay-no-animation").addClass("cardcompany-overlay");
+        elem.find(".cardcompany-buttons-holder").removeClass("cardcompany-buttons-no-animation").addClass("cardcompany-buttons");
+        setTimeout(function() {
+          elem.bind("click", onClickBehaviourForCards);
+        }, 100);
       }
     }
   </script>

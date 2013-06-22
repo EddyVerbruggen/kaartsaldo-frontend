@@ -185,6 +185,17 @@ input::-webkit-input-placeholder {
   /*border: 1px dashed blue;*/
 }
 
+.cardcompany-overlay-no-animation {
+  position: absolute;
+  clear: none;
+  left:0;
+  top:0;
+  text-align: center;
+  width: 100%;
+  margin-left: 2px;
+  z-index: 12;
+}
+
 .cardcompany-buttons {
   position: absolute;
   clear: none;
@@ -196,32 +207,59 @@ input::-webkit-input-placeholder {
   -webkit-transform: rotateY(180deg);
 }
 
-.cardcompany-buttons a {
+.cardcompany-buttons-no-animation {
+  position: absolute;
+  clear: none;
+  left:0;
+  top:0;
+  z-index: 17;
+  width: 100%;
+  -webkit-backface-visibility: visible;
+  -webkit-transform: none;
+}
+
+.cardcompany-buttons-holder a {
   position: absolute;
   cursor: pointer;
-  left:50%;
+  left: 50%;
   margin-left: 22px;
   height: 26px;
   width: 42px;
+  /*border: 1px solid red;*/
 }
 
-.cardcompany-buttons .close {
-  /*border: 1px solid red;*/
-  top:0;
+.cardcompany-buttons-no-animation a {
+  margin-left: 48px;
+  height: 30px;
+  width: 50px;
+}
+
+.cardcompany-buttons-no-animation .close {
+  top:6px;
 }
 
 .cardcompany-buttons .scan {
-  /*border: 1px solid blue;*/
   top:34px;
 }
 
+.cardcompany-buttons-no-animation .scan {
+  top:56px;
+}
+
 .cardcompany-buttons .type {
-  /*border: 1px solid green;*/
   top:60px;
+}
+
+.cardcompany-buttons-no-animation .type {
+  top:94px;
 }
 
 .cardcompany-overlay img {
   width: 134px;
+}
+
+.cardcompany-overlay-no-animation img {
+  width: 200px;
 }
 
 @media (max-width:380px) {
@@ -239,24 +277,24 @@ input::-webkit-input-placeholder {
     -webkit-transition: 1.25s;
   }
 
-  .cardcompany-overlay {
+  .cardcompany-overlay-holder {
     margin-left: 2px;
   }
 
-  .cardcompany-overlay img {
-    width: 134px;
+  .cardcompany-overlay-no-animation img {
+    width: 268px;
   }
 
-  .cardcompany-buttons a {
+  .cardcompany-buttons-holder a {
     margin-left: 32px;
   }
 
   /* move the enlarged cards a bit to the middle */
-  .ui-block-a .cardcompany-overlay {
+  .ui-block-a .cardcompany-overlay-holder {
     left:-8px;
   }
 
-  .ui-block-b .cardcompany-overlay {
+  .ui-block-b .cardcompany-overlay-holder {
     left:6px;
   }
 
