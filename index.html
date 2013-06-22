@@ -422,15 +422,15 @@ function processCardResponse(cardcompany, data) {
       var testcardnr = $(that).attr("data-testcard");
       googleAnalytics("clickcard/"+cardcompany);
       // do not animate for Android 2
-      if (!isAndroid2()) {
+      if (isAndroid2()) {
+        $(that).find(".cardcompany-overlay-holder").removeClass("cardcompany-overlay").addClass("cardcompany-overlay-no-animation");
+        $(that).find(".cardcompany-buttons-holder").removeClass("cardcompany-buttons").addClass("cardcompany-buttons-no-animation");
+      } else {
         flipBackAll();
         $(that).addClass('zoom');
         setTimeout(function() {
           $(that).addClass('rotate');
         }, 750);
-      } else {
-        $(that).find(".cardcompany-overlay-holder").removeClass("cardcompany-overlay").addClass("cardcompany-overlay-no-animation");
-        $(that).find(".cardcompany-buttons-holder").removeClass("cardcompany-buttons").addClass("cardcompany-buttons-no-animation");
       }
     }
 
@@ -442,19 +442,23 @@ function processCardResponse(cardcompany, data) {
 
     function flipBack(elemt) {
       var elem = $(elemt);
-      if (elem.hasClass('zoom')) {
-        elem.removeClass('zoom').removeClass('rotate').addClass('rotateBack');
-        // init the element for a new click
-        setTimeout(function() {
-          elem.bind("click", onClickBehaviourForCards);
-          elem.removeClass('rotateBack');
-        }, 1300); // animation ends after 1250
+      if (isAndroid2()) {
+        if (elem.find(".cardcompany-overlay-holder").hasClass("cardcompany-overlay-no-animation")) {
+          elem.find(".cardcompany-overlay-holder").removeClass("cardcompany-overlay-no-animation").addClass("cardcompany-overlay");
+          elem.find(".cardcompany-buttons-holder").removeClass("cardcompany-buttons-no-animation").addClass("cardcompany-buttons");
+          setTimeout(function() {
+            elem.bind("click", onClickBehaviourForCards);
+          }, 100);
+        }
       } else {
-        elem.find(".cardcompany-overlay-holder").removeClass("cardcompany-overlay-no-animation").addClass("cardcompany-overlay");
-        elem.find(".cardcompany-buttons-holder").removeClass("cardcompany-buttons-no-animation").addClass("cardcompany-buttons");
-        setTimeout(function() {
-          elem.bind("click", onClickBehaviourForCards);
-        }, 100);
+        if (elem.hasClass('zoom')) {
+          elem.removeClass('zoom').removeClass('rotate').addClass('rotateBack');
+          // init the element for a new click
+          setTimeout(function() {
+            elem.bind("click", onClickBehaviourForCards);
+            elem.removeClass('rotateBack');
+          }, 1300); // animation ends after 1250
+        }
       }
     }
   </script>
