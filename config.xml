@@ -16,15 +16,13 @@
   </author>
 
   <!-- default icon -->
-  <icon src="icons/icon-default.png" gap:role="default" />
+  <icon src="icon.png"/>
 
-  <!-- iPhone icons -->
-  <icon src="icons/ios/icon.png" width="57" height="57" />
-  <icon src="icons/ios/icon_at_2x.png" width="114" height="114" />
-
-  <!-- iPad icons -->
-  <icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
-  <icon src="icons/ios/icon-72_at_2x.png" gap:platform="ios" width="144" height="144" />
+  <!-- iPhone and iPad icons -->
+  <icon src="icons/ios/icon-57.png" gap:platform="ios" width="57" height="57"/>
+  <icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72"/>
+  <icon src="icons/ios/icon-57-2x.png" gap:platform="ios" width="114" height="114"/>
+  <icon src="icons/ios/icon-72-2x.png" gap:platform="ios" width="144" height="144"/>
 
   <!-- Android icons -->
   <icon src="icons/android/ldpi.png"  gap:platform="android" gap:density="ldpi" width="36" height="36"/>
@@ -34,8 +32,8 @@
 
   <!-- iPhone splash -->
   <gap:splash src="splash/ios/Default.png"         gap:platform="ios" width="320" height="480" />
- 	<gap:splash src="splash/ios/Default_at_2x.png"   gap:platform="ios" width="640" height="960" />
- 	<gap:splash src="splash/ios/Default_iphone5.png" gap:platform="ios" width="640" height="1136" />
+  <gap:splash src="splash/ios/Default_at_2x.png"   gap:platform="ios" width="640" height="960" />
+  <gap:splash src="splash/ios/Default_iphone5.png" gap:platform="ios" width="640" height="1136" />
 
   <!-- iPad splash -->
   <gap:splash src="splash/ios/Default-Portrait-ipad.png"  gap:platform="ios" width="768" height="1024" />
@@ -43,9 +41,9 @@
 
   <!-- Android splash -->
   <gap:splash src="splash/android/Default-ldpi.png"  gap:platform="android" gap:density="ldpi" />
- 	<gap:splash src="splash/android/Default-mdpi.png"  gap:platform="android" gap:density="mdpi" />
- 	<gap:splash src="splash/android/Default-hdpi.png"  gap:platform="android" gap:density="hdpi" />
- 	<gap:splash src="splash/android/Default-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+  <gap:splash src="splash/android/Default-mdpi.png"  gap:platform="android" gap:density="mdpi" />
+  <gap:splash src="splash/android/Default-hdpi.png"  gap:platform="android" gap:density="hdpi" />
+  <gap:splash src="splash/android/Default-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
   <feature name="http://api.phonegap.com/1.0/network"/>
 
