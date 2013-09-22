@@ -61,7 +61,7 @@
   <preference name="auto-hide-splash-screen" value="false" /><!-- we're hiding it with js -->
 
   <gap:plugin name="BarcodeScanner" version="0.5.5" /> <!-- trying to find a release with a fullscreen iOS rectangle -->
-  <gap:plugin name="Analytics" /> <!-- latest release -->
+  <gap:plugin name="com.adobe.plugins.gaplugin" />
 
   <!--reference name="splash-screen-duration" value="2000" /--> <!-- default 5000 -->
 
