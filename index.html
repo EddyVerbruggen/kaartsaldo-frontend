@@ -35,7 +35,7 @@ var gaPlugin;
 function onDeviceReady() {
   navigator.splashscreen.hide();
   gaPlugin = window.plugins.gaPlugin;
-  gaPlugin.init(gaInitSuccessHandler, gaInitErrorHandler, "UA-28850866-5", 8); // last argument is push interval (in seconds)
+  gaPlugin.init(gaInitSuccessHandler, gaInitErrorHandler, "UA-28850866-5", 6); // last argument is push interval (in seconds)
 }
 
 function gaInitSuccessHandler() {
@@ -291,8 +291,9 @@ function renderMycardsList(mycards) {
         '  </div>' +
         '</li>';
   }
-  $("#mycardsList").html(htmlMyCards);
-  $("#mycardsList").listview("refresh");
+  $("#mycardsList")
+      .html(htmlMyCards)
+      .listview("refresh");
 }
 
 // TODO add prefix and check when scanning/typing
