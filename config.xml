@@ -60,7 +60,7 @@
   <preference name="exit-on-suspend" value="true" />
   <preference name="auto-hide-splash-screen" value="false" /><!-- we're hiding it with js -->
 
-  <gap:plugin name="BarcodeScanner" /> <!-- trying to find a release with a fullscreen iOS rectangle -->
+  <gap:plugin name="com.phonegap.plugins.barcodescanner" /> <!-- trying to find a release with a fullscreen iOS rectangle -->
   <gap:plugin name="com.adobe.plugins.gaplugin" />
 
   <!--reference name="splash-screen-duration" value="2000" /--> <!-- default 5000 -->
