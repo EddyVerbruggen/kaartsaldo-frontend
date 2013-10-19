@@ -271,8 +271,8 @@ function renderMycardsList(mycards) {
           '      <p class="cardnumber">' + formatCardnumber(mycard.cardnumber) + '</p>' +
           '    </div>' +
           '    <div class="ui-block-b" style="text-align: right; margin-top: 8px">' +
-          '      <div class="refresh"><a href="#" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></a></div>' +
-          '      <div class="remove"><a href="#" onclick="removeCard(\'' + mycard.cardnumber + '\')"><img src="img/trash.png" width="16px" height="16px" border="0"/></a></div>' +
+          '      <div class="refresh" onclick="refreshBalance(\'' + mycard.cardcompany + '\', \'' + mycard.cardnumber + '\')"><img src="img/refresh.png" width="15px" height="16px" border="0"/></div>' +
+          '      <div class="remove" onclick="removeCard(\'' + mycard.cardnumber + '\')"><img src="img/trash.png" width="16px" height="16px" border="0"/></div>' +
           '    </div>' +
           '  </div>' +
           '</li>';

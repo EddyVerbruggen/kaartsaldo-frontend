@@ -2,8 +2,8 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
         id="nl.x-services.kaartsaldo"
-        version="1.4"
-        versionCode="713"><!-- for Android.. normally not required, but we've removed the pgbuild config once which reset the versionCode-->
+        version="1.5.SNAPSHOT"
+        versionCode="715"><!-- for Android.. normally not required, but we've removed the pgbuild config once which reset the versionCode-->
 
   <name>Kaartsaldo</name><!-- is also the name of the icon on the device -->
 
@@ -43,24 +43,32 @@
   <gap:splash src="splash/android/Default-hdpi.png"  gap:platform="android" gap:density="hdpi" />
   <gap:splash src="splash/android/Default-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
+  <gap:platform name="ios" />
+  <gap:platform name="android" />
+
   <feature name="http://api.phonegap.com/1.0/network"/>
 
   <preference name="phonegap-version" value="2.9.0"/>
   <preference name="fullscreen" value="false" />
   <preference name="detect-data-types" value="false" />
-  <preference name="orientation" value="default"/><!-- both/landscape/portrait-->
-  <preference name="target-device" value="handset"/>
-  <preference name="webviewbounce" value="true"/><!-- iOS rubber banding -->
+  <preference name="orientation" value="default"/><!-- default(=all)/landscape/portrait-->
+  <!--<preference name="target-device" value="handset"/>-->
+  <preference name="DisallowOverscroll" value="false"/><!-- iOS rubber banding -->
   <preference name="ios-statusbarstyle" value="black-opaque"/>
   <preference name="android-minSdkVersion" value="8" />
+  <preference name="android-targetSdkVersion" value="14" />
   <preference name="android-installLocation" value="auto" /><!-- preferExternal; preferably install on SD-card -->
-  <preference name="show-splash-screen-spinner" value="true" />
+  <preference name="ShowSplashScreenSpinner" value="true" />
   <preference name="stay-in-webview" value="false" />
   <preference name="prerendered-icon" value="true" /><!-- don't add iOS gloss effect -->
   <preference name="exit-on-suspend" value="true" />
-  <preference name="auto-hide-splash-screen" value="false" /><!-- we're hiding it with js -->
+  <preference name="AutoHideSplashScreen" value="false" /><!-- we're hiding it with js -->
+  <preference name="FadeSplashScreen" value="true" />
+  <preference name="BackupWebStorage" value="local" />
+  <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+  <preference name="HideKeyboardFormAccessoryBar" value="true" />
 
-  <gap:plugin name="com.phonegap.plugins.barcodescanner" /> <!-- trying to find a release with a fullscreen iOS rectangle -->
+  <gap:plugin name="com.phonegap.plugins.barcodescanner" />
   <gap:plugin name="com.adobe.plugins.gaplugin" />
 
   <!--reference name="splash-screen-duration" value="2000" /--> <!-- default 5000 -->
