@@ -2,8 +2,8 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
         id="nl.x-services.kaartsaldo"
-        version="1.6.SNAPSHOT"
-        versionCode="716"><!-- for Android.. normally not required, but we've removed the pgbuild config once which reset the versionCode-->
+        version="1.5"
+        versionCode="715"><!-- for Android.. normally not required, but we've removed the pgbuild config once which reset the versionCode-->
 
   <name>Kaartsaldo</name><!-- is also the name of the icon on the device -->
 
@@ -17,16 +17,19 @@
   </author>
 
   <!-- default icon -->
-  <icon src="icon.png"/>
+  <icon src="icon.png" gap:role="default"/>
+
+  <!-- iOS icons -->
+  <icon src="icons/ios/icon-57.png"    gap:platform="ios" width="57" height="57"/>
+  <icon src="icons/ios/icon-72.png"    gap:platform="ios" width="72" height="72"/>
+  <icon src="icons/ios/icon-57-2x.png" gap:platform="ios" width="114" height="114"/>
+  <icon src="icons/ios/icon-72-2x.png" gap:platform="ios" width="144" height="144"/>
+
+  <!-- Android icons -->
   <icon src="icons/android/ldpi.png"  gap:platform="android" gap:density="ldpi" width="36" height="36"/>
   <icon src="icons/android/mdpi.png"  gap:platform="android" gap:density="mdpi" width="48" height="48"/>
   <icon src="icons/android/hdpi.png"  gap:platform="android" gap:density="hdpi" width="72" height="72"/>
   <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" width="96" height="96"/>
-  <icon src="icons/ios/icon-57.png" gap:platform="ios" width="57" height="57"/>
-  <icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72"/>
-  <icon src="icons/ios/icon-57-2x.png" gap:platform="ios" width="114" height="114"/>
-  <icon src="icons/ios/icon-72-2x.png" gap:platform="ios" width="144" height="144"/>
-
 
   <!-- iPhone splash -->
   <gap:splash src="splash/ios/Default.png"         gap:platform="ios" width="320" height="480" />
