@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
         id="nl.x-services.kaartsaldo"
-        version="1.5.SNAPSHOT"
+        version="1.5"
         versionCode="715"><!-- for Android.. normally not required, but we've removed the pgbuild config once which reset the versionCode-->
 
   <name>Kaartsaldo</name><!-- is also the name of the icon on the device -->
