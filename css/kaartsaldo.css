@@ -43,7 +43,7 @@ input::-webkit-input-placeholder {
   background-color: #000;
 }
 
-.ui-block-a, .ui-block-b {
+.ui-grid-a > div {
   -webkit-transform: translateZ(0);
 }
 
