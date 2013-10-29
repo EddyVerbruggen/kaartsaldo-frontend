@@ -2,8 +2,8 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
         id="nl.x-services.kaartsaldo"
-        version="1.5"
-        versionCode="715"><!-- for Android.. normally not required, but we've removed the pgbuild config once which reset the versionCode-->
+        version="1.6"
+        versionCode="716"><!-- for Android.. normally not required, but we've removed the pgbuild config once which reset the versionCode-->
 
   <name>Kaartsaldo</name><!-- is also the name of the icon on the device -->
 
@@ -23,6 +23,7 @@
   <icon src="icons/ios/icon-57.png" width="57" height="57"/>
   <icon src="icons/ios/icon_at_2x.png" width="114" height="114"/>
 
+  <!-- NOTE: if we get an 'icon-72 is missing' error when uploading to Apple, temp disable the hdpi Android icon :)  -->
   <icon src="icons/ios/icon-72.png" width="72" height="72"/>
   <icon src="icons/ios/icon-72_at_2x.png" width="144" height="144"/>
 
@@ -34,7 +35,7 @@
   <!-- Android icons -->
   <icon src="icons/android/ldpi.png"  gap:platform="android" gap:density="ldpi" width="36" height="36"/>
   <icon src="icons/android/mdpi.png"  gap:platform="android" gap:density="mdpi" width="48" height="48"/>
-  <!--<icon src="icons/android/hdpi.png"  gap:platform="android" gap:density="hdpi" width="72" height="72"/>-->
+  <icon src="icons/android/hdpi.png"  gap:platform="android" gap:density="hdpi" width="72" height="72"/>
   <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" width="96" height="96"/>
 
   <!-- iPhone splash -->
