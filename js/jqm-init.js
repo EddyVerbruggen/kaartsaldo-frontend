@@ -2,12 +2,15 @@
 
 // override some jqm defaults, need to be done before jqm is loaded
 $(document).bind("mobileinit", function(){
-  $.mobile.page.prototype.options.domCache = true;
+  $.mobile.page.prototype.options.domCache = false;
   $.mobile.pushStateEnabled = false;
-  $.mobile.defaultPageTransition = "slide";
-  $.event.special.swipe.horizontalDistanceThreshold = 60; // default is 30, but swipe is triggered too often for my taste
+  $.mobile.defaultPageTransition = "none";
 
-  // page loading widget (only required for login)
+  $.event.special.swipe.horizontalDistanceThreshold = 90;
+  $.event.special.swipe.scrollSupressionThreshold = 120;
+  $.mobile.buttonMarkup.hoverDelay = 20;
+
+  // page loading widget (when checking the card on the server)
   $.mobile.loader.prototype.options.text = "Momentje..";
   $.mobile.loader.prototype.options.textVisible = true;
   $.mobile.loader.prototype.options.theme = "b";
