@@ -77,11 +77,11 @@
   <preference name="BackupWebStorage" value="local" />
   <preference name="KeyboardDisplayRequiresUserAction" value="false" />
   <preference name="HideKeyboardFormAccessoryBar" value="true" />
+  <preference name="StatusBarOverlaysWebView" value="true" />
 
   <gap:plugin name="com.phonegap.plugins.barcodescanner" />
   <gap:plugin name="com.adobe.plugins.gaplugin" />
-
-  <!--reference name="splash-screen-duration" value="2000" /--> <!-- default 5000 -->
+  <gap:plugin name="com.phonegap.plugin.statusbar" />
 
   <!-- allow loading any url in the webview -->
   <access origin="*" />

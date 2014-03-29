@@ -12,7 +12,7 @@
   <script src="js/lib/fastclick.js"></script>
   <script src="js/kaartsaldo.custom.js"></script>
   <script>
-    if (true || isIOS()) {
+    if (isIOS()) {
       document.write('<link rel="stylesheet" href="css/ios.css"/>');
     }
   </script>
@@ -39,6 +39,12 @@ function onDeviceReady() {
   navigator.splashscreen.hide();
   gaPlugin = window.plugins.gaPlugin;
   gaPlugin.init(gaInitSuccessHandler, gaInitErrorHandler, "UA-28850866-5", 6); // last argument is push interval (in seconds)
+  if (isIOS()) {
+    setTimeout(function () {
+      StatusBar.styleLightContent();
+      StatusBar.overlaysWebView(true);
+    }, 500);
+  }
 }
 
 function gaInitSuccessHandler() {
