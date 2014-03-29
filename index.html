@@ -11,6 +11,11 @@
   <script src="js/lib/jquery-1.9.1.min.js"></script>
   <script src="js/lib/fastclick.js"></script>
   <script src="js/kaartsaldo.custom.js"></script>
+  <script>
+    if (true || isIOS()) {
+      document.write('<link rel="stylesheet" href="css/ios.css"/>');
+    }
+  </script>
   <script src="js/jqm-init.js"></script>
   <script src="js/lib/jquery.mobile-1.3.1.min.js"></script>
   <script src="cordova.js"></script>
@@ -255,7 +260,7 @@ function onConfirmRemoveCardCallback(j) {
 }
 
 function renderMycardsList(mycards) {
-  var htmlMyCards = '<li data-role="list-divider">Mijn kaarten</li>';
+  var htmlMyCards = '<li class="headerbar" data-role="list-divider">Mijn kaarten</li>';
   if (mycards != null && mycards.length > 0) {
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
@@ -317,7 +322,7 @@ var allcards = new Array(
     new Array("nationaleentertainmentcard", "Nat. Entertainment Card", ""),
     new Array("nederlandsesaunacadeaubon", "Ned. Sauna Cadeaubon", ""),
     new Array("podium", "PODIUM Cadeaukaart", ""),
-    new Array("prenatal", "Prénatal", "3080017005005856058"),
+    new Array("prenatal", "Prénatal", ""),
     new Array("promiss", "Promiss", ""),
     new Array("restaurantcadeau", "Restaurant Cadeau", ""),
     new Array("vend", "V & D", ""),
