@@ -258,8 +258,9 @@ function onConfirmRemoveCardCallback(j) {
 }
 
 function renderMycardsList(mycards) {
-  var htmlMyCards = '<li class="headerbar" data-role="list-divider">Mijn kaarten</li>';
+  var htmlMyCards;
   if (mycards != null && mycards.length > 0) {
+    htmlMyCards = '<li class="headerbar" data-role="list-divider">Mijn kaarten</li>';
     $.each(mycards, function (i, mycard) {
       htmlMyCards += '' +
           '<li data-role="fieldcontain">' +
@@ -279,7 +280,9 @@ function renderMycardsList(mycards) {
           '</li>';
     });
   } else {
+    htmlMyCards = '<li class="headerbar" data-role="list-divider">Voeg een kaart toe</li>';
     // show a nice helptext about adding your own cards
+    /*
     htmlMyCards += '' +
         '<li data-role="fieldcontain">' +
         '  <img src="img/card/_nocard.png" />' +
@@ -291,6 +294,7 @@ function renderMycardsList(mycards) {
         '    </div>' +
         '  </div>' +
         '</li>';
+        */
   }
   $("#mycardsList")
       .html(htmlMyCards)
@@ -471,11 +475,11 @@ function processCardResponse(cardcompany, data) {
   <div>
     <ul id="mycardsList" data-role="listview" data-inset="false" data-divider-theme="a"></ul>
   </div>
-  <div data-role="content">
+  <!--div data-role="content">
     <ul data-role="listview" data-inset="false" data-divider-theme="d">
       <li data-role="list-divider">Voeg een kaart toe</li>
     </ul>
-  </div>
+  </div-->
   <div data-role="content" class="ui-grid-a" id="allcardsList"></div>
 
   <div data-role="popup" id="typeInPopup" data-theme="a" class="ui-corner-all">

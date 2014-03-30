@@ -8,6 +8,7 @@
   background-color: #FFF;
   color: #000;
   text-shadow: none;
+  border: none;
 }
 
 .ui-page {
@@ -128,6 +129,7 @@ input::-webkit-input-placeholder {
 .cardcompany-image-container.zoom {
   -webkit-transform: perspective(500) translateZ(180px);
   -webkit-transition: 0.5s;
+  z-index: 12;
 }
 
 .cardcompany-image-container.rotate {
