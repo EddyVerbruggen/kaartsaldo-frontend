@@ -258,7 +258,7 @@ function onConfirmRemoveCardCallback(j) {
 }
 
 function renderMycardsList(mycards) {
-  var htmlMyCards;
+  var htmlMyCards = '';
   if (mycards != null && mycards.length > 0) {
     htmlMyCards = '<li class="headerbar" data-role="list-divider">Mijn kaarten</li>';
     $.each(mycards, function (i, mycard) {
@@ -280,7 +280,7 @@ function renderMycardsList(mycards) {
           '</li>';
     });
   } else {
-    htmlMyCards = '<li class="headerbar" data-role="list-divider">Voeg een kaart toe</li>';
+//    htmlMyCards = '<li class="headerbar" data-role="list-divider">Kies een kaart om toe te voegen</li>';
     // show a nice helptext about adding your own cards
     /*
     htmlMyCards += '' +

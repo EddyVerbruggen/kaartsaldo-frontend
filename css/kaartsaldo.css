@@ -9,6 +9,11 @@
   color: #000;
   text-shadow: none;
   border: none;
+  text-align: center;
+}
+
+.ui-li-divider {
+  font-weight: normal;
 }
 
 .ui-page {
@@ -146,7 +151,7 @@ input::-webkit-input-placeholder {
   position: absolute;
   left:0;
   top:0;
-  z-index: 11;
+  /*z-index: 11;*/
   margin-left: -2px;
   clear: none;
   /*border: 1px dotted green;*/
