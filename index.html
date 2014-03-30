@@ -162,13 +162,13 @@ function closeScanInstructionsPopup() {
 function encodeTextAsBarcode(company, text) {
   // This plugin supports only QR codes, so using our own backend
   /*
-  window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, text, function(success) {
-        alert("encode success: " + success);
-      }, function(fail) {
-        alert("encoding failed: " + fail);
-      }
-    );
-  */
+   window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, text, function(success) {
+   alert("encode success: " + success);
+   }, function(fail) {
+   alert("encoding failed: " + fail);
+   }
+   );
+   */
 
   $("#barcodePopup").css({"background-image" : "url('img/card/" + company + ".png')"});
   $("#barcodePopup #barcodeImage").attr("src", "https://morning-stone-3983.herokuapp.com/barcode/"+text);
@@ -283,18 +283,18 @@ function renderMycardsList(mycards) {
 //    htmlMyCards = '<li class="headerbar" data-role="list-divider">Kies een kaart om toe te voegen</li>';
     // show a nice helptext about adding your own cards
     /*
-    htmlMyCards += '' +
-        '<li data-role="fieldcontain">' +
-        '  <img src="img/card/_nocard.png" />' +
-        '  <div class="ui-grid-a">' +
-        '    <div class="ui-block-a">' +
-        '      <h3><div class="euro">&euro;</div>0,<span class="cents"><sup>00</sup></span></h3>' +
-        '      <p>Je hebt geen gescande kaarten</p>' +
-        '      <p class="cardnumber">Kies hieronder je cadeaukaart</p>' +
-        '    </div>' +
-        '  </div>' +
-        '</li>';
-        */
+     htmlMyCards += '' +
+     '<li data-role="fieldcontain">' +
+     '  <img src="img/card/_nocard.png" />' +
+     '  <div class="ui-grid-a">' +
+     '    <div class="ui-block-a">' +
+     '      <h3><div class="euro">&euro;</div>0,<span class="cents"><sup>00</sup></span></h3>' +
+     '      <p>Je hebt geen gescande kaarten</p>' +
+     '      <p class="cardnumber">Kies hieronder je cadeaukaart</p>' +
+     '    </div>' +
+     '  </div>' +
+     '</li>';
+     */
   }
   $("#mycardsList")
       .html(htmlMyCards)
@@ -393,7 +393,7 @@ function processCardResponse(cardcompany, data) {
     // re-render all cards, so the flipped card(s) is hidden
     renderAllcardsList();
     setTimeout(function() {
-    // scroll to the top, so the user sees the card
+      // scroll to the top, so the user sees the card
       $.mobile.silentScroll(0);
     }, 600);
   } else {
@@ -435,7 +435,7 @@ function processCardResponse(cardcompany, data) {
         $(that).find(".cardcompany-buttons-holder").removeClass("cardcompany-buttons").addClass("cardcompany-buttons-no-animation");
       } else {
         flipBackAll();
-        $(that).addClass('zoom');
+        $(that).parent().addClass('zoom');
         setTimeout(function() {
           if (!$(that).hasClass('rotateBack')) {
             $(that).addClass('rotate');
@@ -461,10 +461,11 @@ function processCardResponse(cardcompany, data) {
           }, 100);
         }
       } else {
-        if (elem.hasClass('zoom')) {
-          elem.removeClass('zoom').removeClass('rotate').addClass('rotateBack');
+        if (elem.parent().hasClass('zoom')) {
+          elem.removeClass('rotate').addClass('rotateBack');
           // init the element for a new click
           setTimeout(function() {
+            elem.parent().removeClass('zoom');
             elem.bind("click", onClickBehaviourForCards);
             elem.removeClass('rotateBack');
           }, 1300); // animation ends after 1250

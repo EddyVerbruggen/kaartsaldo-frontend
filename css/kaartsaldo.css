@@ -3,19 +3,6 @@
   font-family: Arial, sans-serif;
 }
 
-.headerbar {
-  background: none;
-  background-color: #FFF;
-  color: #000;
-  text-shadow: none;
-  border: none;
-  text-align: center;
-}
-
-.ui-li-divider {
-  font-weight: normal;
-}
-
 .ui-page {
   background-color: #fff;
   background-size: 619px 645px;
@@ -44,6 +31,10 @@
 
 input::-webkit-input-placeholder {
   color: #bbb;
+}
+
+.ui-content {
+  padding-top: 5px;
 }
 
 .ui-content .ui-listview-inset {
@@ -125,21 +116,18 @@ input::-webkit-input-placeholder {
   -webkit-transform: perspective(500);
   -webkit-transform-style: preserve-3d;
   position: relative;
-  z-index: 9;
   text-align: center;
   width: 100%;
   height: 120px;
 }
 
-.cardcompany-image-container.zoom {
-  -webkit-transform: perspective(500) translateZ(180px);
-  -webkit-transition: 0.5s;
-  z-index: 12;
+.zoom {
+  z-index: 100;
 }
 
-.cardcompany-image-container.rotate {
-  -webkit-transform: perspective(500) translateZ(180px) rotateY(180deg);
-  -webkit-transition: 1.25s;
+.cardcompany-image-container {
+  -webkit-transform: perspective(500) translateZ(180px);
+  -webkit-transition: 0.5s;
 }
 
 .cardcompany-image-container.rotateBack {
@@ -151,7 +139,6 @@ input::-webkit-input-placeholder {
   position: absolute;
   left:0;
   top:0;
-  /*z-index: 11;*/
   margin-left: -2px;
   clear: none;
   /*border: 1px dotted green;*/
@@ -408,6 +395,7 @@ input::-webkit-input-placeholder {
   height: 160px;
   padding-top: 20px;
   margin-top: 10px;
+  position: relative;
 }
 
 #allcardsList .cardcompany-name {
