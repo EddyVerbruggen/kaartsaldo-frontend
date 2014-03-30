@@ -33,10 +33,11 @@ function onDeviceReady() {
   navigator.splashscreen.hide();
   gaPlugin = window.plugins.gaPlugin;
   gaPlugin.init(gaInitSuccessHandler, gaInitErrorHandler, "UA-28850866-5", 6); // last argument is push interval (in seconds)
-//  if (isIOS()) {
-//      StatusBar.styleLightContent();
-//      StatusBar.overlaysWebView(true);
-//  }
+  if (isIOS()) {
+    setTimeout(function() {
+      window.plugins.webviewcolor.change('#ffffff');
+    }, 500);
+  }
 }
 
 function gaInitSuccessHandler() {
