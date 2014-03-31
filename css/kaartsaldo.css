@@ -345,13 +345,14 @@ input::-webkit-input-placeholder {
 .cents {
   color: #888;
   font-size: 0.7em;
+  font-weight: normal;
 }
 
 #mycardsList .euro {
   width: 18px;
   color: #fff;
   background-color: #33991b;
-  padding: 2px 6px;
+  padding: 2px 3px 1px 8px;
   border-radius: 4px;
   margin-right: 8px;
   margin-bottom: 6px;
