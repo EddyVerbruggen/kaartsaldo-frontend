@@ -458,9 +458,11 @@ function processCardResponse(cardcompany, data) {
           // init the element for a new click
           setTimeout(function() {
             elem.parent().removeClass('zoom');
+          }, 500);
+          setTimeout(function() {
             elem.bind("click", onClickBehaviourForCards);
             elem.removeClass('rotateBack');
-          }, 500); // animation ends after 1250
+          }, 1300); // animation ends after 1250
         }
       }
     }
