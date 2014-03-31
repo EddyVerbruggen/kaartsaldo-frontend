@@ -388,7 +388,6 @@ function processCardResponse(cardcompany, data) {
     renderMycardsList(mycards);
     // re-render all cards, so the flipped card(s) is hidden
     renderAllcardsList();
-    $(document).scrollTop(0);
   } else {
     setTimeout(function() {
       googleAnalytics("cardresponse/failure/"+cardcompany);

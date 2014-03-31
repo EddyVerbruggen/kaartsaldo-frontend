@@ -9,6 +9,7 @@ $(document).bind("mobileinit", function(){
   $.event.special.swipe.horizontalDistanceThreshold = 90;
   $.event.special.swipe.scrollSupressionThreshold = 120;
   $.mobile.buttonMarkup.hoverDelay = 20;
+  $.mobile.minScrollBack = 9999;
 
   // page loading widget (when checking the card on the server)
   $.mobile.loader.prototype.options.text = "Momentje..";
