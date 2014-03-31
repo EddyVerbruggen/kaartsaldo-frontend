@@ -337,8 +337,8 @@ input::-webkit-input-placeholder {
   width: 16%;
 }
 
-#mycardsList li:last-child {
-  border-bottom: 0;
+#mycardsList li {
+  border-bottom: 1px solid #fff;
 }
 
 .cents {
