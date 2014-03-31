@@ -366,7 +366,7 @@ function processCardResponse(cardcompany, data) {
     var mycards = localStorage.getItem("mycards");
     var added = false;
     if (mycards == null) {
-      mycards = new Array();
+      mycards = [];
     } else {
       mycards = JSON.parse(mycards);
       // check if it existed... if so, remove it first
@@ -388,10 +388,7 @@ function processCardResponse(cardcompany, data) {
     renderMycardsList(mycards);
     // re-render all cards, so the flipped card(s) is hidden
     renderAllcardsList();
-    setTimeout(function() {
-      // scroll to the top, so the user sees the card
-      $.mobile.silentScroll(0);
-    }, 1000);
+    $(document).scrollTop(0);
   } else {
     setTimeout(function() {
       googleAnalytics("cardresponse/failure/"+cardcompany);
