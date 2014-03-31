@@ -391,7 +391,7 @@ function processCardResponse(cardcompany, data) {
     setTimeout(function() {
       // scroll to the top, so the user sees the card
       $.mobile.silentScroll(0);
-    }, 600);
+    }, 1000);
   } else {
     setTimeout(function() {
       googleAnalytics("cardresponse/failure/"+cardcompany);
