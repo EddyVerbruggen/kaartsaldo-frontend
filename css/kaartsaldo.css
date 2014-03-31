@@ -373,8 +373,7 @@ input::-webkit-input-placeholder {
   float: right;
   clear:both;
   margin-right: 5%;
-  padding:10px;
-  padding-right: 10px;
+  padding: 10px 8px 10px 10px;
   width: 22px;
   height: 19px;
   text-align: center;
@@ -401,8 +400,8 @@ input::-webkit-input-placeholder {
 
 #allcardsList .cardcompany-name {
   margin-bottom: 10px;
-  font-size: 0.8em;
-  color: #777;
+  font-size: 0.75em;
+  color: #999;
 }
 
 .ui-li-thumb {
@@ -422,6 +421,10 @@ input::-webkit-input-placeholder {
 
 .ui-dialog-contain h1 {
   font-size: 0.8em;
+}
+
+h1 {
+  font-weight: normal;
 }
 
 .ui-dialog-contain .hint {
