@@ -81,6 +81,7 @@
   <preference name="HideKeyboardFormAccessoryBar" value="true" />
   <!--<preference name="StatusBarOverlaysWebView" value="true" />-->
 
+  <gap:plugin name="org.apache.cordova.dialogs"/>
   <gap:plugin name="com.phonegap.plugins.barcodescanner" />
   <gap:plugin name="com.adobe.plugins.gaplugin" />
 
