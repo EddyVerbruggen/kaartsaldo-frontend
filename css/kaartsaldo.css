@@ -237,7 +237,7 @@ input::-webkit-input-placeholder {
   width: 200px;
 }
 
-@media (max-width:380px) {
+@media (max-width:38099px) {
   .cardcompany-image-container {
     -webkit-transform: perspective(500);
   }
