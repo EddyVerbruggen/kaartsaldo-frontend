@@ -24,6 +24,7 @@ function formatAmount(amount) {
     if (amount.indexOf(",") == -1) {
       amount += ",00";
     }
+    amount = amount.replace(",-", ",00");
     var amountFormatted = amount.substr(0, amount.indexOf(",") + 1);
     amountFormatted += '<span class=cents><sup>' + amount.substr(amount.indexOf(",") + 1) + '</sup></span>';
     return amountFormatted;

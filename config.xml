@@ -61,8 +61,7 @@
   <preference name="phonegap-version" value="3.3.0"/>
   <preference name="fullscreen" value="false" />
   <preference name="detect-data-types" value="false" />
-  <preference name="orientation" value="default"/><!-- default(=all)/landscape/portrait-->
-  <!--<preference name="target-device" value="handset"/>-->
+  <preference name="orientation" value="portrait"/>
   <preference name="webviewbounce" value="false" />
   <preference name="UIWebViewBounce" value="false" />
   <preference name="DisallowOverscroll" value="true"/>
@@ -79,7 +78,6 @@
   <preference name="BackupWebStorage" value="local" />
   <preference name="KeyboardDisplayRequiresUserAction" value="false" />
   <preference name="HideKeyboardFormAccessoryBar" value="true" />
-  <!--<preference name="StatusBarOverlaysWebView" value="true" />-->
 
   <gap:plugin name="org.apache.cordova.dialogs"/>
   <gap:plugin name="com.phonegap.plugins.barcodescanner" />
