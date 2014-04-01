@@ -388,6 +388,10 @@ function processCardResponse(cardcompany, data) {
     renderMycardsList(mycards);
     // re-render all cards, so the flipped card(s) is hidden
     renderAllcardsList();
+    setTimeout(function() {
+      // scroll to the top after scanning, so the user sees the card
+      $.mobile.silentScroll(0);
+    }, 600);
   } else {
     setTimeout(function() {
       googleAnalytics("cardresponse/failure/"+cardcompany);
